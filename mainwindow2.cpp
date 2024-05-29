@@ -146,6 +146,7 @@ void MainWindow2::on_pushButton_refreshAiHistory_clicked()
         textEdit->setPlainText(history[i]);
         // 不要滚动条
         textEdit->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        textEdit->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
         textEdit->setReadOnly(true); //只读
         //添加占位label
