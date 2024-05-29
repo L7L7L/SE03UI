@@ -42,12 +42,14 @@ public:
     QWidget *stackedWidgetPage1_2;
     QLabel *label_4;
     QPushButton *pushButton_3;
-    QLineEdit *lineEdit_3;
+    QLineEdit *lineEdit_rPW;
     QCheckBox *checkBox_2;
     QLabel *label_5;
     QLabel *label_6;
-    QLineEdit *lineEdit_4;
+    QLineEdit *lineEdit_rEmail;
     QPushButton *pushButton_4;
+    QLineEdit *lineEdit_rPWconfirm;
+    QLabel *label_7;
     QWidget *stackedWidgetPage2_2;
     QMenuBar *menubar;
     QStatusBar *statusbar;
@@ -115,22 +117,22 @@ public:
         stackedWidgetPage1_2->setObjectName("stackedWidgetPage1_2");
         label_4 = new QLabel(stackedWidgetPage1_2);
         label_4->setObjectName("label_4");
-        label_4->setGeometry(QRect(20, 180, 91, 20));
+        label_4->setGeometry(QRect(20, 170, 91, 20));
         pushButton_3 = new QPushButton(stackedWidgetPage1_2);
         pushButton_3->setObjectName("pushButton_3");
-        pushButton_3->setGeometry(QRect(20, 310, 320, 36));
+        pushButton_3->setGeometry(QRect(20, 360, 320, 36));
         pushButton_3->setStyleSheet(QString::fromUtf8("background-color : rgb(168, 85, 247);\n"
 "color : white;\n"
 "\n"
 ""));
-        lineEdit_3 = new QLineEdit(stackedWidgetPage1_2);
-        lineEdit_3->setObjectName("lineEdit_3");
-        lineEdit_3->setGeometry(QRect(20, 220, 320, 40));
-        lineEdit_3->setStyleSheet(QString::fromUtf8("background-color:rgb(255, 255, 255)"));
-        lineEdit_3->setEchoMode(QLineEdit::Password);
+        lineEdit_rPW = new QLineEdit(stackedWidgetPage1_2);
+        lineEdit_rPW->setObjectName("lineEdit_rPW");
+        lineEdit_rPW->setGeometry(QRect(20, 190, 320, 40));
+        lineEdit_rPW->setStyleSheet(QString::fromUtf8("background-color:rgb(255, 255, 255)"));
+        lineEdit_rPW->setEchoMode(QLineEdit::Password);
         checkBox_2 = new QCheckBox(stackedWidgetPage1_2);
         checkBox_2->setObjectName("checkBox_2");
-        checkBox_2->setGeometry(QRect(20, 280, 101, 18));
+        checkBox_2->setGeometry(QRect(20, 330, 101, 18));
         checkBox_2->setStyleSheet(QString::fromUtf8("color : rgb(250, 143, 247)"));
         label_5 = new QLabel(stackedWidgetPage1_2);
         label_5->setObjectName("label_5");
@@ -141,16 +143,24 @@ public:
         label_6->setPixmap(QPixmap(QString::fromUtf8(":/new/prefix1/image/logo.png")));
         label_6->setScaledContents(true);
         label_6->setWordWrap(false);
-        lineEdit_4 = new QLineEdit(stackedWidgetPage1_2);
-        lineEdit_4->setObjectName("lineEdit_4");
-        lineEdit_4->setGeometry(QRect(20, 120, 319, 40));
-        lineEdit_4->setMinimumSize(QSize(250, 40));
-        lineEdit_4->setStyleSheet(QString::fromUtf8("background-color:rgb(255, 255, 255)"));
+        lineEdit_rEmail = new QLineEdit(stackedWidgetPage1_2);
+        lineEdit_rEmail->setObjectName("lineEdit_rEmail");
+        lineEdit_rEmail->setGeometry(QRect(20, 120, 319, 40));
+        lineEdit_rEmail->setMinimumSize(QSize(250, 40));
+        lineEdit_rEmail->setStyleSheet(QString::fromUtf8("background-color:rgb(255, 255, 255)"));
         pushButton_4 = new QPushButton(stackedWidgetPage1_2);
         pushButton_4->setObjectName("pushButton_4");
-        pushButton_4->setGeometry(QRect(239, 280, 101, 20));
+        pushButton_4->setGeometry(QRect(239, 330, 101, 20));
         pushButton_4->setStyleSheet(QString::fromUtf8("border : none;\n"
 "color : rgb(250, 143, 247)"));
+        lineEdit_rPWconfirm = new QLineEdit(stackedWidgetPage1_2);
+        lineEdit_rPWconfirm->setObjectName("lineEdit_rPWconfirm");
+        lineEdit_rPWconfirm->setGeometry(QRect(20, 260, 320, 40));
+        lineEdit_rPWconfirm->setStyleSheet(QString::fromUtf8("background-color:rgb(255, 255, 255)"));
+        lineEdit_rPWconfirm->setEchoMode(QLineEdit::Password);
+        label_7 = new QLabel(stackedWidgetPage1_2);
+        label_7->setObjectName("label_7");
+        label_7->setGeometry(QRect(20, 240, 91, 20));
         stackedWidget_2->addWidget(stackedWidgetPage1_2);
         stackedWidgetPage2_2 = new QWidget();
         stackedWidgetPage2_2->setObjectName("stackedWidgetPage2_2");
@@ -164,10 +174,20 @@ public:
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName("statusbar");
         MainWindow->setStatusBar(statusbar);
+        QWidget::setTabOrder(lineEdit_rEmail, lineEdit_rPW);
+        QWidget::setTabOrder(lineEdit_rPW, lineEdit_rPWconfirm);
+        QWidget::setTabOrder(lineEdit_rPWconfirm, checkBox_2);
+        QWidget::setTabOrder(checkBox_2, pushButton_4);
+        QWidget::setTabOrder(pushButton_4, pushButton_3);
+        QWidget::setTabOrder(pushButton_3, lineEdit);
+        QWidget::setTabOrder(lineEdit, lineEdit_2);
+        QWidget::setTabOrder(lineEdit_2, checkBox);
+        QWidget::setTabOrder(checkBox, pushButton_2);
+        QWidget::setTabOrder(pushButton_2, pushButton);
 
         retranslateUi(MainWindow);
 
-        stackedWidget->setCurrentIndex(0);
+        stackedWidget->setCurrentIndex(1);
         stackedWidget_2->setCurrentIndex(0);
 
 
@@ -188,13 +208,16 @@ public:
         pushButton_2->setText(QCoreApplication::translate("MainWindow", "\350\277\230\346\262\241\346\234\211\350\264\246\346\210\267\357\274\237\346\263\250\345\206\214", nullptr));
         label_4->setText(QCoreApplication::translate("MainWindow", "\350\264\246\346\210\267\345\257\206\347\240\201", nullptr));
         pushButton_3->setText(QCoreApplication::translate("MainWindow", "\346\263\250\345\206\214\345\271\266\347\231\273\345\275\225", nullptr));
-        lineEdit_3->setText(QString());
-        lineEdit_3->setPlaceholderText(QCoreApplication::translate("MainWindow", "\350\257\267\350\276\223\345\205\245\350\264\246\346\210\267\345\257\206\347\240\201", nullptr));
+        lineEdit_rPW->setText(QString());
+        lineEdit_rPW->setPlaceholderText(QCoreApplication::translate("MainWindow", "\350\257\267\350\276\223\345\205\245\350\264\246\346\210\267\345\257\206\347\240\201", nullptr));
         checkBox_2->setText(QCoreApplication::translate("MainWindow", "\346\216\245\345\217\227\347\224\250\346\210\267\345\215\217\350\256\256", nullptr));
         label_5->setText(QCoreApplication::translate("MainWindow", "\346\263\250\345\206\214\347\224\250\351\202\256\347\256\261", nullptr));
-        lineEdit_4->setText(QString());
-        lineEdit_4->setPlaceholderText(QCoreApplication::translate("MainWindow", "\350\257\267\350\276\223\345\205\245\346\263\250\345\206\214\351\202\256\347\256\261", nullptr));
+        lineEdit_rEmail->setText(QString());
+        lineEdit_rEmail->setPlaceholderText(QCoreApplication::translate("MainWindow", "\350\257\267\350\276\223\345\205\245\346\263\250\345\206\214\351\202\256\347\256\261", nullptr));
         pushButton_4->setText(QCoreApplication::translate("MainWindow", "\345\267\262\346\234\211\350\264\246\346\210\267\357\274\237\347\231\273\345\275\225\357\274\201", nullptr));
+        lineEdit_rPWconfirm->setText(QString());
+        lineEdit_rPWconfirm->setPlaceholderText(QCoreApplication::translate("MainWindow", "\350\257\267\347\241\256\350\256\244\345\257\206\347\240\201", nullptr));
+        label_7->setText(QCoreApplication::translate("MainWindow", "\347\241\256\350\256\244\345\257\206\347\240\201", nullptr));
     } // retranslateUi
 
 };
