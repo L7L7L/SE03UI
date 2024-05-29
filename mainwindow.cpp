@@ -15,8 +15,10 @@
 #include <QNetworkCookieJar>
 #include <QTextDocument>
 
+QNetworkAccessManager manager;
+
 int login(const QString &loginUrl, const QString &email, const QString &password) {
-    QNetworkAccessManager manager;
+
     QNetworkRequest request((QUrl(loginUrl)));
 
     // 发送GET请求
