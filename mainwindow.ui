@@ -26,7 +26,25 @@
       <height>455</height>
      </rect>
     </property>
-    <widget class="QWidget" name="tab">
+    <property name="tabShape">
+     <enum>QTabWidget::Rounded</enum>
+    </property>
+    <property name="currentIndex">
+     <number>0</number>
+    </property>
+    <property name="elideMode">
+     <enum>Qt::ElideNone</enum>
+    </property>
+    <property name="usesScrollButtons">
+     <bool>false</bool>
+    </property>
+    <property name="tabsClosable">
+     <bool>false</bool>
+    </property>
+    <property name="tabBarAutoHide">
+     <bool>false</bool>
+    </property>
+    <widget class="QWidget" name="login">
      <attribute name="title">
       <string>Tab 1</string>
      </attribute>
@@ -41,25 +59,6 @@
       </property>
       <property name="text">
        <string>密码</string>
-      </property>
-     </widget>
-     <widget class="QLineEdit" name="lineEdit">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>120</y>
-        <width>320</width>
-        <height>40</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color:rgb(255, 255, 255)</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="placeholderText">
-       <string>请输入邮箱</string>
       </property>
      </widget>
      <widget class="QPushButton" name="pushButton">
@@ -139,13 +138,38 @@ color : white;
        </rect>
       </property>
       <property name="pixmap">
-       <pixmap resource="image.qrc">:/new/prefix1/logo.png</pixmap>
+       <pixmap resource="image.qrc">:/new/prefix1/image/logo.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
       </property>
       <property name="wordWrap">
        <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>120</y>
+        <width>319</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>250</width>
+        <height>40</height>
+       </size>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color:rgb(255, 255, 255)</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="placeholderText">
+       <string>请输入邮箱</string>
       </property>
      </widget>
     </widget>
