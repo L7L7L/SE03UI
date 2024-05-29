@@ -27,6 +27,18 @@ private slots:
 
     void on_pushButton_4_clicked();
 
+    void on_lineEdit_2_returnPressed();
+
+    void on_lineEdit_returnPressed();
+
+    void on_pushButton_3_clicked();
+
+    void on_lineEdit_rPWconfirm_returnPressed();
+
+    void on_lineEdit_rPW_returnPressed();
+
+    void on_lineEdit_rEmail_returnPressed();
+
 private:
     Ui::MainWindow *ui;
 };
