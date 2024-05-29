@@ -20,6 +20,9 @@ MainWindow2::MainWindow2(QWidget *parent)
     , ui(new Ui::MainWindow2)
 {
     ui->setupUi(this);
+    // manager.post()
+    ui->label_name->setText("")
+
 }
 
 MainWindow2::~MainWindow2()
