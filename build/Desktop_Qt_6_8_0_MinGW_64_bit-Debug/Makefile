@@ -417,6 +417,7 @@ Makefile: ../../SE03UI.pro D:/QT/6.8.0/mingw_64/mkspecs/win32-g++/qmake.conf D:/
 		../../SE03UI.pro \
 		D:/QT/6.8.0/mingw_64/lib/Qt6Widgets.prl \
 		D:/QT/6.8.0/mingw_64/lib/Qt6Gui.prl \
+		D:/QT/6.8.0/mingw_64/lib/Qt6Network.prl \
 		D:/QT/6.8.0/mingw_64/lib/Qt6Core.prl \
 		D:/QT/6.8.0/mingw_64/lib/Qt6EntryPoint.prl \
 		D:/QT/6.8.0/mingw_64/mkspecs/features/build_pass.prf \
@@ -771,6 +772,7 @@ D:/QT/6.8.0/mingw_64/mkspecs/features/lex.prf:
 ../../SE03UI.pro:
 D:/QT/6.8.0/mingw_64/lib/Qt6Widgets.prl:
 D:/QT/6.8.0/mingw_64/lib/Qt6Gui.prl:
+D:/QT/6.8.0/mingw_64/lib/Qt6Network.prl:
 D:/QT/6.8.0/mingw_64/lib/Qt6Core.prl:
 D:/QT/6.8.0/mingw_64/lib/Qt6EntryPoint.prl:
 D:/QT/6.8.0/mingw_64/mkspecs/features/build_pass.prf:

@@ -17,8 +17,8 @@
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QStackedWidget>
 #include <QtWidgets/QStatusBar>
-#include <QtWidgets/QTabWidget>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -27,8 +27,8 @@ class Ui_MainWindow
 {
 public:
     QWidget *centralwidget;
-    QTabWidget *tabWidget;
-    QWidget *login;
+    QStackedWidget *stackedWidget;
+    QWidget *stackedWidgetPage1;
     QLabel *label_2;
     QPushButton *pushButton;
     QLineEdit *lineEdit_2;
@@ -36,7 +36,7 @@ public:
     QLabel *label;
     QLabel *label_3;
     QLineEdit *lineEdit;
-    QWidget *tab_2;
+    QWidget *stackedWidgetPage2;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -48,52 +48,49 @@ public:
         MainWindow->setLayoutDirection(Qt::LeftToRight);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName("centralwidget");
-        tabWidget = new QTabWidget(centralwidget);
-        tabWidget->setObjectName("tabWidget");
-        tabWidget->setGeometry(QRect(0, 0, 370, 455));
-        tabWidget->setTabShape(QTabWidget::Rounded);
-        tabWidget->setElideMode(Qt::ElideNone);
-        tabWidget->setUsesScrollButtons(false);
-        tabWidget->setTabsClosable(false);
-        tabWidget->setTabBarAutoHide(false);
-        login = new QWidget();
-        login->setObjectName("login");
-        label_2 = new QLabel(login);
+        stackedWidget = new QStackedWidget(centralwidget);
+        stackedWidget->setObjectName("stackedWidget");
+        stackedWidget->setGeometry(QRect(0, 0, 370, 455));
+        stackedWidget->setStyleSheet(QString::fromUtf8("background-color:white"));
+        stackedWidgetPage1 = new QWidget();
+        stackedWidgetPage1->setObjectName("stackedWidgetPage1");
+        label_2 = new QLabel(stackedWidgetPage1);
         label_2->setObjectName("label_2");
         label_2->setGeometry(QRect(20, 180, 37, 20));
-        pushButton = new QPushButton(login);
+        pushButton = new QPushButton(stackedWidgetPage1);
         pushButton->setObjectName("pushButton");
         pushButton->setGeometry(QRect(20, 310, 320, 36));
         pushButton->setStyleSheet(QString::fromUtf8("background-color : rgb(168, 85, 247);\n"
 "color : white;\n"
 "\n"
 ""));
-        lineEdit_2 = new QLineEdit(login);
+        lineEdit_2 = new QLineEdit(stackedWidgetPage1);
         lineEdit_2->setObjectName("lineEdit_2");
         lineEdit_2->setGeometry(QRect(20, 220, 320, 40));
         lineEdit_2->setStyleSheet(QString::fromUtf8("background-color:rgb(255, 255, 255)"));
-        checkBox = new QCheckBox(login);
+        lineEdit_2->setEchoMode(QLineEdit::Password);
+        checkBox = new QCheckBox(stackedWidgetPage1);
         checkBox->setObjectName("checkBox");
         checkBox->setGeometry(QRect(20, 280, 81, 18));
         checkBox->setStyleSheet(QString::fromUtf8(""));
-        label = new QLabel(login);
+        label = new QLabel(stackedWidgetPage1);
         label->setObjectName("label");
         label->setGeometry(QRect(20, 80, 37, 20));
-        label_3 = new QLabel(login);
+        label_3 = new QLabel(stackedWidgetPage1);
         label_3->setObjectName("label_3");
         label_3->setGeometry(QRect(145, 20, 82, 75));
         label_3->setPixmap(QPixmap(QString::fromUtf8(":/new/prefix1/image/logo.png")));
         label_3->setScaledContents(true);
         label_3->setWordWrap(false);
-        lineEdit = new QLineEdit(login);
+        lineEdit = new QLineEdit(stackedWidgetPage1);
         lineEdit->setObjectName("lineEdit");
         lineEdit->setGeometry(QRect(20, 120, 319, 40));
         lineEdit->setMinimumSize(QSize(250, 40));
         lineEdit->setStyleSheet(QString::fromUtf8("background-color:rgb(255, 255, 255)"));
-        tabWidget->addTab(login, QString());
-        tab_2 = new QWidget();
-        tab_2->setObjectName("tab_2");
-        tabWidget->addTab(tab_2, QString());
+        stackedWidget->addWidget(stackedWidgetPage1);
+        stackedWidgetPage2 = new QWidget();
+        stackedWidgetPage2->setObjectName("stackedWidgetPage2");
+        stackedWidget->addWidget(stackedWidgetPage2);
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
@@ -105,7 +102,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        tabWidget->setCurrentIndex(0);
+        stackedWidget->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -122,8 +119,6 @@ public:
         label->setText(QCoreApplication::translate("MainWindow", "\351\202\256\347\256\261", nullptr));
         lineEdit->setText(QString());
         lineEdit->setPlaceholderText(QCoreApplication::translate("MainWindow", "\350\257\267\350\276\223\345\205\245\351\202\256\347\256\261", nullptr));
-        tabWidget->setTabText(tabWidget->indexOf(login), QCoreApplication::translate("MainWindow", "Tab 1", nullptr));
-        tabWidget->setTabText(tabWidget->indexOf(tab_2), QCoreApplication::translate("MainWindow", "Tab 2", nullptr));
     } // retranslateUi
 
 };
