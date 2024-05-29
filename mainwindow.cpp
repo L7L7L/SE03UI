@@ -251,6 +251,19 @@ int logon(const QString &logonUrl, const QString &tmpEmail, const QString &passw
 }
 
 
+bool isValidEmail(const QString &email) {
+    // 定义用于验证邮箱的正则表达式
+    static QRegularExpression emailPattern(R"((^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$))");
+
+    // 使用正则表达式匹配邮箱地址
+    QRegularExpressionMatch match = emailPattern.match(email);
+
+    // 如果匹配成功，则邮箱地址合法
+
+    return match.hasMatch();
+}
+
+
 void MainWindow::on_pushButton_3_clicked()
 {
     QString tmpEmail = ui->lineEdit_rEmail->text();
@@ -259,6 +272,11 @@ void MainWindow::on_pushButton_3_clicked()
     if(tmpEmail.isEmpty())
     {
         QMessageBox::warning(nullptr, "注册失败", "请输入邮箱");
+        return;
+    }
+    if(isValidEmail(tmpEmail) == false)
+    {
+        QMessageBox::warning(nullptr, "注册失败", "请输入合法的邮箱");
         return;
     }
     if(password.isEmpty())
