@@ -143,3 +143,15 @@ void MainWindow::on_pushButton_clicked()
     ui->pushButton->setStyleSheet(originStyle);
     ui->pushButton->setText("登录");
 }
+
+void MainWindow::on_pushButton_2_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(1);
+}
+
+
+void MainWindow::on_pushButton_4_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(0);
+}
+
