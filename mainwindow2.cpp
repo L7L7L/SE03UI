@@ -19,6 +19,20 @@
 #include <QScrollBar>
 #include <QTimer>
 
+
+struct Paper
+{
+    QString title;
+    QString author;
+    QString publicTime;
+    QString abstract;
+    QString paperUrl;
+    QString pdfUrl;
+    Paper(QString title, QString author, QString publicTime, QString abstract, QString paperUrl, QString pdfUrl)
+        : title(title), author(author), publicTime(publicTime), abstract(abstract), paperUrl(paperUrl), pdfUrl(pdfUrl) {}
+};
+
+
 extern QNetworkAccessManager manager;
 extern QString email;
 QTimer dotTimer; //用来显示省略号的Timer
@@ -307,8 +321,6 @@ void MainWindow2::on_textEdit_question_textChanged()
 
 
 
-
-
 void MainWindow2::on_pushButton_AI__chat_page_clicked()
 {
     ui->stackedWidget->setCurrentIndex(0);
@@ -330,5 +342,130 @@ void MainWindow2::on_pushButton_Document_query_page_clicked()
 void MainWindow2::on_pushButton_Mine_page_clicked()
 {
     ui->stackedWidget->setCurrentIndex(3);
+}
+
+QVector<Paper> paperSearch(const QString &keyword)
+{
+    QVector<Paper> papers;
+    QString searchUrl = "http://62.234.28.172:8000/system/paper_query/";
+    QNetworkRequest request((QUrl(searchUrl)));
+
+    // 发送GET请求
+    QNetworkReply *reply = manager.get(request);
+
+    // 等待请求完成
+    QEventLoop loop;
+    QObject::connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+    loop.exec();
+
+    // 检查请求状态
+    if (reply->error() != QNetworkReply::NoError) {
+        qWarning() << "Error:" << reply->errorString();
+        reply->deleteLater();
+        return papers;
+    }
+
+    // 读取响应内容
+    QString response = reply->readAll();
+    reply->deleteLater();
+
+    QString pattern = "<input\\s+type=\"hidden\"\\s+name=\"csrfmiddlewaretoken\"\\s+value=\"([^\"]*)\">";
+    static QRegularExpression regex(pattern);
+
+    // 匹配csrfToken
+    QRegularExpressionMatch match = regex.match(response);
+    QString csrfToken;
+    if (match.hasMatch()) {
+        csrfToken = match.captured();
+        // std::cout<<csrfToken.toStdString()<<"\n";
+        csrfToken = csrfToken.right(66);
+        csrfToken = csrfToken.left(64);
+        // std::cout<<csrfToken.toStdString()<<"\n";
+    } else {
+        return papers;
+    }
+
+    QNetworkRequest searchRequest((QUrl(searchUrl)));
+    searchRequest.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+    searchRequest.setRawHeader("Referer", searchUrl.toUtf8());
+
+    QUrlQuery params;
+    params.addQueryItem("user_input", "query_button");
+    params.addQueryItem("query_input", keyword);
+    params.addQueryItem("csrfmiddlewaretoken", csrfToken);
+    // qWarning()<<csrfToken;
+    // qWarning()<<params.toString();
+    QNetworkReply *searchReply = manager.post(searchRequest, params.query(QUrl::FullyEncoded).toUtf8());
+
+
+
+    QEventLoop loop2;
+    loop2.exec();
+
+    // 检查请求状态
+    if (searchReply->error() != QNetworkReply::NoError) {
+        qWarning() << "Error:" << searchReply->errorString();
+        searchReply->deleteLater();
+        return papers;
+    }
+
+    // 读取响应内容
+    QString html = searchReply->readAll();
+    searchReply->deleteLater();
+
+    // 取出有用的部分
+    QString start_marker = "#*#*#*论文项目开始#*#*#*";
+    QString end_marker = "#*#*#*论文项目结束#*#*#*";
+    int start_pos = 0;
+
+    while ((start_pos = html.indexOf(start_marker, start_pos)) != -1) {
+        int end_pos = html.indexOf(end_marker, start_pos);
+        if (end_pos == -1) break;
+
+        QString project = html.mid(start_pos, end_pos - start_pos);
+        start_pos = end_pos + end_marker.length();
+
+        QString title = project.mid(
+            project.indexOf("#*#*#*标题开始#*#*#*") + 15,
+            project.indexOf("#*#*#*标题结束#*#*#*") - project.indexOf("#*#*#*标题开始#*#*#*") - 15
+            );
+
+        qWarning()<<title<<"\n";
+
+        QString author = project.mid(
+            project.indexOf("#*#*#*作者开始#*#*#*") + 15,
+            project.indexOf("#*#*#*作者结束#*#*#*") - project.indexOf("#*#*#*作者开始#*#*#*") - 15
+            );
+
+        QString publicTime = project.mid(
+            project.indexOf("#*#*#*时间开始#*#*#*") + 15,
+            project.indexOf("#*#*#*时间结束#*#*#*") - project.indexOf("#*#*#*时间开始#*#*#*") - 15
+            );
+
+        QString abstractText = project.mid(
+            project.indexOf("#*#*#*摘要开始#*#*#*") + 15,
+            project.indexOf("#*#*#*摘要结束#*#*#*") - project.indexOf("#*#*#*摘要开始#*#*#*") - 15
+            );
+
+        QString paperUrl = project.mid(
+            project.indexOf("#*#*#*论文地址开始#*#*#*") + 15,
+            project.indexOf("#*#*#*论文地址结束#*#*#*") - project.indexOf("#*#*#*论文地址开始#*#*#*") - 15
+            );
+
+        QString pdfUrl = project.mid(
+            project.indexOf("#*#*#*pdf地址开始#*#*#*") + 14,
+            project.indexOf("#*#*#*pdf地址结束#*#*#*") - project.indexOf("#*#*#*pdf地址开始#*#*#*") - 14
+            );
+
+        papers.append(Paper(title, author, publicTime, abstractText, paperUrl, pdfUrl));
+    }
+
+    return papers;
+}
+
+
+void MainWindow2::on_pushButton_search_clicked()
+{
+    paperSearch(ui->lineEdit->text());
 }
 
