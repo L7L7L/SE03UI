@@ -390,8 +390,8 @@ QVector<Paper> paperSearch(const QString &keyword)
     searchRequest.setRawHeader("Referer", searchUrl.toUtf8());
 
     QUrlQuery params;
-    params.addQueryItem("user_input", "query_button");
     params.addQueryItem("query_input", keyword);
+    params.addQueryItem("query_button", "get_paper_results");
     params.addQueryItem("csrfmiddlewaretoken", csrfToken);
     // qWarning()<<csrfToken;
     // qWarning()<<params.toString();
@@ -400,6 +400,7 @@ QVector<Paper> paperSearch(const QString &keyword)
 
 
     QEventLoop loop2;
+    QObject::connect(searchReply,&QNetworkReply::finished,&loop2,&QEventLoop::quit);
     loop2.exec();
 
     // 检查请求状态
