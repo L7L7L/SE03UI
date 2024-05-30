@@ -26,6 +26,14 @@ private slots:
 
     void showDot();
 
+    void on_pushButton_AI__chat_page_clicked();
+
+    void on_pushButton_Document_manage_page_clicked();
+
+    void on_pushButton_Document_query_page_clicked();
+
+    void on_pushButton_Mine_page_clicked();
+
 private:
     Ui::MainWindow2 *ui;
     QStringList history;

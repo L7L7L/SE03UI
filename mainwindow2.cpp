@@ -212,7 +212,7 @@ MainWindow2::MainWindow2(QWidget *parent)
     this->setFixedSize(1000, 650);
     // 隐藏刷新按钮
     ui->pushButton_refreshAiHistory->setVisible(false);
-
+    ui->stackedWidget->setCurrentIndex(0);
     QObject::connect(&dotTimer, &QTimer::timeout, this, &MainWindow2::showDot);
 
 }
@@ -303,5 +303,32 @@ void MainWindow2::on_textEdit_question_textChanged()
     {
         ui->pushButton_question->setEnabled(false);
     }
+}
+
+
+
+
+
+void MainWindow2::on_pushButton_AI__chat_page_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(0);
+}
+
+
+void MainWindow2::on_pushButton_Document_manage_page_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(1);
+}
+
+
+void MainWindow2::on_pushButton_Document_query_page_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(2);
+}
+
+
+void MainWindow2::on_pushButton_Mine_page_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(3);
 }
 
