@@ -2,5 +2,10 @@
     <qresource prefix="/new/prefix1">
         <file>image/emial.png</file>
         <file>image/logo.png</file>
+        <file>image/AI.png</file>
+        <file>image/Document.png</file>
+        <file>image/Mine.png</file>
+        <file>image/Search.png</file>
+        <file>image/Send.png</file>
     </qresource>
 </RCC>

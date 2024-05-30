@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <string>
+#include <QMouseEvent>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -39,7 +39,18 @@ private slots:
 
     void on_lineEdit_rEmail_returnPressed();
 
+    void on_pushButton_close_clicked();
+
+    void on_pushButton_minimize_clicked();
+
+protected:
+    void mousePressEvent(QMouseEvent *event) override;
+    void mouseMoveEvent(QMouseEvent *event) override;
+    void mouseReleaseEvent(QMouseEvent *event) override;
+
 private:
     Ui::MainWindow *ui;
+    bool m_dragging = false;
+    QPoint m_dragPosition;
 };
 #endif // MAINWINDOW_H

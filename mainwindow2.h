@@ -7,6 +7,8 @@ namespace Ui {
 class MainWindow2;
 }
 
+struct Paper;
+
 class MainWindow2 : public QMainWindow
 {
     Q_OBJECT
@@ -14,7 +16,8 @@ class MainWindow2 : public QMainWindow
 public:
     explicit MainWindow2(QWidget *parent = nullptr);
     ~MainWindow2();
-    void display_history();
+    void displayHistory();
+    void displaySearchResult(const QVector<Paper>& papers);
 
 private slots:
 
@@ -24,7 +27,9 @@ private slots:
 
     void on_textEdit_question_textChanged();
 
-    void showDot();
+    void showDotAI();
+
+    void showDotSearch();
 
     void on_pushButton_AI__chat_page_clicked();
 
@@ -36,12 +41,24 @@ private slots:
 
     void on_pushButton_search_clicked();
 
+    void on_pushButton_minimize_clicked();
+
+    void on_pushButton_close_clicked();
+
+    void on_stackedWidget_currentChanged();
+
+protected:
+    void mousePressEvent(QMouseEvent *event) override;
+    void mouseMoveEvent(QMouseEvent *event) override;
+    void mouseReleaseEvent(QMouseEvent *event) override;
+
 private:
     Ui::MainWindow2 *ui;
+    bool m_dragging = false;
+    QPoint m_dragPosition;
     QStringList history;
     QStringList getAiHistory();
     void question_to_AI(QString question);
-
 };
 
 

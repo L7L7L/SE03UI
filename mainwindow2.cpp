@@ -18,6 +18,8 @@
 #include <QVBoxLayout>
 #include <QScrollBar>
 #include <QTimer>
+#include <QTextBrowser>
+
 
 
 struct Paper
@@ -30,18 +32,115 @@ struct Paper
     QString pdfUrl;
     Paper(QString title, QString author, QString publicTime, QString abstract, QString paperUrl, QString pdfUrl)
         : title(title), author(author), publicTime(publicTime), abstract(abstract), paperUrl(paperUrl), pdfUrl(pdfUrl) {}
+
+    QString str() const
+    {
+        QString ret;
+        ret = "Title: " + title + "\n\n" +
+              "Author: " + author + "\n\n" +
+              "Publication Time: " + publicTime + "\n\n" +
+              "Abstract: " + abstract + "\n\n" +
+              "Paper URL: " + paperUrl + "\n\n" +
+              "PDF URL: " + pdfUrl;
+        return ret;
+    }
+
+    QString toHtml() const
+    {
+        QString ret;
+        ret = "<h1>" + title + "</h1>" +
+              "<p><strong>作者：</strong> " + author + "</p>" +
+              "<p><strong>发表时间：</strong> " + publicTime + "</p>" +
+              "<p><strong>摘要:</strong> " + abstract + "</p>" +
+              "<p><strong>文章链接：</strong> <a href=\"" + paperUrl + "\">" + paperUrl + "</a></p>" +
+              "<p><strong>PDF下载：</strong> <a href=\"" + pdfUrl + "\">" + pdfUrl + "</a></p>";
+        return ret;
+    }
 };
 
 
 extern QNetworkAccessManager manager;
 extern QString email;
-QTimer dotTimer; //用来显示省略号的Timer
-QTextEdit *lastTextEdit; //指向对话框的最后一个文本框
+QTimer dotTimerAI; //用来显示省略号的Timer
+QTimer dotTimerSearch; //用来显示省略号的Timer
+QTextEdit *lastAiTextEdit; //指向AI对话框的最后一个文本框
+
+// 以下代码确保窗口可拖动
+void MainWindow2::mousePressEvent(QMouseEvent *event) {
+    if (event->button() == Qt::LeftButton) {
+        m_dragging = true;
+        m_dragPosition = event->globalPosition().toPoint() - frameGeometry().topLeft();
+        event->accept();
+    }
+}
+
+void MainWindow2::mouseMoveEvent(QMouseEvent *event) {
+    if (m_dragging && (event->buttons() & Qt::LeftButton)) {
+        move(event->globalPosition().toPoint() - m_dragPosition);
+        event->accept();
+    }
+}
+
+void MainWindow2::mouseReleaseEvent(QMouseEvent *event) {
+    if (event->button() == Qt::LeftButton) {
+        m_dragging = false;
+        event->accept();
+    }
+}
+
+
+
+QString qTextStyle = "QTextEdit {"
+                           "background-color: rgb(255, 255, 255);" /* 设置背景颜色 */
+                           "color: black;" /* 设置文本颜色 */
+                           "border: 1px solid rgb(168, 85, 247);" /* 设置边框颜色 */
+                           "padding: 4px 8px;" /* 设置内边距 */
+                           "border-radius: 4px;" /* 设置圆角 */
+                           "font-size: 14px;" /* 设置字体大小 */
+                           "}"
+                           "QTextEdit:focus {"
+                           "border: 1px solid rgb(48, 5, 127);" /* 设置聚焦时的边框颜色 */
+                           "}";
+
+
+QString qScrollBarStyle = "/* ScrollBar */"
+                              "QScrollBar:horizontal {"
+                              "    border: none;"
+                              "    background: #f0f0f0;"
+                              "    height: 15px;"
+                              "    margin: 0px 20px 0 20px;"
+                              "}"
+                              "QScrollBar:vertical {"
+                              "    border: none;"
+                              "    background: #f0f0f0;"
+                              "    width: 15px;"
+                              "    margin: 0px 0px 0px 0;"
+                              "}"
+                              "QScrollBar::handle:horizontal {"
+                              "    background: rgb(168, 85, 247);"
+                              "    min-width: 20px;"
+                              "    border-radius: 7px;"
+                              "}"
+                              "QScrollBar::handle:vertical {"
+                              "    background: rgb(168, 85, 247);"
+                              "    min-height: 20px;"
+                              "    border-radius: 7px;"
+                              "}"
+                              "QScrollBar::add-line:horizontal, QScrollBar::sub-line:horizontal,"
+                              "QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {"
+                              "    border: none;"
+                              "    background: none;"
+                              "}"
+                              "QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal,"
+                              "QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {"
+                              "    background: none;"
+                              "}";
+
 
 QStringList MainWindow2::getAiHistory()
 {
     QStringList strList;
-    QString mainUrl = "http://62.234.28.172:8000/system/main/";
+    QString mainUrl = "http://62.234.28.172:5656/system/main/";
     QNetworkRequest request((QUrl(mainUrl)));
 
     // 发送GET请求
@@ -136,7 +235,7 @@ QStringList MainWindow2::getAiHistory()
 void MainWindow2::question_to_AI(QString question)
 {
     // QStringList strList;
-    QString mainUrl = "http://62.234.28.172:8000/system/main/";
+    QString mainUrl = "http://62.234.28.172:5656/system/main/";
     QNetworkRequest request((QUrl(mainUrl)));
 
     // 发送GET请求
@@ -198,36 +297,53 @@ void MainWindow2::question_to_AI(QString question)
         aiQuestionReply->deleteLater();
         return;
     }
-    dotTimer.stop();
+    dotTimerAI.stop();
     this->on_pushButton_refreshAiHistory_clicked();
 }
 
 
 
-void MainWindow2::showDot()
+void MainWindow2::showDotAI()
 {
-    if(lastTextEdit->toPlainText() == "......")
+    if(lastAiTextEdit->toPlainText() == "......")
     {
-        lastTextEdit->setPlainText("");
+        lastAiTextEdit->setPlainText("");
     }
-    lastTextEdit->insertPlainText(".");
+    lastAiTextEdit->insertPlainText(".");
+}
+
+void MainWindow2::showDotSearch()
+{
+    if(ui->pushButton_search->text() == "......")
+    {
+        ui->pushButton_search->setText("");
+    }
+    ui->pushButton_search->setText(ui->pushButton_search->text()+".");
 }
 
 MainWindow2::MainWindow2(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow2)
 {
+    // 窗口被创建
     ui->setupUi(this);
     // manager.post()
-    ui->label_name->setText(email);
+    ui->label_name->setText("当前用户："+email);
     on_pushButton_refreshAiHistory_clicked();
 
     // 设置固定窗口
     this->setFixedSize(1000, 650);
+    // 隐藏标题栏
+    this->setWindowFlags(Qt::FramelessWindowHint);
     // 隐藏刷新按钮
     ui->pushButton_refreshAiHistory->setVisible(false);
     ui->stackedWidget->setCurrentIndex(0);
-    QObject::connect(&dotTimer, &QTimer::timeout, this, &MainWindow2::showDot);
+
+    //设置Timer
+    QObject::connect(&dotTimerAI, &QTimer::timeout, this, &MainWindow2::showDotAI);
+    QObject::connect(&dotTimerSearch, &QTimer::timeout, this, &MainWindow2::showDotSearch);
+    //设置按钮的样式（读取哪个是选中滚动）
+    this->on_stackedWidget_currentChanged();
 
 }
 
@@ -237,9 +353,9 @@ MainWindow2::~MainWindow2()
 }
 
 
-void MainWindow2::display_history()
+void MainWindow2::displayHistory()
 {
-    ui->scrollArea->setWidgetResizable(true);
+    ui->scrollArea_history->setWidgetResizable(true);
 
     // 创建内部widget和布局
     QWidget *scrollWidget = new QWidget;
@@ -252,10 +368,12 @@ void MainWindow2::display_history()
 
         layout->addWidget(new QLabel(i%2==0 ? "用户：" : "AI："));
         QTextEdit *textEdit = new QTextEdit();
+        // 设置风格
+        textEdit->setStyleSheet(qTextStyle);
 
         if(i == history.size()-1)
         {
-            lastTextEdit = textEdit;
+            lastAiTextEdit = textEdit;
         }
         textEdit->setPlainText(history[i]);
         // 不要滚动条
@@ -270,20 +388,90 @@ void MainWindow2::display_history()
         // 自适应高度
         textEdit->document()->adjustSize();
         auto h = textEdit->document()->size().height();
-        textEdit->setFixedHeight((h > 20 ? h : 20));
+        textEdit->setFixedHeight((h + 10 > 40 ? h + 10 : 40));
     }
     scrollWidget->setLayout(layout);
-    ui->scrollArea->setWidget(scrollWidget);
+    ui->scrollArea_history->setWidget(scrollWidget);
     //滚动到最底部
-    QScrollBar *vScrollBar = ui->scrollArea->verticalScrollBar();
+    QScrollBar *vScrollBar = ui->scrollArea_history->verticalScrollBar();
     vScrollBar->setValue(vScrollBar->maximum());
+    vScrollBar->setStyleSheet(qScrollBarStyle);
+}
+
+void MainWindow2::displaySearchResult(const QVector<Paper>& papers)
+{
+    ui->scrollArea_search->setWidgetResizable(true);
+
+    // 创建内部widget和布局
+    QWidget *scrollWidget = new QWidget;
+    QVBoxLayout *layout = new QVBoxLayout(scrollWidget);
+
+
+    //没搜到
+    if(papers.empty())
+    {
+        // layout->addWidget(new QLabel(i%2==0 ? "用户：" : "AI："));
+        QTextBrowser *textEdit = new QTextBrowser();
+        // QTextBrowser *textBrowser = new QTextBrowser;
+        // 设置风格
+        textEdit->setStyleSheet(qTextStyle);
+
+        textEdit->setHtml("<h1>没有搜索到相关结果</h1>");
+        textEdit->setOpenExternalLinks(true);
+        // 不要滚动条
+        textEdit->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        textEdit->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+        textEdit->setReadOnly(true); //只读
+        //添加占位label
+        layout->addWidget(textEdit);
+        layout->addWidget(new QLabel(""));
+
+        // 自适应高度
+        textEdit->document()->adjustSize();
+        auto h = textEdit->document()->size().height();
+        textEdit->setFixedHeight(480);
+    }
+
+    // 添加到布局中
+    for(int i=0 ; i<papers.size() ; i++)
+    {
+
+        // layout->addWidget(new QLabel(i%2==0 ? "用户：" : "AI："));
+        QTextBrowser *textEdit = new QTextBrowser();
+        // QTextBrowser *textBrowser = new QTextBrowser;
+        // 设置风格
+        textEdit->setStyleSheet(qTextStyle);
+
+        textEdit->setHtml(papers[i].toHtml());
+        textEdit->setOpenExternalLinks(true);
+        // 不要滚动条
+        textEdit->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        textEdit->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+        textEdit->setReadOnly(true); //只读
+        //添加占位label
+        layout->addWidget(textEdit);
+        layout->addWidget(new QLabel(""));
+
+        // 自适应高度
+        textEdit->document()->adjustSize();
+        auto h = textEdit->document()->size().height();
+        textEdit->setFixedHeight((h + 10 > 40 ? h + 10 : 40));
+    }
+    scrollWidget->setLayout(layout);
+    ui->scrollArea_search->setWidget(scrollWidget);
+    //滚动到最底部
+    QScrollBar *vScrollBar = ui->scrollArea_search->verticalScrollBar();
+    // vScrollBar->setValue(vScrollBar->maximum());
+    vScrollBar->setStyleSheet(qScrollBarStyle);
 }
 
 void MainWindow2::on_pushButton_refreshAiHistory_clicked()
 {
     //从服务器获取搜索历史
     this->history = getAiHistory();
-    display_history();
+    displayHistory();
 }
 
 bool isSendingMessage;
@@ -295,8 +483,8 @@ void MainWindow2::on_pushButton_question_clicked()
     ui->textEdit_question->clear();
     this->history.append(question);
     this->history.append("...");
-    dotTimer.start(200);
-    display_history();
+    dotTimerAI.start(200);
+    displayHistory();
     this->question_to_AI(question);
 
 
@@ -347,7 +535,7 @@ void MainWindow2::on_pushButton_Mine_page_clicked()
 QVector<Paper> paperSearch(const QString &keyword)
 {
     QVector<Paper> papers;
-    QString searchUrl = "http://62.234.28.172:8000/system/paper_query/";
+    QString searchUrl = "http://62.234.28.172:5656/system/paper_query/";
     QNetworkRequest request((QUrl(searchUrl)));
 
     // 发送GET请求
@@ -423,42 +611,59 @@ QVector<Paper> paperSearch(const QString &keyword)
         int end_pos = html.indexOf(end_marker, start_pos);
         if (end_pos == -1) break;
 
+        // 匹配多个空格
+        static QRegularExpression regExp("\\s+");
+
         QString project = html.mid(start_pos, end_pos - start_pos);
         start_pos = end_pos + end_marker.length();
-
+        // 读取标题并整理格式
         QString title = project.mid(
-            project.indexOf("#*#*#*标题开始#*#*#*") + 15,
-            project.indexOf("#*#*#*标题结束#*#*#*") - project.indexOf("#*#*#*标题开始#*#*#*") - 15
+            project.indexOf("#*#*#*标题开始#*#*#*") + 16,
+            project.indexOf("#*#*#*标题结束#*#*#*") - project.indexOf("#*#*#*标题开始#*#*#*") - 16
             );
+        title = title.remove('\n').trimmed().replace(regExp, " ");
 
-        qWarning()<<title<<"\n";
 
+        // 读取作者并整理格式
         QString author = project.mid(
-            project.indexOf("#*#*#*作者开始#*#*#*") + 15,
-            project.indexOf("#*#*#*作者结束#*#*#*") - project.indexOf("#*#*#*作者开始#*#*#*") - 15
+            project.indexOf("#*#*#*作者开始#*#*#*") + 16,
+            project.indexOf("#*#*#*作者结束#*#*#*") - project.indexOf("#*#*#*作者开始#*#*#*") - 16
             );
+        author = author.remove('\n').trimmed().replace(regExp, " ");
 
+        // 读取发布时间并整理格式
         QString publicTime = project.mid(
-            project.indexOf("#*#*#*时间开始#*#*#*") + 15,
-            project.indexOf("#*#*#*时间结束#*#*#*") - project.indexOf("#*#*#*时间开始#*#*#*") - 15
+            project.indexOf("#*#*#*时间开始#*#*#*") + 16,
+            project.indexOf("#*#*#*时间结束#*#*#*") - project.indexOf("#*#*#*时间开始#*#*#*") - 16
             );
+        publicTime = publicTime.remove('\n').trimmed().replace(regExp, " ");
 
+        // 读取摘要并整理格式
         QString abstractText = project.mid(
-            project.indexOf("#*#*#*摘要开始#*#*#*") + 15,
-            project.indexOf("#*#*#*摘要结束#*#*#*") - project.indexOf("#*#*#*摘要开始#*#*#*") - 15
+            project.indexOf("#*#*#*摘要开始#*#*#*") + 16,
+            project.indexOf("#*#*#*摘要结束#*#*#*") - project.indexOf("#*#*#*摘要开始#*#*#*") - 16
             );
+        abstractText = abstractText.remove('\n').trimmed().replace(regExp, " ");
 
+
+        // 读取paperUrl并整理格式
         QString paperUrl = project.mid(
-            project.indexOf("#*#*#*论文地址开始#*#*#*") + 15,
-            project.indexOf("#*#*#*论文地址结束#*#*#*") - project.indexOf("#*#*#*论文地址开始#*#*#*") - 15
+            project.indexOf("#*#*#*论文地址开始#*#*#*") + 18,
+            project.indexOf("#*#*#*论文地址结束#*#*#*") - project.indexOf("#*#*#*论文地址开始#*#*#*") - 18
             );
+        paperUrl = paperUrl.remove('\n').trimmed().replace(regExp, " ");
 
+        // 读取pdfUrl并整理格式
         QString pdfUrl = project.mid(
-            project.indexOf("#*#*#*pdf地址开始#*#*#*") + 14,
-            project.indexOf("#*#*#*pdf地址结束#*#*#*") - project.indexOf("#*#*#*pdf地址开始#*#*#*") - 14
+            project.indexOf("#*#*#*pdf地址开始#*#*#*") + 19,
+            project.indexOf("#*#*#*pdf地址结束#*#*#*") - project.indexOf("#*#*#*pdf地址开始#*#*#*") - 19
             );
+        pdfUrl = pdfUrl.remove('\n').trimmed().replace(regExp, " ");
 
-        papers.append(Paper(title, author, publicTime, abstractText, paperUrl, pdfUrl));
+        // 新建 Paper 并将之加入返回的向量
+        Paper newPaper(title, author, publicTime, abstractText, paperUrl, pdfUrl);
+        papers.append(newPaper);
+
     }
 
     return papers;
@@ -467,6 +672,73 @@ QVector<Paper> paperSearch(const QString &keyword)
 
 void MainWindow2::on_pushButton_search_clicked()
 {
-    paperSearch(ui->lineEdit->text());
+    dotTimerSearch.start(200);
+    auto originText = ui->pushButton_search->text();
+    ui->pushButton_search->setText("");
+    if(ui->pushButton_search->isEnabled()==false)
+        return;
+    ui->pushButton_search->setEnabled(false);
+    auto searchResult = paperSearch(ui->lineEdit->text());
+    displaySearchResult(searchResult);
+    ui->pushButton_search->setEnabled(true);
+    dotTimerSearch.stop();
+    ui->pushButton_search->setText(originText);
+}
+
+
+void MainWindow2::on_pushButton_minimize_clicked()
+{
+    this->showMinimized();
+}
+
+
+void MainWindow2::on_pushButton_close_clicked()
+{
+    this->close();
+}
+
+
+void MainWindow2::on_stackedWidget_currentChanged()
+{
+
+    //顺序：文献 AI 翻译 搜索 任务 我的
+    auto pureStyle = ui->pushButton_pure->styleSheet();
+    auto selectedStyle = ui->pushButton_selected->styleSheet();
+
+    // 隐藏两个模板按钮
+    ui->pushButton_pure->setVisible(false);
+    ui->pushButton_selected->setVisible(false);
+
+
+    ui->pushButton_AI__chat_page->setStyleSheet(pureStyle);
+    ui->pushButton_Document_manage_page->setStyleSheet(pureStyle);
+    ui->pushButton_Document_query_page->setStyleSheet(pureStyle);
+    ui->pushButton_Mine_page->setStyleSheet(pureStyle);
+    ui->pushButton_task->setStyleSheet(pureStyle);
+    ui->pushButton_translate->setStyleSheet(pureStyle);
+
+    if(ui->stackedWidget->currentWidget() == ui->page_0_AI_chat)
+    {
+        ui->pushButton_AI__chat_page->setStyleSheet(selectedStyle);
+    }
+
+    if(ui->stackedWidget->currentWidget() == ui->page_1_Docu_mange)
+    {
+        ui->pushButton_Document_manage_page->setStyleSheet(selectedStyle);
+    }
+
+    if(ui->stackedWidget->currentWidget() == ui->page_2_Docu_query)
+    {
+        ui->pushButton_Document_query_page->setStyleSheet(selectedStyle);
+    }
+
+    if(ui->stackedWidget->currentWidget() == ui->page_3_mine)
+    {
+        ui->pushButton_Mine_page->setStyleSheet(selectedStyle);
+    }
+
+
+
+    //To be added
 }
 
