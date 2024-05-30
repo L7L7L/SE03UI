@@ -19,6 +19,7 @@
 #include <QtWidgets/QScrollArea>
 #include <QtWidgets/QStackedWidget>
 #include <QtWidgets/QStatusBar>
+#include <QtWidgets/QTextEdit>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -32,6 +33,8 @@ public:
     QScrollArea *scrollArea;
     QWidget *scrollAreaWidgetContents;
     QPushButton *pushButton_refreshAiHistory;
+    QTextEdit *textEdit;
+    QPushButton *pushButton_question;
     QWidget *page_2;
     QPushButton *pushButton_Document;
     QPushButton *pushButton_Document_2;
@@ -49,27 +52,35 @@ public:
     {
         if (MainWindow2->objectName().isEmpty())
             MainWindow2->setObjectName("MainWindow2");
-        MainWindow2->resize(788, 492);
+        MainWindow2->resize(1000, 650);
         MainWindow2->setStyleSheet(QString::fromUtf8("background-color:white"));
         centralwidget = new QWidget(MainWindow2);
         centralwidget->setObjectName("centralwidget");
         stackedWidget = new QStackedWidget(centralwidget);
         stackedWidget->setObjectName("stackedWidget");
-        stackedWidget->setGeometry(QRect(60, 40, 711, 411));
+        stackedWidget->setGeometry(QRect(100, 30, 800, 600));
         stackedWidget->setStyleSheet(QString::fromUtf8("background-color:#EEEEEE"));
         page = new QWidget();
         page->setObjectName("page");
         scrollArea = new QScrollArea(page);
         scrollArea->setObjectName("scrollArea");
-        scrollArea->setGeometry(QRect(30, 30, 551, 351));
+        scrollArea->setGeometry(QRect(30, 30, 700, 360));
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName("scrollAreaWidgetContents");
-        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 549, 349));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 698, 358));
         scrollArea->setWidget(scrollAreaWidgetContents);
         pushButton_refreshAiHistory = new QPushButton(page);
         pushButton_refreshAiHistory->setObjectName("pushButton_refreshAiHistory");
-        pushButton_refreshAiHistory->setGeometry(QRect(600, 40, 80, 18));
+        pushButton_refreshAiHistory->setGeometry(QRect(740, 30, 51, 61));
+        textEdit = new QTextEdit(page);
+        textEdit->setObjectName("textEdit");
+        textEdit->setGeometry(QRect(30, 410, 701, 131));
+        textEdit->setStyleSheet(QString::fromUtf8("background-color : white\n"
+""));
+        pushButton_question = new QPushButton(page);
+        pushButton_question->setObjectName("pushButton_question");
+        pushButton_question->setGeometry(QRect(740, 410, 31, 41));
         stackedWidget->addWidget(page);
         page_2 = new QWidget();
         page_2->setObjectName("page_2");
@@ -84,13 +95,13 @@ public:
         pushButton_Document_2->setStyleSheet(QString::fromUtf8(""));
         lineEdit = new QLineEdit(centralwidget);
         lineEdit->setObjectName("lineEdit");
-        lineEdit->setGeometry(QRect(100, 10, 361, 21));
+        lineEdit->setGeometry(QRect(100, 10, 551, 21));
         pushButton = new QPushButton(centralwidget);
         pushButton->setObjectName("pushButton");
-        pushButton->setGeometry(QRect(470, 10, 51, 21));
+        pushButton->setGeometry(QRect(660, 10, 51, 21));
         label_name = new QLabel(centralwidget);
         label_name->setObjectName("label_name");
-        label_name->setGeometry(QRect(540, 10, 131, 16));
+        label_name->setGeometry(QRect(760, 10, 131, 16));
         pushButton_Document_3 = new QPushButton(centralwidget);
         pushButton_Document_3->setObjectName("pushButton_Document_3");
         pushButton_Document_3->setGeometry(QRect(20, 160, 31, 31));
@@ -110,13 +121,16 @@ public:
         MainWindow2->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow2);
         menubar->setObjectName("menubar");
-        menubar->setGeometry(QRect(0, 0, 788, 17));
+        menubar->setGeometry(QRect(0, 0, 1000, 17));
         MainWindow2->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow2);
         statusbar->setObjectName("statusbar");
         MainWindow2->setStatusBar(statusbar);
 
         retranslateUi(MainWindow2);
+
+        stackedWidget->setCurrentIndex(0);
+
 
         QMetaObject::connectSlotsByName(MainWindow2);
     } // setupUi
@@ -125,6 +139,8 @@ public:
     {
         MainWindow2->setWindowTitle(QCoreApplication::translate("MainWindow2", "MainWindow", nullptr));
         pushButton_refreshAiHistory->setText(QCoreApplication::translate("MainWindow2", "\345\210\267\346\226\260", nullptr));
+        textEdit->setPlaceholderText(QCoreApplication::translate("MainWindow2", "\347\273\231\342\200\235AI\342\200\234\345\217\221\346\266\210\346\201\257", nullptr));
+        pushButton_question->setText(QCoreApplication::translate("MainWindow2", "Q", nullptr));
         pushButton_Document->setText(QCoreApplication::translate("MainWindow2", "DOC", nullptr));
         pushButton_Document_2->setText(QCoreApplication::translate("MainWindow2", "AI", nullptr));
         pushButton->setText(QCoreApplication::translate("MainWindow2", "Search", nullptr));

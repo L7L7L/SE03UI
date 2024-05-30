@@ -78,7 +78,7 @@ color : white;
        <string notr="true">background-color:rgb(255, 255, 255)</string>
       </property>
       <property name="text">
-       <string/>
+       <string>password</string>
       </property>
       <property name="echoMode">
        <enum>QLineEdit::Password</enum>
@@ -154,7 +154,7 @@ color : white;
        <string notr="true">background-color:rgb(255, 255, 255)</string>
       </property>
       <property name="text">
-       <string/>
+       <string>123@qq.com</string>
       </property>
       <property name="placeholderText">
        <string>请输入邮箱</string>

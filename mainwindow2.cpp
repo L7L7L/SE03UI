@@ -20,6 +20,8 @@
 extern QNetworkAccessManager manager;
 extern QString email;
 
+
+
 QStringList getAiHistory()
 {
     QStringList strList;
@@ -106,7 +108,7 @@ QStringList getAiHistory()
 
     strList = aiHistoryResponse.split("#*#*分割#*#*");
 
-
+    strList.removeLast();
 
 
     return strList;
@@ -134,13 +136,14 @@ MainWindow2::~MainWindow2()
 void MainWindow2::on_pushButton_refreshAiHistory_clicked()
 {
     ui->scrollArea->setWidgetResizable(true);
-
+    //从服务器获取搜索历史
+    auto history = getAiHistory();
     // 创建内部widget和布局
     QWidget *scrollWidget = new QWidget;
     QVBoxLayout *layout = new QVBoxLayout(scrollWidget);
 
     // 添加对话到布局中
-    auto history = getAiHistory();
+
     for(int i=0 ; i<history.size() ; i++)
     {
 
@@ -166,6 +169,12 @@ void MainWindow2::on_pushButton_refreshAiHistory_clicked()
     //滚动到最底部
     QScrollBar *vScrollBar = ui->scrollArea->verticalScrollBar();
     vScrollBar->setValue(vScrollBar->maximum());
+
+}
+
+
+void MainWindow2::on_pushButton_question_clicked()
+{
 
 }
 

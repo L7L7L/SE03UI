@@ -19,6 +19,8 @@ private slots:
 
     void on_pushButton_refreshAiHistory_clicked();
 
+    void on_pushButton_question_clicked();
+
 private:
     Ui::MainWindow2 *ui;
 };
