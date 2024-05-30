@@ -14,6 +14,7 @@ class MainWindow2 : public QMainWindow
 public:
     explicit MainWindow2(QWidget *parent = nullptr);
     ~MainWindow2();
+    void display_history();
 
 private slots:
 
@@ -23,6 +24,7 @@ private slots:
 
 private:
     Ui::MainWindow2 *ui;
+    QStringList history;
 };
 
 #endif // MAINWINDOW2_H

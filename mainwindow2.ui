@@ -69,7 +69,7 @@
        <string>刷新</string>
       </property>
      </widget>
-     <widget class="QTextEdit" name="textEdit">
+     <widget class="QTextEdit" name="textEdit_question">
       <property name="geometry">
        <rect>
         <x>30</x>
