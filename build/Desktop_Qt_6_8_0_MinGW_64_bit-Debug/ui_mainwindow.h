@@ -10,6 +10,7 @@
 #define UI_MAINWINDOW_H
 
 #include <QtCore/QVariant>
+#include <QtGui/QIcon>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QCheckBox>
 #include <QtWidgets/QLabel>
@@ -45,11 +46,11 @@ public:
     QLineEdit *lineEdit_rPW;
     QCheckBox *checkBox_2;
     QLabel *label_5;
-    QLabel *label_6;
     QLineEdit *lineEdit_rEmail;
     QPushButton *pushButton_4;
     QLineEdit *lineEdit_rPWconfirm;
     QLabel *label_7;
+    QLabel *label_6;
     QWidget *stackedWidgetPage2_2;
     QMenuBar *menubar;
     QStatusBar *statusbar;
@@ -58,22 +59,33 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName("MainWindow");
-        MainWindow->resize(370, 455);
+        MainWindow->resize(352, 442);
+        QSizePolicy sizePolicy(QSizePolicy::Policy::Fixed, QSizePolicy::Policy::Fixed);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(MainWindow->sizePolicy().hasHeightForWidth());
+        MainWindow->setSizePolicy(sizePolicy);
+        QIcon icon;
+        icon.addFile(QString::fromUtf8("../../AI.png"), QSize(), QIcon::Normal, QIcon::Off);
+        MainWindow->setWindowIcon(icon);
         MainWindow->setLayoutDirection(Qt::LeftToRight);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName("centralwidget");
+        sizePolicy.setHeightForWidth(centralwidget->sizePolicy().hasHeightForWidth());
+        centralwidget->setSizePolicy(sizePolicy);
         stackedWidget = new QStackedWidget(centralwidget);
         stackedWidget->setObjectName("stackedWidget");
+        stackedWidget->setEnabled(true);
         stackedWidget->setGeometry(QRect(0, 0, 370, 455));
         stackedWidget->setStyleSheet(QString::fromUtf8("background-color:white"));
         stackedWidgetPage1 = new QWidget();
         stackedWidgetPage1->setObjectName("stackedWidgetPage1");
         label_2 = new QLabel(stackedWidgetPage1);
         label_2->setObjectName("label_2");
-        label_2->setGeometry(QRect(20, 180, 37, 20));
+        label_2->setGeometry(QRect(20, 200, 37, 20));
         pushButton = new QPushButton(stackedWidgetPage1);
         pushButton->setObjectName("pushButton");
-        pushButton->setGeometry(QRect(20, 310, 320, 36));
+        pushButton->setGeometry(QRect(20, 350, 320, 36));
         pushButton->setStyleSheet(QString::fromUtf8("background-color : rgb(168, 85, 247);\n"
 "color : white;\n"
 "\n"
@@ -85,25 +97,25 @@ public:
         lineEdit_2->setEchoMode(QLineEdit::Password);
         checkBox = new QCheckBox(stackedWidgetPage1);
         checkBox->setObjectName("checkBox");
-        checkBox->setGeometry(QRect(20, 280, 81, 18));
+        checkBox->setGeometry(QRect(20, 290, 81, 18));
         checkBox->setStyleSheet(QString::fromUtf8(""));
         label = new QLabel(stackedWidgetPage1);
         label->setObjectName("label");
-        label->setGeometry(QRect(20, 80, 37, 20));
+        label->setGeometry(QRect(20, 100, 37, 20));
         label_3 = new QLabel(stackedWidgetPage1);
         label_3->setObjectName("label_3");
-        label_3->setGeometry(QRect(145, 20, 82, 75));
+        label_3->setGeometry(QRect(145, 20, 80, 80));
         label_3->setPixmap(QPixmap(QString::fromUtf8(":/new/prefix1/image/logo.png")));
         label_3->setScaledContents(true);
         label_3->setWordWrap(false);
         lineEdit = new QLineEdit(stackedWidgetPage1);
         lineEdit->setObjectName("lineEdit");
-        lineEdit->setGeometry(QRect(20, 120, 319, 40));
+        lineEdit->setGeometry(QRect(20, 130, 319, 40));
         lineEdit->setMinimumSize(QSize(250, 40));
         lineEdit->setStyleSheet(QString::fromUtf8("background-color:rgb(255, 255, 255)"));
         pushButton_2 = new QPushButton(stackedWidgetPage1);
         pushButton_2->setObjectName("pushButton_2");
-        pushButton_2->setGeometry(QRect(239, 280, 101, 20));
+        pushButton_2->setGeometry(QRect(239, 290, 101, 20));
         pushButton_2->setStyleSheet(QString::fromUtf8("border : none;\n"
 "color : rgb(250, 143, 247)"));
         stackedWidget->addWidget(stackedWidgetPage1);
@@ -136,13 +148,7 @@ public:
         checkBox_2->setStyleSheet(QString::fromUtf8("color : rgb(250, 143, 247)"));
         label_5 = new QLabel(stackedWidgetPage1_2);
         label_5->setObjectName("label_5");
-        label_5->setGeometry(QRect(20, 80, 81, 20));
-        label_6 = new QLabel(stackedWidgetPage1_2);
-        label_6->setObjectName("label_6");
-        label_6->setGeometry(QRect(145, 20, 82, 75));
-        label_6->setPixmap(QPixmap(QString::fromUtf8(":/new/prefix1/image/logo.png")));
-        label_6->setScaledContents(true);
-        label_6->setWordWrap(false);
+        label_5->setGeometry(QRect(20, 90, 81, 20));
         lineEdit_rEmail = new QLineEdit(stackedWidgetPage1_2);
         lineEdit_rEmail->setObjectName("lineEdit_rEmail");
         lineEdit_rEmail->setGeometry(QRect(20, 120, 319, 40));
@@ -161,6 +167,12 @@ public:
         label_7 = new QLabel(stackedWidgetPage1_2);
         label_7->setObjectName("label_7");
         label_7->setGeometry(QRect(20, 240, 91, 20));
+        label_6 = new QLabel(stackedWidgetPage1_2);
+        label_6->setObjectName("label_6");
+        label_6->setGeometry(QRect(145, 20, 80, 80));
+        label_6->setPixmap(QPixmap(QString::fromUtf8(":/new/prefix1/image/logo.png")));
+        label_6->setScaledContents(true);
+        label_6->setWordWrap(false);
         stackedWidget_2->addWidget(stackedWidgetPage1_2);
         stackedWidgetPage2_2 = new QWidget();
         stackedWidgetPage2_2->setObjectName("stackedWidgetPage2_2");
@@ -169,7 +181,7 @@ public:
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
-        menubar->setGeometry(QRect(0, 0, 370, 17));
+        menubar->setGeometry(QRect(0, 0, 352, 17));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName("statusbar");
