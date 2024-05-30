@@ -39,12 +39,12 @@ public:
     QTextEdit *textEdit;
     QWidget *page_2_Docu_query;
     QTextEdit *textEdit_2;
+    QPushButton *pushButton_search;
+    QLineEdit *lineEdit;
     QWidget *page_3_mine;
     QTextEdit *textEdit_3;
     QPushButton *pushButton_Document_manage_page;
     QPushButton *pushButton_AI__chat_page;
-    QLineEdit *lineEdit;
-    QPushButton *pushButton;
     QLabel *label_name;
     QPushButton *pushButton_Document_query_page;
     QPushButton *pushButton_translate;
@@ -92,13 +92,19 @@ public:
         page_1_Docu_mange->setObjectName("page_1_Docu_mange");
         textEdit = new QTextEdit(page_1_Docu_mange);
         textEdit->setObjectName("textEdit");
-        textEdit->setGeometry(QRect(140, 100, 104, 64));
+        textEdit->setGeometry(QRect(450, 50, 104, 64));
         stackedWidget->addWidget(page_1_Docu_mange);
         page_2_Docu_query = new QWidget();
         page_2_Docu_query->setObjectName("page_2_Docu_query");
         textEdit_2 = new QTextEdit(page_2_Docu_query);
         textEdit_2->setObjectName("textEdit_2");
-        textEdit_2->setGeometry(QRect(160, 130, 104, 64));
+        textEdit_2->setGeometry(QRect(260, 120, 104, 64));
+        pushButton_search = new QPushButton(page_2_Docu_query);
+        pushButton_search->setObjectName("pushButton_search");
+        pushButton_search->setGeometry(QRect(800, 10, 51, 21));
+        lineEdit = new QLineEdit(page_2_Docu_query);
+        lineEdit->setObjectName("lineEdit");
+        lineEdit->setGeometry(QRect(10, 10, 781, 21));
         stackedWidget->addWidget(page_2_Docu_query);
         page_3_mine = new QWidget();
         page_3_mine->setObjectName("page_3_mine");
@@ -114,12 +120,6 @@ public:
         pushButton_AI__chat_page->setObjectName("pushButton_AI__chat_page");
         pushButton_AI__chat_page->setGeometry(QRect(20, 80, 31, 31));
         pushButton_AI__chat_page->setStyleSheet(QString::fromUtf8(""));
-        lineEdit = new QLineEdit(centralwidget);
-        lineEdit->setObjectName("lineEdit");
-        lineEdit->setGeometry(QRect(100, 10, 551, 21));
-        pushButton = new QPushButton(centralwidget);
-        pushButton->setObjectName("pushButton");
-        pushButton->setGeometry(QRect(660, 10, 51, 21));
         label_name = new QLabel(centralwidget);
         label_name->setObjectName("label_name");
         label_name->setGeometry(QRect(760, 10, 131, 16));
@@ -169,7 +169,8 @@ public:
 "li.unchecked::marker { content: \"\\2610\"; }\n"
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Microsoft YaHei UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">page_1</p></body></html>", nullptr));
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">doc</p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", nullptr));
         textEdit_2->setHtml(QCoreApplication::translate("MainWindow2", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
@@ -177,7 +178,10 @@ public:
 "li.unchecked::marker { content: \"\\2610\"; }\n"
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Microsoft YaHei UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">page_2</p></body></html>", nullptr));
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">page_search</p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", nullptr));
+        pushButton_search->setText(QCoreApplication::translate("MainWindow2", "\346\220\234\347\264\242", nullptr));
+        lineEdit->setText(QCoreApplication::translate("MainWindow2", "fuck", nullptr));
         textEdit_3->setHtml(QCoreApplication::translate("MainWindow2", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
@@ -189,7 +193,6 @@ public:
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", nullptr));
         pushButton_Document_manage_page->setText(QCoreApplication::translate("MainWindow2", "DOC", nullptr));
         pushButton_AI__chat_page->setText(QCoreApplication::translate("MainWindow2", "AI", nullptr));
-        pushButton->setText(QCoreApplication::translate("MainWindow2", "Search", nullptr));
         label_name->setText(QCoreApplication::translate("MainWindow2", "name", nullptr));
         pushButton_Document_query_page->setText(QCoreApplication::translate("MainWindow2", "Search", nullptr));
         pushButton_translate->setText(QCoreApplication::translate("MainWindow2", "Translate", nullptr));
