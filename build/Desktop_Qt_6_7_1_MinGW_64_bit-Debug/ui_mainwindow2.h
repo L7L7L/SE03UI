@@ -16,6 +16,7 @@
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QScrollArea>
 #include <QtWidgets/QStackedWidget>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QWidget>
@@ -28,6 +29,9 @@ public:
     QWidget *centralwidget;
     QStackedWidget *stackedWidget;
     QWidget *page;
+    QScrollArea *scrollArea;
+    QWidget *scrollAreaWidgetContents;
+    QPushButton *pushButton_refreshAiHistory;
     QWidget *page_2;
     QPushButton *pushButton_Document;
     QPushButton *pushButton_Document_2;
@@ -51,6 +55,17 @@ public:
         stackedWidget->setStyleSheet(QString::fromUtf8("background-color:#EEEEEE"));
         page = new QWidget();
         page->setObjectName("page");
+        scrollArea = new QScrollArea(page);
+        scrollArea->setObjectName("scrollArea");
+        scrollArea->setGeometry(QRect(30, 30, 551, 351));
+        scrollArea->setWidgetResizable(true);
+        scrollAreaWidgetContents = new QWidget();
+        scrollAreaWidgetContents->setObjectName("scrollAreaWidgetContents");
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 549, 349));
+        scrollArea->setWidget(scrollAreaWidgetContents);
+        pushButton_refreshAiHistory = new QPushButton(page);
+        pushButton_refreshAiHistory->setObjectName("pushButton_refreshAiHistory");
+        pushButton_refreshAiHistory->setGeometry(QRect(600, 40, 80, 18));
         stackedWidget->addWidget(page);
         page_2 = new QWidget();
         page_2->setObjectName("page_2");
@@ -89,6 +104,7 @@ public:
     void retranslateUi(QMainWindow *MainWindow2)
     {
         MainWindow2->setWindowTitle(QCoreApplication::translate("MainWindow2", "MainWindow", nullptr));
+        pushButton_refreshAiHistory->setText(QCoreApplication::translate("MainWindow2", "\345\210\267\346\226\260", nullptr));
         pushButton_Document->setText(QCoreApplication::translate("MainWindow2", "DOC", nullptr));
         pushButton_Document_2->setText(QCoreApplication::translate("MainWindow2", "AI", nullptr));
         pushButton->setText(QCoreApplication::translate("MainWindow2", "Search", nullptr));

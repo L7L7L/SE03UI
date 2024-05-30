@@ -16,6 +16,7 @@
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QScrollArea>
 #include <QtWidgets/QStackedWidget>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QWidget>
@@ -28,12 +29,19 @@ public:
     QWidget *centralwidget;
     QStackedWidget *stackedWidget;
     QWidget *page;
+    QScrollArea *scrollArea;
+    QWidget *scrollAreaWidgetContents;
+    QPushButton *pushButton_refreshAiHistory;
     QWidget *page_2;
     QPushButton *pushButton_Document;
     QPushButton *pushButton_Document_2;
     QLineEdit *lineEdit;
     QPushButton *pushButton;
     QLabel *label_name;
+    QPushButton *pushButton_Document_3;
+    QPushButton *pushButton_Document_4;
+    QPushButton *pushButton_Document_5;
+    QPushButton *pushButton_Document_6;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -51,6 +59,17 @@ public:
         stackedWidget->setStyleSheet(QString::fromUtf8("background-color:#EEEEEE"));
         page = new QWidget();
         page->setObjectName("page");
+        scrollArea = new QScrollArea(page);
+        scrollArea->setObjectName("scrollArea");
+        scrollArea->setGeometry(QRect(30, 30, 551, 351));
+        scrollArea->setWidgetResizable(true);
+        scrollAreaWidgetContents = new QWidget();
+        scrollAreaWidgetContents->setObjectName("scrollAreaWidgetContents");
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 549, 349));
+        scrollArea->setWidget(scrollAreaWidgetContents);
+        pushButton_refreshAiHistory = new QPushButton(page);
+        pushButton_refreshAiHistory->setObjectName("pushButton_refreshAiHistory");
+        pushButton_refreshAiHistory->setGeometry(QRect(600, 40, 80, 18));
         stackedWidget->addWidget(page);
         page_2 = new QWidget();
         page_2->setObjectName("page_2");
@@ -72,6 +91,22 @@ public:
         label_name = new QLabel(centralwidget);
         label_name->setObjectName("label_name");
         label_name->setGeometry(QRect(540, 10, 131, 16));
+        pushButton_Document_3 = new QPushButton(centralwidget);
+        pushButton_Document_3->setObjectName("pushButton_Document_3");
+        pushButton_Document_3->setGeometry(QRect(20, 160, 31, 31));
+        pushButton_Document_3->setStyleSheet(QString::fromUtf8(""));
+        pushButton_Document_4 = new QPushButton(centralwidget);
+        pushButton_Document_4->setObjectName("pushButton_Document_4");
+        pushButton_Document_4->setGeometry(QRect(20, 120, 31, 31));
+        pushButton_Document_4->setStyleSheet(QString::fromUtf8(""));
+        pushButton_Document_5 = new QPushButton(centralwidget);
+        pushButton_Document_5->setObjectName("pushButton_Document_5");
+        pushButton_Document_5->setGeometry(QRect(20, 200, 31, 31));
+        pushButton_Document_5->setStyleSheet(QString::fromUtf8(""));
+        pushButton_Document_6 = new QPushButton(centralwidget);
+        pushButton_Document_6->setObjectName("pushButton_Document_6");
+        pushButton_Document_6->setGeometry(QRect(20, 240, 31, 31));
+        pushButton_Document_6->setStyleSheet(QString::fromUtf8(""));
         MainWindow2->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow2);
         menubar->setObjectName("menubar");
@@ -89,10 +124,15 @@ public:
     void retranslateUi(QMainWindow *MainWindow2)
     {
         MainWindow2->setWindowTitle(QCoreApplication::translate("MainWindow2", "MainWindow", nullptr));
+        pushButton_refreshAiHistory->setText(QCoreApplication::translate("MainWindow2", "\345\210\267\346\226\260", nullptr));
         pushButton_Document->setText(QCoreApplication::translate("MainWindow2", "DOC", nullptr));
         pushButton_Document_2->setText(QCoreApplication::translate("MainWindow2", "AI", nullptr));
         pushButton->setText(QCoreApplication::translate("MainWindow2", "Search", nullptr));
         label_name->setText(QCoreApplication::translate("MainWindow2", "name", nullptr));
+        pushButton_Document_3->setText(QCoreApplication::translate("MainWindow2", "Search", nullptr));
+        pushButton_Document_4->setText(QCoreApplication::translate("MainWindow2", "Translate", nullptr));
+        pushButton_Document_5->setText(QCoreApplication::translate("MainWindow2", "Task", nullptr));
+        pushButton_Document_6->setText(QCoreApplication::translate("MainWindow2", "Me", nullptr));
     } // retranslateUi
 
 };
