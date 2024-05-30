@@ -22,6 +22,8 @@ private slots:
 
     void on_pushButton_question_clicked();
 
+    void on_textEdit_question_textChanged();
+
 private:
     Ui::MainWindow2 *ui;
     QStringList history;

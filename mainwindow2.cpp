@@ -115,7 +115,7 @@ QStringList MainWindow2::getAiHistory()
 
 void MainWindow2::question_to_AI(QString question)
 {
-    QStringList strList;
+    // QStringList strList;
     QString mainUrl = "http://62.234.28.172:8000/system/main/";
     QNetworkRequest request((QUrl(mainUrl)));
 
@@ -190,6 +190,7 @@ MainWindow2::MainWindow2(QWidget *parent)
     // manager.post()
     ui->label_name->setText(email);
     on_pushButton_refreshAiHistory_clicked();
+    this->setFixedSize(1000, 650);
 }
 
 MainWindow2::~MainWindow2()
@@ -241,15 +242,32 @@ void MainWindow2::on_pushButton_refreshAiHistory_clicked()
     display_history();
 }
 
-
+bool isSendingMessage;
 void MainWindow2::on_pushButton_question_clicked()
 {
     ui->pushButton_question->setDisabled(1);
+    isSendingMessage = 1;
     QString question = ui->textEdit_question->toPlainText();
+    ui->textEdit_question->clear();
     this->history.append(question);
     display_history();
     this->question_to_AI(question);
-    ui->textEdit_question->clear();
-    ui->pushButton_question->setEnabled(1);
+
+    if (!ui->textEdit_question->toPlainText().isEmpty())
+        ui->pushButton_question->setEnabled(1);
+    isSendingMessage = 0;
+}
+
+
+void MainWindow2::on_textEdit_question_textChanged()
+{
+    if (!ui->textEdit_question->toPlainText().isEmpty() && !isSendingMessage)
+    {
+        ui->pushButton_question->setEnabled(true);
+    }
+    else
+    {
+        ui->pushButton_question->setEnabled(false);
+    }
 }
 
