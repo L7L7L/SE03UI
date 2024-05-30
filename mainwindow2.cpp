@@ -106,6 +106,9 @@ QStringList getAiHistory()
 
     strList = aiHistoryResponse.split("#*#*分割#*#*");
 
+
+
+
     return strList;
 }
 
