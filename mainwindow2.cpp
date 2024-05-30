@@ -17,8 +17,12 @@
 #include <QPlainTextEdit>
 #include <QVBoxLayout>
 #include <QScrollBar>
+#include <QTimer>
+
 extern QNetworkAccessManager manager;
 extern QString email;
+QTimer dotTimer; //用来显示省略号的Timer
+QTextEdit *lastTextEdit; //指向对话框的最后一个文本框
 
 QStringList MainWindow2::getAiHistory()
 {
@@ -72,6 +76,8 @@ QStringList MainWindow2::getAiHistory()
     // qWarning()<<csrfToken;
     // qWarning()<<params.toString();
     QNetworkReply *aiHistoryReply = manager.post(aiHistoryRequest, params.query(QUrl::FullyEncoded).toUtf8());
+
+
 
     QEventLoop loop2;
     QObject::connect(aiHistoryReply, &QNetworkReply::finished, &loop2, &QEventLoop::quit);
@@ -178,11 +184,20 @@ void MainWindow2::question_to_AI(QString question)
         aiQuestionReply->deleteLater();
         return;
     }
-
+    dotTimer.stop();
     this->on_pushButton_refreshAiHistory_clicked();
 }
 
 
+
+void MainWindow2::showDot()
+{
+    if(lastTextEdit->toPlainText() == "......")
+    {
+        lastTextEdit->setPlainText("");
+    }
+    lastTextEdit->insertPlainText(".");
+}
 
 MainWindow2::MainWindow2(QWidget *parent)
     : QMainWindow(parent)
@@ -192,13 +207,21 @@ MainWindow2::MainWindow2(QWidget *parent)
     // manager.post()
     ui->label_name->setText(email);
     on_pushButton_refreshAiHistory_clicked();
+
+    // 设置固定窗口
     this->setFixedSize(1000, 650);
+    // 隐藏刷新按钮
+    ui->pushButton_refreshAiHistory->setVisible(false);
+
+    QObject::connect(&dotTimer, &QTimer::timeout, this, &MainWindow2::showDot);
+
 }
 
 MainWindow2::~MainWindow2()
 {
     delete ui;
 }
+
 
 void MainWindow2::display_history()
 {
@@ -215,6 +238,11 @@ void MainWindow2::display_history()
 
         layout->addWidget(new QLabel(i%2==0 ? "用户：" : "AI："));
         QTextEdit *textEdit = new QTextEdit();
+
+        if(i == history.size()-1)
+        {
+            lastTextEdit = textEdit;
+        }
         textEdit->setPlainText(history[i]);
         // 不要滚动条
         textEdit->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -252,8 +280,12 @@ void MainWindow2::on_pushButton_question_clicked()
     QString question = ui->textEdit_question->toPlainText();
     ui->textEdit_question->clear();
     this->history.append(question);
+    this->history.append("...");
+    dotTimer.start(200);
     display_history();
     this->question_to_AI(question);
+
+
 
     if (!ui->textEdit_question->toPlainText().isEmpty())
         ui->pushButton_question->setEnabled(1);
