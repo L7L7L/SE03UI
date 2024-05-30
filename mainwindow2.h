@@ -24,6 +24,8 @@ private slots:
 
     void on_textEdit_question_textChanged();
 
+    void showDot();
+
 private:
     Ui::MainWindow2 *ui;
     QStringList history;
