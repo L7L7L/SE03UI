@@ -33,7 +33,7 @@ public:
     QScrollArea *scrollArea;
     QWidget *scrollAreaWidgetContents;
     QPushButton *pushButton_refreshAiHistory;
-    QTextEdit *textEdit;
+    QTextEdit *textEdit_question;
     QPushButton *pushButton_question;
     QWidget *page_2;
     QPushButton *pushButton_Document;
@@ -73,10 +73,10 @@ public:
         pushButton_refreshAiHistory = new QPushButton(page);
         pushButton_refreshAiHistory->setObjectName("pushButton_refreshAiHistory");
         pushButton_refreshAiHistory->setGeometry(QRect(740, 30, 51, 61));
-        textEdit = new QTextEdit(page);
-        textEdit->setObjectName("textEdit");
-        textEdit->setGeometry(QRect(30, 410, 701, 131));
-        textEdit->setStyleSheet(QString::fromUtf8("background-color : white\n"
+        textEdit_question = new QTextEdit(page);
+        textEdit_question->setObjectName("textEdit_question");
+        textEdit_question->setGeometry(QRect(30, 410, 701, 131));
+        textEdit_question->setStyleSheet(QString::fromUtf8("background-color : white\n"
 ""));
         pushButton_question = new QPushButton(page);
         pushButton_question->setObjectName("pushButton_question");
@@ -139,7 +139,7 @@ public:
     {
         MainWindow2->setWindowTitle(QCoreApplication::translate("MainWindow2", "MainWindow", nullptr));
         pushButton_refreshAiHistory->setText(QCoreApplication::translate("MainWindow2", "\345\210\267\346\226\260", nullptr));
-        textEdit->setPlaceholderText(QCoreApplication::translate("MainWindow2", "\347\273\231\342\200\235AI\342\200\234\345\217\221\346\266\210\346\201\257", nullptr));
+        textEdit_question->setPlaceholderText(QCoreApplication::translate("MainWindow2", "\347\273\231\342\200\235AI\342\200\234\345\217\221\346\266\210\346\201\257", nullptr));
         pushButton_question->setText(QCoreApplication::translate("MainWindow2", "Q", nullptr));
         pushButton_Document->setText(QCoreApplication::translate("MainWindow2", "DOC", nullptr));
         pushButton_Document_2->setText(QCoreApplication::translate("MainWindow2", "AI", nullptr));

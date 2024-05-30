@@ -25,6 +25,8 @@ private slots:
 private:
     Ui::MainWindow2 *ui;
     QStringList history;
+    QStringList getAiHistory();
+    void question_to_AI(QString question);
 };
 
 #endif // MAINWINDOW2_H

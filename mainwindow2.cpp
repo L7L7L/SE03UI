@@ -20,7 +20,7 @@
 extern QNetworkAccessManager manager;
 extern QString email;
 
-QStringList getAiHistory()
+QStringList MainWindow2::getAiHistory()
 {
     QStringList strList;
     QString mainUrl = "http://62.234.28.172:8000/system/main/";
@@ -113,7 +113,72 @@ QStringList getAiHistory()
 }
 
 
+void MainWindow2::question_to_AI(QString question)
+{
+    QStringList strList;
+    QString mainUrl = "http://62.234.28.172:8000/system/main/";
+    QNetworkRequest request((QUrl(mainUrl)));
 
+    // 发送GET请求
+    QNetworkReply *reply = manager.get(request);
+
+    // 等待请求完成
+    QEventLoop loop;
+    QObject::connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+    loop.exec();
+
+    // 检查请求状态
+    if (reply->error() != QNetworkReply::NoError) {
+        qWarning() << "Error:" << reply->errorString();
+        reply->deleteLater();
+        return;
+    }
+
+    // 读取响应内容
+    QString response = reply->readAll();
+    reply->deleteLater();
+
+    QString pattern = "<input\\s+type=\"hidden\"\\s+name=\"csrfmiddlewaretoken\"\\s+value=\"([^\"]*)\">";
+    static QRegularExpression regex(pattern);
+
+    // 匹配csrfToken
+    QRegularExpressionMatch match = regex.match(response);
+    QString csrfToken;
+    if (match.hasMatch()) {
+        csrfToken = match.captured();
+        // std::cout<<csrfToken.toStdString()<<"\n";
+        csrfToken = csrfToken.right(66);
+        csrfToken = csrfToken.left(64);
+        // std::cout<<csrfToken.toStdString()<<"\n";
+    } else {
+        return;
+    }
+
+    QNetworkRequest aiQuestionRequest((QUrl(mainUrl)));
+    aiQuestionRequest.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+    aiQuestionRequest.setRawHeader("Referer", mainUrl.toUtf8());
+
+    QUrlQuery params;
+    params.addQueryItem("user_input", question);
+    params.addQueryItem("submit_button", "get_airesult");
+    params.addQueryItem("csrfmiddlewaretoken", csrfToken);
+    // qWarning()<<csrfToken;
+    // qWarning()<<params.toString();
+    QNetworkReply *aiQuestionReply = manager.post(aiQuestionRequest, params.query(QUrl::FullyEncoded).toUtf8());
+
+    QEventLoop loop2;
+    QObject::connect(aiQuestionReply, &QNetworkReply::finished, &loop2, &QEventLoop::quit);
+    loop2.exec();
+
+    // 检查请求状态
+    if (aiQuestionReply->error() != QNetworkReply::NoError) {
+        qWarning() << "Error:" << aiQuestionReply->errorString();
+        aiQuestionReply->deleteLater();
+        return;
+    }
+
+    this->on_pushButton_refreshAiHistory_clicked();
+}
 
 
 
@@ -179,8 +244,12 @@ void MainWindow2::on_pushButton_refreshAiHistory_clicked()
 
 void MainWindow2::on_pushButton_question_clicked()
 {
-    this->history.append("");
+    ui->pushButton_question->setDisabled(1);
+    QString question = ui->textEdit_question->toPlainText();
+    this->history.append(question);
     display_history();
-    auto question = ui->textEdit_question->toPlainText();
+    this->question_to_AI(question);
+    ui->textEdit_question->clear();
+    ui->pushButton_question->setEnabled(1);
 }
 
