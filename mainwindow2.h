@@ -2,6 +2,8 @@
 #define MAINWINDOW2_H
 
 #include <QMainWindow>
+#include <QComboBox>
+#include <QPushButton>
 
 namespace Ui {
 class MainWindow2;
@@ -54,6 +56,10 @@ private slots:
     void on_pushButton_translate_clicked();
 
     void on_pushButton_clicked();
+
+    void starPaper(QString paperUrl, QComboBox* tagBox, QPushButton* button);
+
+    void on_lineEdit_returnPressed();
 
 protected:
     void mousePressEvent(QMouseEvent *event) override;
