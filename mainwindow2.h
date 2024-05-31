@@ -58,6 +58,7 @@ private:
     QPoint m_dragPosition;
     QStringList history;
     QStringList getAiHistory();
+    QStringList getTags();
     void question_to_AI(QString question);
 };
 

@@ -301,8 +301,6 @@ void MainWindow2::question_to_AI(QString question)
     this->on_pushButton_refreshAiHistory_clicked();
 }
 
-
-
 void MainWindow2::showDotAI()
 {
     if(lastAiTextEdit->toPlainText() == "......")
@@ -741,4 +739,104 @@ void MainWindow2::on_stackedWidget_currentChanged()
 
     //To be added
 }
+
+QStringList MainWindow2::getTags()
+{
+    QStringList TagList;
+    QString mainUrl = "http://62.234.28.172:5656/system/star_query/";
+    QNetworkRequest request((QUrl(mainUrl)));
+
+    // 发送GET请求
+    QNetworkReply *reply = manager.get(request);
+
+    // 等待请求完成
+    QEventLoop loop;
+    QObject::connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+    loop.exec();
+
+    // 检查请求状态
+    if (reply->error() != QNetworkReply::NoError) {
+        qWarning() << "Error:" << reply->errorString();
+        reply->deleteLater();
+        return TagList;
+    }
+
+    // 读取响应内容
+    QString response = reply->readAll();
+    reply->deleteLater();
+
+    QString pattern = "<input\\s+type=\"hidden\"\\s+name=\"csrfmiddlewaretoken\"\\s+value=\"([^\"]*)\">";
+    static QRegularExpression regex(pattern);
+
+    // 匹配csrfToken
+    QRegularExpressionMatch match = regex.match(response);
+    QString csrfToken;
+    if (match.hasMatch()) {
+        csrfToken = match.captured();
+        // std::cout<<csrfToken.toStdString()<<"\n";
+        csrfToken = csrfToken.right(66);
+        csrfToken = csrfToken.left(64);
+        // std::cout<<csrfToken.toStdString()<<"\n";
+    } else {
+        return TagList;
+    }
+
+    QNetworkRequest aiHistoryRequest((QUrl(mainUrl)));
+    aiHistoryRequest.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+    aiHistoryRequest.setRawHeader("Referer", mainUrl.toUtf8());
+
+    QUrlQuery params;
+    params.addQueryItem("user_input", "");
+    params.addQueryItem("history_button", "get_history");
+    params.addQueryItem("csrfmiddlewaretoken", csrfToken);
+    // qWarning()<<csrfToken;
+    // qWarning()<<params.toString();
+    QNetworkReply *aiHistoryReply = manager.post(aiHistoryRequest, params.query(QUrl::FullyEncoded).toUtf8());
+
+
+
+    QEventLoop loop2;
+    QObject::connect(aiHistoryReply, &QNetworkReply::finished, &loop2, &QEventLoop::quit);
+    loop2.exec();
+
+    // 检查请求状态
+    if (aiHistoryReply->error() != QNetworkReply::NoError) {
+        qWarning() << "Error:" << aiHistoryReply->errorString();
+        aiHistoryReply->deleteLater();
+        return strList;
+    }
+
+    // 读取响应内容
+    QString aiHistoryResponse = aiHistoryReply->readAll();
+    aiHistoryReply->deleteLater();
+
+    // 取出有用的部分
+    QString startMarker = "#*#*提问历史开始#*#*";
+    QString endMarker = "#*#*提问历史结束#*#*";
+
+    int startIndex = aiHistoryResponse.indexOf(startMarker);
+    int endIndex = aiHistoryResponse.indexOf(endMarker);
+
+    if (startIndex != -1 && endIndex != -1 && startIndex < endIndex) {
+        startIndex += startMarker.length(); // 移动到开始标记之后的位置
+        aiHistoryResponse = aiHistoryResponse.mid(startIndex, endIndex - startIndex);
+        // return extractedString;
+    } else {
+        qDebug() << "aiHistory未找到标记或标记顺序不正确";
+        return strList;
+    }
+
+    strList = aiHistoryResponse.split("#*#*分割#*#*");
+
+    strList.removeLast();
+
+
+    return strList;
+}
+
+
+
+
+
+
 
