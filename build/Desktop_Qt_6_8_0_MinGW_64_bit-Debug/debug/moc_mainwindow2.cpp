@@ -40,12 +40,16 @@ constexpr auto qt_meta_stringdata_CLASSMainWindow2ENDCLASS = QtMocHelpers::strin
     "",
     "on_pushButton_question_clicked",
     "on_textEdit_question_textChanged",
-    "showDot",
+    "showDotAI",
+    "showDotSearch",
     "on_pushButton_AI__chat_page_clicked",
     "on_pushButton_Document_manage_page_clicked",
     "on_pushButton_Document_query_page_clicked",
     "on_pushButton_Mine_page_clicked",
-    "on_pushButton_search_clicked"
+    "on_pushButton_search_clicked",
+    "on_pushButton_minimize_clicked",
+    "on_pushButton_close_clicked",
+    "on_stackedWidget_currentChanged"
 );
 #else  // !QT_MOC_HAS_STRINGDATA
 #error "qtmochelpers.h not found or too old."
@@ -58,7 +62,7 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSMainWindow2ENDCLASS[] = {
       12,       // revision
        0,       // classname
        0,    0, // classinfo
-       9,   14, // methods
+      13,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -66,17 +70,25 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSMainWindow2ENDCLASS[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    0,   68,    2, 0x08,    1 /* Private */,
-       3,    0,   69,    2, 0x08,    2 /* Private */,
-       4,    0,   70,    2, 0x08,    3 /* Private */,
-       5,    0,   71,    2, 0x08,    4 /* Private */,
-       6,    0,   72,    2, 0x08,    5 /* Private */,
-       7,    0,   73,    2, 0x08,    6 /* Private */,
-       8,    0,   74,    2, 0x08,    7 /* Private */,
-       9,    0,   75,    2, 0x08,    8 /* Private */,
-      10,    0,   76,    2, 0x08,    9 /* Private */,
+       1,    0,   92,    2, 0x08,    1 /* Private */,
+       3,    0,   93,    2, 0x08,    2 /* Private */,
+       4,    0,   94,    2, 0x08,    3 /* Private */,
+       5,    0,   95,    2, 0x08,    4 /* Private */,
+       6,    0,   96,    2, 0x08,    5 /* Private */,
+       7,    0,   97,    2, 0x08,    6 /* Private */,
+       8,    0,   98,    2, 0x08,    7 /* Private */,
+       9,    0,   99,    2, 0x08,    8 /* Private */,
+      10,    0,  100,    2, 0x08,    9 /* Private */,
+      11,    0,  101,    2, 0x08,   10 /* Private */,
+      12,    0,  102,    2, 0x08,   11 /* Private */,
+      13,    0,  103,    2, 0x08,   12 /* Private */,
+      14,    0,  104,    2, 0x08,   13 /* Private */,
 
  // slots: parameters
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -105,7 +117,9 @@ Q_CONSTINIT const QMetaObject MainWindow2::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'on_textEdit_question_textChanged'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        // method 'showDot'
+        // method 'showDotAI'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'showDotSearch'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'on_pushButton_AI__chat_page_clicked'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
@@ -116,6 +130,12 @@ Q_CONSTINIT const QMetaObject MainWindow2::staticMetaObject = { {
         // method 'on_pushButton_Mine_page_clicked'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'on_pushButton_search_clicked'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'on_pushButton_minimize_clicked'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'on_pushButton_close_clicked'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'on_stackedWidget_currentChanged'
         QtPrivate::TypeAndForceComplete<void, std::false_type>
     >,
     nullptr
@@ -130,12 +150,16 @@ void MainWindow2::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
         case 0: _t->on_pushButton_refreshAiHistory_clicked(); break;
         case 1: _t->on_pushButton_question_clicked(); break;
         case 2: _t->on_textEdit_question_textChanged(); break;
-        case 3: _t->showDot(); break;
-        case 4: _t->on_pushButton_AI__chat_page_clicked(); break;
-        case 5: _t->on_pushButton_Document_manage_page_clicked(); break;
-        case 6: _t->on_pushButton_Document_query_page_clicked(); break;
-        case 7: _t->on_pushButton_Mine_page_clicked(); break;
-        case 8: _t->on_pushButton_search_clicked(); break;
+        case 3: _t->showDotAI(); break;
+        case 4: _t->showDotSearch(); break;
+        case 5: _t->on_pushButton_AI__chat_page_clicked(); break;
+        case 6: _t->on_pushButton_Document_manage_page_clicked(); break;
+        case 7: _t->on_pushButton_Document_query_page_clicked(); break;
+        case 8: _t->on_pushButton_Mine_page_clicked(); break;
+        case 9: _t->on_pushButton_search_clicked(); break;
+        case 10: _t->on_pushButton_minimize_clicked(); break;
+        case 11: _t->on_pushButton_close_clicked(); break;
+        case 12: _t->on_stackedWidget_currentChanged(); break;
         default: ;
         }
     }
@@ -161,13 +185,13 @@ int MainWindow2::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 9)
+        if (_id < 13)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 9;
+        _id -= 13;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 9)
+        if (_id < 13)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 9;
+        _id -= 13;
     }
     return _id;
 }

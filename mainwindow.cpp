@@ -14,8 +14,33 @@
 #include <QHttpMultiPart>
 #include <QNetworkCookieJar>
 #include <QTextDocument>
+
 QString email;
 QNetworkAccessManager manager;
+
+// 以下代码确保窗口可拖动
+void MainWindow::mousePressEvent(QMouseEvent *event) {
+    if (event->button() == Qt::LeftButton) {
+        m_dragging = true;
+        m_dragPosition = event->globalPosition().toPoint() - frameGeometry().topLeft();
+        event->accept();
+    }
+}
+
+void MainWindow::mouseMoveEvent(QMouseEvent *event) {
+    if (m_dragging && (event->buttons() & Qt::LeftButton)) {
+        move(event->globalPosition().toPoint() - m_dragPosition);
+        event->accept();
+    }
+}
+
+void MainWindow::mouseReleaseEvent(QMouseEvent *event) {
+    if (event->button() == Qt::LeftButton) {
+        m_dragging = false;
+        event->accept();
+    }
+}
+
 
 int login(const QString &loginUrl, const QString &tmpEmail, const QString &password) {
 
@@ -97,8 +122,10 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
+    // 窗口被创建
     ui->setupUi(this);
-    this->setFixedSize(370, 455);
+    this->setFixedSize(370, 485);
+    this->setWindowFlags(Qt::FramelessWindowHint);
 }
 
 MainWindow::~MainWindow()
@@ -108,9 +135,11 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_clicked()
 {
+    if(ui->pushButton->isEnabled()==false)
+        return;
     QString tmpEmail = ui->lineEdit->text();
     QString password = ui->lineEdit_2->text();
-    const QString loginURL = "http://62.234.28.172:8000/system/login/";
+    const QString loginURL = "http://62.234.28.172:5656/system/login/";
 
     if(tmpEmail.isEmpty())
     {
@@ -267,6 +296,9 @@ bool isValidEmail(const QString &email) {
 
 void MainWindow::on_pushButton_3_clicked()
 {
+    if(ui->pushButton_3->isEnabled()==false)
+        return;
+
     QString tmpEmail = ui->lineEdit_rEmail->text();
     QString password = ui->lineEdit_rPW->text();
     QString password2 = ui->lineEdit_rPWconfirm->text();
@@ -305,7 +337,7 @@ void MainWindow::on_pushButton_3_clicked()
     ui->pushButton_3->setStyleSheet("background-color : rgb(90, 90, 90);\ncolor : gray;\n\n");
     ui->pushButton_3->setText("注册中...");
 
-    const QString logonURL = "http://62.234.28.172:8000/system/logon/";
+    const QString logonURL = "http://62.234.28.172:5656/system/logon/";
     int status = logon(logonURL, tmpEmail, password);
     if(status == -1)
     {
@@ -343,5 +375,17 @@ void MainWindow::on_lineEdit_rPW_returnPressed()
 void MainWindow::on_lineEdit_rEmail_returnPressed()
 {
     on_pushButton_3_clicked();
+}
+
+
+void MainWindow::on_pushButton_close_clicked()
+{
+    this->close();
+}
+
+
+void MainWindow::on_pushButton_minimize_clicked()
+{
+    this->showMinimized();
 }
 

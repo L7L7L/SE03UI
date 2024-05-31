@@ -118,8 +118,13 @@ compiler_rcc_clean:
 	-$(DEL_FILE) debug\qrc_image.cpp debug\qrc_qmake_qmake_qm_files.cpp
 debug/qrc_image.cpp: ../../image.qrc \
 		D:/QT/6.8.0/mingw_64/bin/rcc.exe \
+		../../image/Mine.png \
 		../../image/emial.png \
-		../../image/logo.png
+		../../image/logo.png \
+		../../image/Send.png \
+		../../image/AI.png \
+		../../image/Document.png \
+		../../image/Search.png
 	D:\QT\6.8.0\mingw_64\bin\rcc.exe -name image --no-zstd ..\..\image.qrc -o debug\qrc_image.cpp
 
 debug/qrc_qmake_qmake_qm_files.cpp: debug/qmake_qmake_qm_files.qrc \
@@ -325,6 +330,7 @@ debug/moc_mainwindow.cpp: ../../mainwindow.h \
 		D:/QT/6.8.0/mingw_64/include/QtCore/qlocale.h \
 		D:/QT/6.8.0/mingw_64/include/QtGui/qguiapplication_platform.h \
 		D:/QT/6.8.0/mingw_64/include/QtWidgets/qtabwidget.h \
+		D:/QT/6.8.0/mingw_64/include/QtGui/QMouseEvent \
 		debug/moc_predefs.h \
 		D:/QT/6.8.0/mingw_64/bin/moc.exe
 	D:\QT\6.8.0\mingw_64\bin\moc.exe $(DEFINES) --include C:/Users/19746/Desktop/SE03UI/build/Desktop_Qt_6_8_0_MinGW_64_bit-Debug/debug/moc_predefs.h -ID:/QT/6.8.0/mingw_64/mkspecs/win32-g++ -IC:/Users/19746/Desktop/SE03UI -ID:/QT/6.8.0/mingw_64/include -ID:/QT/6.8.0/mingw_64/include/QtWidgets -ID:/QT/6.8.0/mingw_64/include/QtGui -ID:/QT/6.8.0/mingw_64/include/QtNetwork -ID:/QT/6.8.0/mingw_64/include/QtCore -I. -ID:/QT/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++ -ID:/QT/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/x86_64-w64-mingw32 -ID:/QT/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/backward -ID:/QT/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include -ID:/QT/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include-fixed -ID:/QT/Tools/mingw1310_64/x86_64-w64-mingw32/include ..\..\mainwindow.h -o debug\moc_mainwindow.cpp
@@ -738,6 +744,7 @@ debug/main.o: ../../main.cpp ../../mainwindow.h \
 		D:/QT/6.8.0/mingw_64/include/QtCore/qlocale.h \
 		D:/QT/6.8.0/mingw_64/include/QtGui/qguiapplication_platform.h \
 		D:/QT/6.8.0/mingw_64/include/QtWidgets/qtabwidget.h \
+		D:/QT/6.8.0/mingw_64/include/QtGui/QMouseEvent \
 		D:/QT/6.8.0/mingw_64/include/QtWidgets/QApplication \
 		D:/QT/6.8.0/mingw_64/include/QtWidgets/qapplication.h \
 		D:/QT/6.8.0/mingw_64/include/QtCore/QLocale \
@@ -934,8 +941,10 @@ debug/mainwindow.o: ../../mainwindow.cpp ../../mainwindow.h \
 		D:/QT/6.8.0/mingw_64/include/QtCore/qlocale.h \
 		D:/QT/6.8.0/mingw_64/include/QtGui/qguiapplication_platform.h \
 		D:/QT/6.8.0/mingw_64/include/QtWidgets/qtabwidget.h \
+		D:/QT/6.8.0/mingw_64/include/QtGui/QMouseEvent \
 		ui_mainwindow.h \
 		D:/QT/6.8.0/mingw_64/include/QtCore/QVariant \
+		D:/QT/6.8.0/mingw_64/include/QtGui/QIcon \
 		D:/QT/6.8.0/mingw_64/include/QtWidgets/QApplication \
 		D:/QT/6.8.0/mingw_64/include/QtWidgets/qapplication.h \
 		D:/QT/6.8.0/mingw_64/include/QtWidgets/QCheckBox \
@@ -957,9 +966,10 @@ debug/mainwindow.o: ../../mainwindow.cpp ../../mainwindow.h \
 		D:/QT/6.8.0/mingw_64/include/QtWidgets/qmenu.h \
 		D:/QT/6.8.0/mingw_64/include/QtWidgets/QPushButton \
 		D:/QT/6.8.0/mingw_64/include/QtWidgets/qpushbutton.h \
+		D:/QT/6.8.0/mingw_64/include/QtWidgets/QStackedWidget \
+		D:/QT/6.8.0/mingw_64/include/QtWidgets/qstackedwidget.h \
 		D:/QT/6.8.0/mingw_64/include/QtWidgets/QStatusBar \
 		D:/QT/6.8.0/mingw_64/include/QtWidgets/qstatusbar.h \
-		D:/QT/6.8.0/mingw_64/include/QtWidgets/QTabWidget \
 		D:/QT/6.8.0/mingw_64/include/QtWidgets/QWidget \
 		../../mainwindow2.h \
 		D:/QT/6.8.0/mingw_64/include/QtCore/QCoreApplication \
@@ -1199,7 +1209,103 @@ debug/mainwindow2.o: ../../mainwindow2.cpp ../../mainwindow2.h \
 		D:/QT/6.8.0/mingw_64/include/QtCore/qlocale.h \
 		D:/QT/6.8.0/mingw_64/include/QtGui/qguiapplication_platform.h \
 		D:/QT/6.8.0/mingw_64/include/QtWidgets/qtabwidget.h \
-		ui_mainwindow2.h
+		ui_mainwindow2.h \
+		D:/QT/6.8.0/mingw_64/include/QtCore/QVariant \
+		D:/QT/6.8.0/mingw_64/include/QtWidgets/QApplication \
+		D:/QT/6.8.0/mingw_64/include/QtWidgets/qapplication.h \
+		D:/QT/6.8.0/mingw_64/include/QtWidgets/QLabel \
+		D:/QT/6.8.0/mingw_64/include/QtWidgets/qlabel.h \
+		D:/QT/6.8.0/mingw_64/include/QtWidgets/qframe.h \
+		D:/QT/6.8.0/mingw_64/include/QtGui/qpicture.h \
+		D:/QT/6.8.0/mingw_64/include/QtGui/qtextdocument.h \
+		D:/QT/6.8.0/mingw_64/include/QtWidgets/QLineEdit \
+		D:/QT/6.8.0/mingw_64/include/QtWidgets/qlineedit.h \
+		D:/QT/6.8.0/mingw_64/include/QtGui/qtextcursor.h \
+		D:/QT/6.8.0/mingw_64/include/QtGui/qtextformat.h \
+		D:/QT/6.8.0/mingw_64/include/QtGui/qpen.h \
+		D:/QT/6.8.0/mingw_64/include/QtGui/qtextoption.h \
+		D:/QT/6.8.0/mingw_64/include/QtWidgets/QMenuBar \
+		D:/QT/6.8.0/mingw_64/include/QtWidgets/qmenubar.h \
+		D:/QT/6.8.0/mingw_64/include/QtWidgets/qmenu.h \
+		D:/QT/6.8.0/mingw_64/include/QtWidgets/QPushButton \
+		D:/QT/6.8.0/mingw_64/include/QtWidgets/qpushbutton.h \
+		D:/QT/6.8.0/mingw_64/include/QtWidgets/qabstractbutton.h \
+		D:/QT/6.8.0/mingw_64/include/QtWidgets/QScrollArea \
+		D:/QT/6.8.0/mingw_64/include/QtWidgets/qscrollarea.h \
+		D:/QT/6.8.0/mingw_64/include/QtWidgets/qabstractscrollarea.h \
+		D:/QT/6.8.0/mingw_64/include/QtWidgets/QStackedWidget \
+		D:/QT/6.8.0/mingw_64/include/QtWidgets/qstackedwidget.h \
+		D:/QT/6.8.0/mingw_64/include/QtWidgets/QStatusBar \
+		D:/QT/6.8.0/mingw_64/include/QtWidgets/qstatusbar.h \
+		D:/QT/6.8.0/mingw_64/include/QtWidgets/QTextEdit \
+		D:/QT/6.8.0/mingw_64/include/QtWidgets/qtextedit.h \
+		D:/QT/6.8.0/mingw_64/include/QtWidgets/QWidget \
+		D:/QT/6.8.0/mingw_64/include/QtCore/QCoreApplication \
+		D:/QT/6.8.0/mingw_64/include/QtNetwork/QNetworkAccessManager \
+		D:/QT/6.8.0/mingw_64/include/QtNetwork/qnetworkaccessmanager.h \
+		D:/QT/6.8.0/mingw_64/include/QtNetwork/qtnetworkglobal.h \
+		D:/QT/6.8.0/mingw_64/include/QtNetwork/qtnetwork-config.h \
+		D:/QT/6.8.0/mingw_64/include/QtNetwork/qtnetworkexports.h \
+		D:/QT/6.8.0/mingw_64/include/QtNetwork/qnetworkrequest.h \
+		D:/QT/6.8.0/mingw_64/include/QtCore/QSharedDataPointer \
+		D:/QT/6.8.0/mingw_64/include/QtCore/QString \
+		D:/QT/6.8.0/mingw_64/include/QtCore/QUrl \
+		D:/QT/6.8.0/mingw_64/include/QtNetwork/QSslConfiguration \
+		D:/QT/6.8.0/mingw_64/include/QtNetwork/qsslconfiguration.h \
+		D:/QT/6.8.0/mingw_64/include/QtNetwork/qsslsocket.h \
+		D:/QT/6.8.0/mingw_64/include/QtNetwork/qtcpsocket.h \
+		D:/QT/6.8.0/mingw_64/include/QtNetwork/qabstractsocket.h \
+		D:/QT/6.8.0/mingw_64/include/QtNetwork/qhostaddress.h \
+		D:/QT/6.8.0/mingw_64/include/QtNetwork/qsslerror.h \
+		D:/QT/6.8.0/mingw_64/include/QtNetwork/qsslcertificate.h \
+		D:/QT/6.8.0/mingw_64/include/QtCore/qcryptographichash.h \
+		D:/QT/6.8.0/mingw_64/include/QtCore/qdatetime.h \
+		D:/QT/6.8.0/mingw_64/include/QtCore/qcalendar.h \
+		D:/QT/6.8.0/mingw_64/include/QtNetwork/qssl.h \
+		D:/QT/6.8.0/mingw_64/include/QtCore/QFlags \
+		D:/QT/6.8.0/mingw_64/include/QtNetwork/QSslPreSharedKeyAuthenticator \
+		D:/QT/6.8.0/mingw_64/include/QtNetwork/qsslpresharedkeyauthenticator.h \
+		D:/QT/6.8.0/mingw_64/include/QtCore/QMetaType \
+		D:/QT/6.8.0/mingw_64/include/QtNetwork/QNetworkRequest \
+		D:/QT/6.8.0/mingw_64/include/QtNetwork/QNetworkReply \
+		D:/QT/6.8.0/mingw_64/include/QtNetwork/qnetworkreply.h \
+		D:/QT/6.8.0/mingw_64/include/QtCore/QIODevice \
+		D:/QT/6.8.0/mingw_64/include/QtCore/QEventLoop \
+		D:/QT/6.8.0/mingw_64/include/QtCore/QDebug \
+		D:/QT/6.8.0/mingw_64/include/QtCore/QRegularExpression \
+		D:/QT/6.8.0/mingw_64/include/QtCore/qregularexpression.h \
+		D:/QT/6.8.0/mingw_64/include/QtWidgets/QMessageBox \
+		D:/QT/6.8.0/mingw_64/include/QtWidgets/qmessagebox.h \
+		D:/QT/6.8.0/mingw_64/include/QtWidgets/qdialog.h \
+		D:/QT/6.8.0/mingw_64/include/QtWidgets/qdialogbuttonbox.h \
+		D:/QT/6.8.0/mingw_64/include/QtCore/QUrlQuery \
+		D:/QT/6.8.0/mingw_64/include/QtCore/qurlquery.h \
+		D:/QT/6.8.0/mingw_64/include/QtNetwork/QHttpMultiPart \
+		D:/QT/6.8.0/mingw_64/include/QtNetwork/qhttpmultipart.h \
+		D:/QT/6.8.0/mingw_64/include/QtCore/QByteArray \
+		D:/QT/6.8.0/mingw_64/include/QtNetwork/QNetworkCookieJar \
+		D:/QT/6.8.0/mingw_64/include/QtNetwork/qnetworkcookiejar.h \
+		D:/QT/6.8.0/mingw_64/include/QtGui/QTextDocument \
+		D:/QT/6.8.0/mingw_64/include/QtWidgets/QPlainTextEdit \
+		D:/QT/6.8.0/mingw_64/include/QtWidgets/qplaintextedit.h \
+		D:/QT/6.8.0/mingw_64/include/QtGui/qabstracttextdocumentlayout.h \
+		D:/QT/6.8.0/mingw_64/include/QtGui/qtextlayout.h \
+		D:/QT/6.8.0/mingw_64/include/QtGui/qglyphrun.h \
+		D:/QT/6.8.0/mingw_64/include/QtGui/qrawfont.h \
+		D:/QT/6.8.0/mingw_64/include/QtGui/qfontdatabase.h \
+		D:/QT/6.8.0/mingw_64/include/QtWidgets/QVBoxLayout \
+		D:/QT/6.8.0/mingw_64/include/QtWidgets/qboxlayout.h \
+		D:/QT/6.8.0/mingw_64/include/QtWidgets/qlayout.h \
+		D:/QT/6.8.0/mingw_64/include/QtWidgets/qlayoutitem.h \
+		D:/QT/6.8.0/mingw_64/include/QtWidgets/qgridlayout.h \
+		D:/QT/6.8.0/mingw_64/include/QtWidgets/QScrollBar \
+		D:/QT/6.8.0/mingw_64/include/QtWidgets/qscrollbar.h \
+		D:/QT/6.8.0/mingw_64/include/QtWidgets/qabstractslider.h \
+		D:/QT/6.8.0/mingw_64/include/QtCore/QTimer \
+		D:/QT/6.8.0/mingw_64/include/QtCore/qtimer.h \
+		D:/QT/6.8.0/mingw_64/include/QtCore/qbasictimer.h \
+		D:/QT/6.8.0/mingw_64/include/QtWidgets/QTextBrowser \
+		D:/QT/6.8.0/mingw_64/include/QtWidgets/qtextbrowser.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\mainwindow2.o ..\..\mainwindow2.cpp
 
 debug/qrc_image.o: debug/qrc_image.cpp 

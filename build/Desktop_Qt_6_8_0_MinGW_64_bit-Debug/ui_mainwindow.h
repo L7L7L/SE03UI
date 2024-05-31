@@ -52,6 +52,8 @@ public:
     QLabel *label_7;
     QLabel *label_6;
     QWidget *stackedWidgetPage2_2;
+    QPushButton *pushButton_minimize;
+    QPushButton *pushButton_close;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -59,7 +61,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName("MainWindow");
-        MainWindow->resize(352, 442);
+        MainWindow->resize(370, 485);
         QSizePolicy sizePolicy(QSizePolicy::Policy::Fixed, QSizePolicy::Policy::Fixed);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
@@ -69,6 +71,7 @@ public:
         icon.addFile(QString::fromUtf8("../../AI.png"), QSize(), QIcon::Normal, QIcon::Off);
         MainWindow->setWindowIcon(icon);
         MainWindow->setLayoutDirection(Qt::LeftToRight);
+        MainWindow->setStyleSheet(QString::fromUtf8("background-color:white"));
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName("centralwidget");
         sizePolicy.setHeightForWidth(centralwidget->sizePolicy().hasHeightForWidth());
@@ -76,48 +79,88 @@ public:
         stackedWidget = new QStackedWidget(centralwidget);
         stackedWidget->setObjectName("stackedWidget");
         stackedWidget->setEnabled(true);
-        stackedWidget->setGeometry(QRect(0, 0, 370, 455));
+        stackedWidget->setGeometry(QRect(0, 60, 370, 455));
         stackedWidget->setStyleSheet(QString::fromUtf8("background-color:white"));
         stackedWidgetPage1 = new QWidget();
         stackedWidgetPage1->setObjectName("stackedWidgetPage1");
         label_2 = new QLabel(stackedWidgetPage1);
         label_2->setObjectName("label_2");
-        label_2->setGeometry(QRect(20, 200, 37, 20));
+        label_2->setGeometry(QRect(30, 220, 37, 20));
         pushButton = new QPushButton(stackedWidgetPage1);
         pushButton->setObjectName("pushButton");
-        pushButton->setGeometry(QRect(20, 350, 320, 36));
-        pushButton->setStyleSheet(QString::fromUtf8("background-color : rgb(168, 85, 247);\n"
-"color : white;\n"
+        pushButton->setGeometry(QRect(30, 350, 320, 36));
+        QFont font;
+        pushButton->setFont(font);
+        pushButton->setCursor(QCursor(Qt::PointingHandCursor));
+        pushButton->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+"    background-color: rgb(168, 85, 247); /* \350\256\276\347\275\256\351\273\230\350\256\244\350\203\214\346\231\257\351\242\234\350\211\262 */\n"
+"    color: white; /* \350\256\276\347\275\256\346\226\207\345\255\227\351\242\234\350\211\262 */\n"
+"    border: none; /* \345\216\273\351\231\244\350\276\271\346\241\206 */\n"
+"    padding: 8px 16px; /* \350\256\276\347\275\256\345\206\205\350\276\271\350\267\235 */\n"
+"    border-radius: 4px; /* \350\256\276\347\275\256\345\234\206\350\247\222 */\n"
+"    font-size: 14px; /* \350\256\276\347\275\256\345\255\227\344\275\223\345\244\247\345\260\217 */\n"
+"}\n"
 "\n"
+"QPushButton:hover {\n"
+"    background-color: rgb(148, 65, 227); /* \350\256\276\347\275\256\351\274\240\346\240\207\346\202\254\345\201\234\346\227\266\347\232\204\350\203\214\346\231\257\351\242\234\350\211\262 */\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: rgb(128, 45, 207); /* \350\256\276\347\275\256\346\214\211\344\270\213\346\227\266\347\232\204\350\203\214\346"
+                        "\231\257\351\242\234\350\211\262 */\n"
+"}\n"
 ""));
         lineEdit_2 = new QLineEdit(stackedWidgetPage1);
         lineEdit_2->setObjectName("lineEdit_2");
-        lineEdit_2->setGeometry(QRect(20, 220, 320, 40));
-        lineEdit_2->setStyleSheet(QString::fromUtf8("background-color:rgb(255, 255, 255)"));
+        lineEdit_2->setGeometry(QRect(30, 240, 320, 41));
+        lineEdit_2->setStyleSheet(QString::fromUtf8("QLineEdit {\n"
+"    background-color: rgb(255, 255, 255); /* \350\256\276\347\275\256\350\203\214\346\231\257\351\242\234\350\211\262 */\n"
+"    color: black; /* \350\256\276\347\275\256\346\226\207\346\234\254\351\242\234\350\211\262 */\n"
+"    border: 1px solid rgb(168, 85, 247); /* \350\256\276\347\275\256\350\276\271\346\241\206\351\242\234\350\211\262 */\n"
+"    padding: 4px 8px; /* \350\256\276\347\275\256\345\206\205\350\276\271\350\267\235 */\n"
+"    border-radius: 4px; /* \350\256\276\347\275\256\345\234\206\350\247\222 */\n"
+"}\n"
+"\n"
+"QLineEdit:focus {\n"
+"    border: 1px solid rgb(68, 5, 147); /* \350\256\276\347\275\256\350\201\232\347\204\246\346\227\266\347\232\204\350\276\271\346\241\206\351\242\234\350\211\262 */\n"
+"}\n"
+""));
         lineEdit_2->setEchoMode(QLineEdit::Password);
         checkBox = new QCheckBox(stackedWidgetPage1);
         checkBox->setObjectName("checkBox");
-        checkBox->setGeometry(QRect(20, 290, 81, 18));
+        checkBox->setGeometry(QRect(30, 310, 81, 20));
         checkBox->setStyleSheet(QString::fromUtf8(""));
         label = new QLabel(stackedWidgetPage1);
         label->setObjectName("label");
-        label->setGeometry(QRect(20, 100, 37, 20));
+        label->setGeometry(QRect(30, 120, 37, 20));
         label_3 = new QLabel(stackedWidgetPage1);
         label_3->setObjectName("label_3");
-        label_3->setGeometry(QRect(145, 20, 80, 80));
+        label_3->setGeometry(QRect(150, -10, 80, 80));
         label_3->setPixmap(QPixmap(QString::fromUtf8(":/new/prefix1/image/logo.png")));
         label_3->setScaledContents(true);
         label_3->setWordWrap(false);
         lineEdit = new QLineEdit(stackedWidgetPage1);
         lineEdit->setObjectName("lineEdit");
-        lineEdit->setGeometry(QRect(20, 130, 319, 40));
+        lineEdit->setGeometry(QRect(30, 140, 319, 40));
         lineEdit->setMinimumSize(QSize(250, 40));
-        lineEdit->setStyleSheet(QString::fromUtf8("background-color:rgb(255, 255, 255)"));
+        lineEdit->setStyleSheet(QString::fromUtf8("QLineEdit {\n"
+"    background-color: rgb(255, 255, 255); /* \350\256\276\347\275\256\350\203\214\346\231\257\351\242\234\350\211\262 */\n"
+"    color: black; /* \350\256\276\347\275\256\346\226\207\346\234\254\351\242\234\350\211\262 */\n"
+"    border: 1px solid rgb(168, 85, 247); /* \350\256\276\347\275\256\350\276\271\346\241\206\351\242\234\350\211\262 */\n"
+"    padding: 4px 8px; /* \350\256\276\347\275\256\345\206\205\350\276\271\350\267\235 */\n"
+"    border-radius: 4px; /* \350\256\276\347\275\256\345\234\206\350\247\222 */\n"
+"}\n"
+"\n"
+"QLineEdit:focus {\n"
+"    border: 1px solid rgb(68, 5, 147); /* \350\256\276\347\275\256\350\201\232\347\204\246\346\227\266\347\232\204\350\276\271\346\241\206\351\242\234\350\211\262 */\n"
+"}\n"
+""));
         pushButton_2 = new QPushButton(stackedWidgetPage1);
         pushButton_2->setObjectName("pushButton_2");
-        pushButton_2->setGeometry(QRect(239, 290, 101, 20));
+        pushButton_2->setGeometry(QRect(249, 310, 101, 20));
+        pushButton_2->setCursor(QCursor(Qt::PointingHandCursor));
         pushButton_2->setStyleSheet(QString::fromUtf8("border : none;\n"
-"color : rgb(250, 143, 247)"));
+"color : rgb(68, 5, 147)"));
         stackedWidget->addWidget(stackedWidgetPage1);
         stackedWidgetPage2 = new QWidget();
         stackedWidgetPage2->setObjectName("stackedWidgetPage2");
@@ -129,47 +172,97 @@ public:
         stackedWidgetPage1_2->setObjectName("stackedWidgetPage1_2");
         label_4 = new QLabel(stackedWidgetPage1_2);
         label_4->setObjectName("label_4");
-        label_4->setGeometry(QRect(20, 170, 91, 20));
+        label_4->setGeometry(QRect(30, 170, 91, 20));
         pushButton_3 = new QPushButton(stackedWidgetPage1_2);
         pushButton_3->setObjectName("pushButton_3");
-        pushButton_3->setGeometry(QRect(20, 360, 320, 36));
-        pushButton_3->setStyleSheet(QString::fromUtf8("background-color : rgb(168, 85, 247);\n"
-"color : white;\n"
+        pushButton_3->setGeometry(QRect(30, 360, 320, 36));
+        pushButton_3->setFont(font);
+        pushButton_3->setCursor(QCursor(Qt::PointingHandCursor));
+        pushButton_3->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+"    background-color: rgb(168, 85, 247); /* \350\256\276\347\275\256\351\273\230\350\256\244\350\203\214\346\231\257\351\242\234\350\211\262 */\n"
+"    color: white; /* \350\256\276\347\275\256\346\226\207\345\255\227\351\242\234\350\211\262 */\n"
+"    border: none; /* \345\216\273\351\231\244\350\276\271\346\241\206 */\n"
+"    padding: 8px 16px; /* \350\256\276\347\275\256\345\206\205\350\276\271\350\267\235 */\n"
+"    border-radius: 4px; /* \350\256\276\347\275\256\345\234\206\350\247\222 */\n"
+"    font-size: 14px; /* \350\256\276\347\275\256\345\255\227\344\275\223\345\244\247\345\260\217 */\n"
+"}\n"
 "\n"
+"QPushButton:hover {\n"
+"    background-color: rgb(148, 65, 227); /* \350\256\276\347\275\256\351\274\240\346\240\207\346\202\254\345\201\234\346\227\266\347\232\204\350\203\214\346\231\257\351\242\234\350\211\262 */\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: rgb(128, 45, 207); /* \350\256\276\347\275\256\346\214\211\344\270\213\346\227\266\347\232\204\350\203\214\346"
+                        "\231\257\351\242\234\350\211\262 */\n"
+"}\n"
 ""));
         lineEdit_rPW = new QLineEdit(stackedWidgetPage1_2);
         lineEdit_rPW->setObjectName("lineEdit_rPW");
-        lineEdit_rPW->setGeometry(QRect(20, 190, 320, 40));
-        lineEdit_rPW->setStyleSheet(QString::fromUtf8("background-color:rgb(255, 255, 255)"));
+        lineEdit_rPW->setGeometry(QRect(30, 190, 320, 40));
+        lineEdit_rPW->setStyleSheet(QString::fromUtf8("QLineEdit {\n"
+"    background-color: rgb(255, 255, 255); /* \350\256\276\347\275\256\350\203\214\346\231\257\351\242\234\350\211\262 */\n"
+"    color: black; /* \350\256\276\347\275\256\346\226\207\346\234\254\351\242\234\350\211\262 */\n"
+"    border: 1px solid rgb(168, 85, 247); /* \350\256\276\347\275\256\350\276\271\346\241\206\351\242\234\350\211\262 */\n"
+"    padding: 4px 8px; /* \350\256\276\347\275\256\345\206\205\350\276\271\350\267\235 */\n"
+"    border-radius: 4px; /* \350\256\276\347\275\256\345\234\206\350\247\222 */\n"
+"}\n"
+"\n"
+"QLineEdit:focus {\n"
+"    border: 1px solid rgb(68, 5, 147); /* \350\256\276\347\275\256\350\201\232\347\204\246\346\227\266\347\232\204\350\276\271\346\241\206\351\242\234\350\211\262 */\n"
+"}\n"
+""));
         lineEdit_rPW->setEchoMode(QLineEdit::Password);
         checkBox_2 = new QCheckBox(stackedWidgetPage1_2);
         checkBox_2->setObjectName("checkBox_2");
-        checkBox_2->setGeometry(QRect(20, 330, 101, 18));
-        checkBox_2->setStyleSheet(QString::fromUtf8("color : rgb(250, 143, 247)"));
+        checkBox_2->setGeometry(QRect(30, 320, 101, 20));
+        checkBox_2->setStyleSheet(QString::fromUtf8("color : rgb(68, 5, 147)"));
         label_5 = new QLabel(stackedWidgetPage1_2);
         label_5->setObjectName("label_5");
-        label_5->setGeometry(QRect(20, 90, 81, 20));
+        label_5->setGeometry(QRect(30, 100, 81, 20));
         lineEdit_rEmail = new QLineEdit(stackedWidgetPage1_2);
         lineEdit_rEmail->setObjectName("lineEdit_rEmail");
-        lineEdit_rEmail->setGeometry(QRect(20, 120, 319, 40));
+        lineEdit_rEmail->setGeometry(QRect(30, 120, 319, 40));
         lineEdit_rEmail->setMinimumSize(QSize(250, 40));
-        lineEdit_rEmail->setStyleSheet(QString::fromUtf8("background-color:rgb(255, 255, 255)"));
+        lineEdit_rEmail->setStyleSheet(QString::fromUtf8("QLineEdit {\n"
+"    background-color: rgb(255, 255, 255); /* \350\256\276\347\275\256\350\203\214\346\231\257\351\242\234\350\211\262 */\n"
+"    color: black; /* \350\256\276\347\275\256\346\226\207\346\234\254\351\242\234\350\211\262 */\n"
+"    border: 1px solid rgb(168, 85, 247); /* \350\256\276\347\275\256\350\276\271\346\241\206\351\242\234\350\211\262 */\n"
+"    padding: 4px 8px; /* \350\256\276\347\275\256\345\206\205\350\276\271\350\267\235 */\n"
+"    border-radius: 4px; /* \350\256\276\347\275\256\345\234\206\350\247\222 */\n"
+"}\n"
+"\n"
+"QLineEdit:focus {\n"
+"    border: 1px solid rgb(68, 5, 147); /* \350\256\276\347\275\256\350\201\232\347\204\246\346\227\266\347\232\204\350\276\271\346\241\206\351\242\234\350\211\262 */\n"
+"}\n"
+""));
         pushButton_4 = new QPushButton(stackedWidgetPage1_2);
         pushButton_4->setObjectName("pushButton_4");
-        pushButton_4->setGeometry(QRect(239, 330, 101, 20));
+        pushButton_4->setGeometry(QRect(240, 320, 101, 20));
+        pushButton_4->setCursor(QCursor(Qt::PointingHandCursor));
         pushButton_4->setStyleSheet(QString::fromUtf8("border : none;\n"
-"color : rgb(250, 143, 247)"));
+"color : rgb(68, 5, 147)"));
         lineEdit_rPWconfirm = new QLineEdit(stackedWidgetPage1_2);
         lineEdit_rPWconfirm->setObjectName("lineEdit_rPWconfirm");
-        lineEdit_rPWconfirm->setGeometry(QRect(20, 260, 320, 40));
-        lineEdit_rPWconfirm->setStyleSheet(QString::fromUtf8("background-color:rgb(255, 255, 255)"));
+        lineEdit_rPWconfirm->setGeometry(QRect(30, 260, 320, 40));
+        lineEdit_rPWconfirm->setStyleSheet(QString::fromUtf8("QLineEdit {\n"
+"    background-color: rgb(255, 255, 255); /* \350\256\276\347\275\256\350\203\214\346\231\257\351\242\234\350\211\262 */\n"
+"    color: black; /* \350\256\276\347\275\256\346\226\207\346\234\254\351\242\234\350\211\262 */\n"
+"    border: 1px solid rgb(168, 85, 247); /* \350\256\276\347\275\256\350\276\271\346\241\206\351\242\234\350\211\262 */\n"
+"    padding: 4px 8px; /* \350\256\276\347\275\256\345\206\205\350\276\271\350\267\235 */\n"
+"    border-radius: 4px; /* \350\256\276\347\275\256\345\234\206\350\247\222 */\n"
+"}\n"
+"\n"
+"QLineEdit:focus {\n"
+"    border: 1px solid rgb(68, 5, 147); /* \350\256\276\347\275\256\350\201\232\347\204\246\346\227\266\347\232\204\350\276\271\346\241\206\351\242\234\350\211\262 */\n"
+"}\n"
+""));
         lineEdit_rPWconfirm->setEchoMode(QLineEdit::Password);
         label_7 = new QLabel(stackedWidgetPage1_2);
         label_7->setObjectName("label_7");
-        label_7->setGeometry(QRect(20, 240, 91, 20));
+        label_7->setGeometry(QRect(30, 240, 91, 20));
         label_6 = new QLabel(stackedWidgetPage1_2);
         label_6->setObjectName("label_6");
-        label_6->setGeometry(QRect(145, 20, 80, 80));
+        label_6->setGeometry(QRect(150, -10, 80, 80));
         label_6->setPixmap(QPixmap(QString::fromUtf8(":/new/prefix1/image/logo.png")));
         label_6->setScaledContents(true);
         label_6->setWordWrap(false);
@@ -178,10 +271,49 @@ public:
         stackedWidgetPage2_2->setObjectName("stackedWidgetPage2_2");
         stackedWidget_2->addWidget(stackedWidgetPage2_2);
         stackedWidget->addWidget(stackedWidgetPage2);
+        pushButton_minimize = new QPushButton(centralwidget);
+        pushButton_minimize->setObjectName("pushButton_minimize");
+        pushButton_minimize->setGeometry(QRect(310, 0, 31, 21));
+        QFont font1;
+        font1.setPointSize(22);
+        font1.setStrikeOut(false);
+        pushButton_minimize->setFont(font1);
+        pushButton_minimize->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+"    background-color: rgb(168, 85, 247); /* \350\256\276\347\275\256\351\273\230\350\256\244\350\203\214\346\231\257\351\242\234\350\211\262 */\n"
+"    color: white; /* \350\256\276\347\275\256\346\226\207\345\255\227\351\242\234\350\211\262 */\n"
+"    border: none; /* \345\216\273\351\231\244\350\276\271\346\241\206 */\n"
+"\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"    background-color: rgb(148, 65, 227); /* \350\256\276\347\275\256\351\274\240\346\240\207\346\202\254\345\201\234\346\227\266\347\232\204\350\203\214\346\231\257\351\242\234\350\211\262 */\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: rgb(128, 45, 207); /* \350\256\276\347\275\256\346\214\211\344\270\213\346\227\266\347\232\204\350\203\214\346\231\257\351\242\234\350\211\262 */\n"
+"}\n"
+""));
+        pushButton_close = new QPushButton(centralwidget);
+        pushButton_close->setObjectName("pushButton_close");
+        pushButton_close->setGeometry(QRect(340, 0, 31, 21));
+        pushButton_close->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+"    background-color: rgb(255, 85, 85);\n"
+"    color: white;\n"
+"    border: none;\n"
+"    padding: 4px;\n"
+"\n"
+"}\n"
+"QPushButton:hover {\n"
+"    background-color: rgb(235, 65, 65);\n"
+"}\n"
+"QPushButton:pressed {\n"
+"    background-color: rgb(215, 45, 45);\n"
+"}\n"
+""));
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
-        menubar->setGeometry(QRect(0, 0, 352, 17));
+        menubar->setGeometry(QRect(0, 0, 370, 17));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName("statusbar");
@@ -230,6 +362,8 @@ public:
         lineEdit_rPWconfirm->setText(QString());
         lineEdit_rPWconfirm->setPlaceholderText(QCoreApplication::translate("MainWindow", "\350\257\267\347\241\256\350\256\244\345\257\206\347\240\201", nullptr));
         label_7->setText(QCoreApplication::translate("MainWindow", "\347\241\256\350\256\244\345\257\206\347\240\201", nullptr));
+        pushButton_minimize->setText(QCoreApplication::translate("MainWindow", "-", nullptr));
+        pushButton_close->setText(QCoreApplication::translate("MainWindow", "X", nullptr));
     } // retranslateUi
 
 };
