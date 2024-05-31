@@ -42,7 +42,6 @@ public:
     QScrollArea *scrollArea_docu_of_tag;
     QWidget *scrollAreaWidgetContents_4;
     QPushButton *pushButton;
-    QTextEdit *textEdit;
     QWidget *page_2_Docu_query;
     QPushButton *pushButton_search;
     QLineEdit *lineEdit;
@@ -160,10 +159,11 @@ public:
         scrollArea_docu_of_tag->setWidget(scrollAreaWidgetContents_4);
         pushButton = new QPushButton(page_1_Docu_mange);
         pushButton->setObjectName("pushButton");
-        pushButton->setGeometry(QRect(250, 10, 80, 18));
-        textEdit = new QTextEdit(page_1_Docu_mange);
-        textEdit->setObjectName("textEdit");
-        textEdit->setGeometry(QRect(20, 0, 201, 41));
+        pushButton->setGeometry(QRect(20, 10, 201, 31));
+        pushButton->setStyleSheet(QString::fromUtf8("font-size: 16px;   \n"
+"\n"
+"\n"
+""));
         stackedWidget->addWidget(page_1_Docu_mange);
         page_2_Docu_query = new QWidget();
         page_2_Docu_query->setObjectName("page_2_Docu_query");
@@ -557,15 +557,7 @@ public:
         pushButton_refreshAiHistory->setText(QCoreApplication::translate("MainWindow2", "\345\210\267\346\226\260", nullptr));
         textEdit_question->setPlaceholderText(QCoreApplication::translate("MainWindow2", "\347\273\231\342\200\235AI\342\200\234\345\217\221\346\266\210\346\201\257", nullptr));
         pushButton_question->setText(QCoreApplication::translate("MainWindow2", "\345\217\221\351\200\201", nullptr));
-        pushButton->setText(QCoreApplication::translate("MainWindow2", "PushButton", nullptr));
-        textEdit->setHtml(QCoreApplication::translate("MainWindow2", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"hr { height: 1px; border-width: 0; }\n"
-"li.unchecked::marker { content: \"\\2610\"; }\n"
-"li.checked::marker { content: \"\\2612\"; }\n"
-"</style></head><body style=\" font-family:'Microsoft YaHei UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:24pt; font-weight:700;\">\346\224\266\350\227\217\345\244\271</span></p></body></html>", nullptr));
+        pushButton->setText(QCoreApplication::translate("MainWindow2", "\346\224\266\350\227\217\345\244\271", nullptr));
         pushButton_search->setText(QCoreApplication::translate("MainWindow2", "\346\220\234\347\264\242", nullptr));
         lineEdit->setText(QCoreApplication::translate("MainWindow2", "fuck", nullptr));
         label_name_2->setText(QCoreApplication::translate("MainWindow2", "name", nullptr));

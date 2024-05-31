@@ -70,6 +70,7 @@ private:
     QStringList getTags();
     void display_tags(QStringList &TagList);
     void get_Docu_of_tag(QString tag);
+    void display_Docu_of_tag(QVector<Paper> &papers);
 };
 
 

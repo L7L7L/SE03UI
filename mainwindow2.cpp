@@ -137,6 +137,19 @@ QString qScrollBarStyle = "/* ScrollBar */"
                               "}";
 
 
+QString qbuttonStyle = "QPushButton {"
+                       "   font-size: 15px;"
+                       "   color: black;"
+                       "   border: 2px solid blue;"
+                       "   border-radius: 10px;"
+                       "   background-color: white;"
+                       "}"
+                       "QPushButton:focus {"
+                       "   background-color: blue;"
+                       "   color: white;"
+                       "}";
+
+
 QStringList MainWindow2::getAiHistory()
 {
     QStringList strList;
@@ -941,6 +954,14 @@ void MainWindow2::display_tags(QStringList &TagList)
         QPushButton *button = new QPushButton(tag,this);
         layout->addWidget(button);
         connect(button,&QPushButton::clicked,[this,tag](){get_Docu_of_tag(tag);});
+        //添加占位label
+        layout->addWidget(new QLabel(""));
+
+        button->setStyleSheet(qbuttonStyle);
+        // 自适应高度
+        button->setFixedHeight(50);
+        // textEdit->document()->adjustSize();
+        // textEdit->setFixedHeight(480);
     }
 
 
@@ -953,16 +974,214 @@ void MainWindow2::display_tags(QStringList &TagList)
 
 void MainWindow2::on_pushButton_clicked()
 {
+    ui->pushButton->setEnabled(0);
     QStringList Tag = this->getTags();
     this->display_tags(Tag);
+    ui->pushButton->setEnabled(1);
 }
 
 void MainWindow2::get_Docu_of_tag(QString tag)
 {
-    qWarning()<< tag;
+    QVector<Paper> papers;
+    QString searchUrl = "http://62.234.28.172:5656/system/star_query/";
+    QNetworkRequest request((QUrl(searchUrl)));
+
+    // 发送GET请求
+    QNetworkReply *reply = manager.get(request);
+
+    // 等待请求完成
+    QEventLoop loop;
+    QObject::connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+    loop.exec();
+
+    // 检查请求状态
+    if (reply->error() != QNetworkReply::NoError) {
+        qWarning() << "Error:" << reply->errorString();
+        reply->deleteLater();
+        return;
+    }
+
+    // 读取响应内容
+    QString response = reply->readAll();
+    reply->deleteLater();
+
+    QString pattern = "<input\\s+type=\"hidden\"\\s+name=\"csrfmiddlewaretoken\"\\s+value=\"([^\"]*)\">";
+    static QRegularExpression regex(pattern);
+
+    // 匹配csrfToken
+    QRegularExpressionMatch match = regex.match(response);
+    QString csrfToken;
+    if (match.hasMatch()) {
+        csrfToken = match.captured();
+        // std::cout<<csrfToken.toStdString()<<"\n";
+        csrfToken = csrfToken.right(66);
+        csrfToken = csrfToken.left(64);
+        // std::cout<<csrfToken.toStdString()<<"\n";
+    } else {
+        return;
+    }
+
+    QNetworkRequest searchRequest((QUrl(searchUrl)));
+    searchRequest.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+    searchRequest.setRawHeader("Referer", searchUrl.toUtf8());
+
+    QUrlQuery params;
+    params.addQueryItem("star_query_input", tag);
+    params.addQueryItem("star_query_button", "get_star_type_results");
+    params.addQueryItem("csrfmiddlewaretoken", csrfToken);
+    // qWarning()<<csrfToken;
+    // qWarning()<<params.toString();
+    QNetworkReply *searchReply = manager.post(searchRequest, params.query(QUrl::FullyEncoded).toUtf8());
+
+
+
+    QEventLoop loop2;
+    QObject::connect(searchReply,&QNetworkReply::finished,&loop2,&QEventLoop::quit);
+    loop2.exec();
+
+    // 检查请求状态
+    if (searchReply->error() != QNetworkReply::NoError) {
+        qWarning() << "Error:" << searchReply->errorString();
+        searchReply->deleteLater();
+        return;
+    }
+
+    // 读取响应内容
+    QString html = searchReply->readAll();
+    searchReply->deleteLater();
+
+    // 取出有用的部分
+    QString start_marker = "#*#*#*论文项目开始#*#*#*";
+    QString end_marker = "#*#*#*论文项目结束#*#*#*";
+    int start_pos = 0;
+
+    while ((start_pos = html.indexOf(start_marker, start_pos)) != -1) {
+        int end_pos = html.indexOf(end_marker, start_pos);
+        if (end_pos == -1) break;
+
+        // 匹配多个空格
+        static QRegularExpression regExp("\\s+");
+
+        QString project = html.mid(start_pos, end_pos - start_pos);
+        start_pos = end_pos + end_marker.length();
+        // 读取标题并整理格式
+        QString title = project.mid(
+            project.indexOf("#*#*#*标题开始#*#*#*") + 16,
+            project.indexOf("#*#*#*标题结束#*#*#*") - project.indexOf("#*#*#*标题开始#*#*#*") - 16
+            );
+        title = title.remove('\n').trimmed().replace(regExp, " ");
+
+
+        // 读取作者并整理格式
+        QString author = project.mid(
+            project.indexOf("#*#*#*作者开始#*#*#*") + 16,
+            project.indexOf("#*#*#*作者结束#*#*#*") - project.indexOf("#*#*#*作者开始#*#*#*") - 16
+            );
+        author = author.remove('\n').trimmed().replace(regExp, " ");
+
+        // 读取发布时间并整理格式
+        QString publicTime = project.mid(
+            project.indexOf("#*#*#*时间开始#*#*#*") + 16,
+            project.indexOf("#*#*#*时间结束#*#*#*") - project.indexOf("#*#*#*时间开始#*#*#*") - 16
+            );
+        publicTime = publicTime.remove('\n').trimmed().replace(regExp, " ");
+
+        // 读取摘要并整理格式
+        QString abstractText = project.mid(
+            project.indexOf("#*#*#*摘要开始#*#*#*") + 16,
+            project.indexOf("#*#*#*摘要结束#*#*#*") - project.indexOf("#*#*#*摘要开始#*#*#*") - 16
+            );
+        abstractText = abstractText.remove('\n').trimmed().replace(regExp, " ");
+
+
+        // 读取paperUrl并整理格式
+        QString paperUrl = project.mid(
+            project.indexOf("#*#*#*论文地址开始#*#*#*") + 18,
+            project.indexOf("#*#*#*论文地址结束#*#*#*") - project.indexOf("#*#*#*论文地址开始#*#*#*") - 18
+            );
+        paperUrl = paperUrl.remove('\n').trimmed().replace(regExp, " ");
+
+        // 读取pdfUrl并整理格式
+        QString pdfUrl = project.mid(
+            project.indexOf("#*#*#*pdf地址开始#*#*#*") + 19,
+            project.indexOf("#*#*#*pdf地址结束#*#*#*") - project.indexOf("#*#*#*pdf地址开始#*#*#*") - 19
+            );
+        pdfUrl = pdfUrl.remove('\n').trimmed().replace(regExp, " ");
+
+        // 新建 Paper 并将之加入返回的向量
+        Paper newPaper(title, author, publicTime, abstractText, paperUrl, pdfUrl);
+        papers.append(newPaper);
+
+    }
+    display_Docu_of_tag(papers);
+    return;
 }
 
-void display_Docu_of_tag()
-{
 
+void MainWindow2::display_Docu_of_tag(QVector<Paper> &papers)
+{
+    ui->scrollArea_docu_of_tag->setWidgetResizable(true);
+
+    // 创建内部widget和布局
+    QWidget *scrollWidget = new QWidget;
+    QVBoxLayout *layout = new QVBoxLayout(scrollWidget);
+
+
+    //没搜到
+    if(papers.empty())
+    {
+        // layout->addWidget(new QLabel(i%2==0 ? "用户：" : "AI："));
+        QTextBrowser *textEdit = new QTextBrowser();
+        // QTextBrowser *textBrowser = new QTextBrowser;
+        // 设置风格
+        textEdit->setStyleSheet(qTextStyle);
+
+        textEdit->setHtml("<h1>没有搜索到相关结果</h1>");
+        textEdit->setOpenExternalLinks(true);
+        // 不要滚动条
+        textEdit->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        textEdit->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+        textEdit->setReadOnly(true); //只读
+        //添加占位label
+        layout->addWidget(textEdit);
+        layout->addWidget(new QLabel(""));
+
+        // 自适应高度
+        textEdit->document()->adjustSize();
+        textEdit->setFixedHeight(480);
+    }
+
+    // 添加到布局中
+    for(int i=0 ; i<papers.size() ; i++)
+    {
+
+        // layout->addWidget(new QLabel(i%2==0 ? "用户：" : "AI："));
+        QTextBrowser *textEdit = new QTextBrowser();
+        // QTextBrowser *textBrowser = new QTextBrowser;
+        // 设置风格
+        textEdit->setStyleSheet(qTextStyle);
+
+        textEdit->setHtml(papers[i].toHtml());
+        textEdit->setOpenExternalLinks(true);
+        // 不要滚动条
+        textEdit->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        textEdit->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+        textEdit->setReadOnly(true); //只读
+        //添加占位label
+        layout->addWidget(textEdit);
+        layout->addWidget(new QLabel(""));
+
+        // 自适应高度
+        textEdit->document()->adjustSize();
+        auto h = textEdit->document()->size().height();
+        textEdit->setFixedHeight((h + 10 > 40 ? h + 10 : 40));
+    }
+    scrollWidget->setLayout(layout);
+    ui->scrollArea_docu_of_tag->setWidget(scrollWidget);
+    //滚动到最底部
+    QScrollBar *vScrollBar = ui->scrollArea_docu_of_tag->verticalScrollBar();
+    // vScrollBar->setValue(vScrollBar->maximum());
+    vScrollBar->setStyleSheet(qScrollBarStyle);
 }

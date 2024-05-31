@@ -52,7 +52,7 @@
      <string notr="true">background-color:white</string>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="stackedWidgetPage1">
      <widget class="QLabel" name="label_2">
@@ -224,7 +224,7 @@ QLineEdit:focus {
 </string>
       </property>
       <property name="text">
-       <string>456@qq.com</string>
+       <string>123@qq.com</string>
       </property>
       <property name="placeholderText">
        <string>请输入邮箱</string>
