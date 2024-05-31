@@ -346,9 +346,28 @@ MainWindow2::MainWindow2(QWidget *parent)
     this->on_stackedWidget_currentChanged();
 
     // 给语言选择框添加选项
-    ui->comboBox_language->addItem("简体中文");
-    ui->comboBox_language->addItem("繁体中文");
-    ui->comboBox_language->addItem("英语");
+    ui->comboBox_language->addItem("简体中文"); // Simplified Chinese
+    ui->comboBox_language->addItem("繁体中文"); // Traditional Chinese
+    ui->comboBox_language->addItem("英语");     // English
+    ui->comboBox_language->addItem("西班牙语"); // Spanish
+    ui->comboBox_language->addItem("阿拉伯语"); // Arabic
+    ui->comboBox_language->addItem("法语");     // French
+    ui->comboBox_language->addItem("德语");     // German
+    ui->comboBox_language->addItem("葡萄牙语"); // Portuguese
+    ui->comboBox_language->addItem("俄语");     // Russian
+    ui->comboBox_language->addItem("日语");     // Japanese
+    ui->comboBox_language->addItem("韩语");     // Korean
+    ui->comboBox_language->addItem("意大利语"); // Italian
+    ui->comboBox_language->addItem("荷兰语");   // Dutch
+    ui->comboBox_language->addItem("希腊语");   // Greek
+    ui->comboBox_language->addItem("波兰语");   // Polish
+    ui->comboBox_language->addItem("瑞典语");   // Swedish
+    ui->comboBox_language->addItem("土耳其语"); // Turkish
+    ui->comboBox_language->addItem("希伯来语"); // Hebrew
+    ui->comboBox_language->addItem("印地语");   // Hindi
+    ui->comboBox_language->addItem("泰语");     // Thai
+    ui->comboBox_language->addItem("越南语");   // Vietnamese
+
     ui->comboBox_language->setCurrentIndex(0);
 }
 
@@ -774,14 +793,15 @@ void MainWindow2::on_pushButton_translate_clicked()
     }
     if(isSendingMessage == true)
     {
-        QMessageBox::warning(nullptr, "无法使用", "AI正在思考");
+        QMessageBox::warning(nullptr, "翻译失败", "AI正在思考其他事情，请等待...");
         return;
     }
     auto textToTranslate = ui->textEdit_translate->toPlainText();
     auto originalAiText = ui->textEdit_question->toPlainText();
 
-
-
+    ui->textEdit_question->setPlainText("请把以下内容翻译成"+ui->comboBox_language->currentText()+"\n\n\n"+textToTranslate);
+    ui->stackedWidget->setCurrentWidget(ui->page_0_AI_chat);
+    on_pushButton_question_clicked();
 
     ui->textEdit_question->setText(originalAiText);
 
