@@ -329,6 +329,7 @@ MainWindow2::MainWindow2(QWidget *parent)
     ui->setupUi(this);
     // manager.post()
     ui->label_name->setText("当前用户："+email);
+    ui->label_name_2->setText("邮箱："+email);
     on_pushButton_refreshAiHistory_clicked();
 
     // 设置固定窗口
@@ -774,7 +775,7 @@ void MainWindow2::on_pushButton_translate_page_clicked()
 
 void MainWindow2::on_textEdit_translate_textChanged()
 {
-    if(ui->textEdit->toPlainText()!=""&& !isSendingMessage)
+    if(ui->textEdit_translate->toPlainText()!=""&& !isSendingMessage)
     {
         ui->pushButton_translate->setEnabled(true);
     }
