@@ -53,6 +53,8 @@ private slots:
 
     void on_pushButton_translate_clicked();
 
+    void on_pushButton_clicked();
+
 protected:
     void mousePressEvent(QMouseEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
@@ -65,6 +67,9 @@ private:
     QStringList history;
     QStringList getAiHistory();
     void question_to_AI(QString question);
+    QStringList getTags();
+    void display_tags(QStringList &TagList);
+    void get_Docu_of_tag(QString tag);
 };
 
 

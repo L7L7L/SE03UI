@@ -808,3 +808,161 @@ void MainWindow2::on_pushButton_translate_clicked()
 
 }
 
+QStringList MainWindow2::getTags()
+{
+    QStringList TagList;
+    QString mainUrl = "http://62.234.28.172:5656/system/star_query/";
+    QNetworkRequest request((QUrl(mainUrl)));
+
+    // 发送GET请求
+    QNetworkReply *reply = manager.get(request);
+
+    // 等待请求完成
+    QEventLoop loop;
+    QObject::connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+    loop.exec();
+
+    // 检查请求状态
+    if (reply->error() != QNetworkReply::NoError) {
+        qWarning() << "Error:" << reply->errorString();
+        reply->deleteLater();
+        return TagList;
+    }
+
+    // 读取响应内容
+    QString response = reply->readAll();
+    reply->deleteLater();
+
+    QString pattern = "<input\\s+type=\"hidden\"\\s+name=\"csrfmiddlewaretoken\"\\s+value=\"([^\"]*)\">";
+    static QRegularExpression regex(pattern);
+
+    // 匹配csrfToken
+    QRegularExpressionMatch match = regex.match(response);
+    QString csrfToken;
+    if (match.hasMatch()) {
+        csrfToken = match.captured();
+        // std::cout<<csrfToken.toStdString()<<"\n";
+        csrfToken = csrfToken.right(66);
+        csrfToken = csrfToken.left(64);
+        // std::cout<<csrfToken.toStdString()<<"\n";
+    } else {
+        return TagList;
+    }
+
+    QNetworkRequest TagsRequest((QUrl(mainUrl)));
+    TagsRequest.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+    TagsRequest.setRawHeader("Referer", mainUrl.toUtf8());
+
+    QUrlQuery params;
+    params.addQueryItem("get_all_star_tag_button", "get_all_star_tag");
+    params.addQueryItem("csrfmiddlewaretoken", csrfToken);
+    // qWarning()<<csrfToken;
+    // qWarning()<<params.toString();
+    QNetworkReply *TagsReply = manager.post(TagsRequest, params.query(QUrl::FullyEncoded).toUtf8());
+
+
+
+    QEventLoop loop2;
+    QObject::connect(TagsReply, &QNetworkReply::finished, &loop2, &QEventLoop::quit);
+    loop2.exec();
+
+    // 检查请求状态
+    if (TagsReply->error() != QNetworkReply::NoError) {
+        qWarning() << "Error:" << TagsReply->errorString();
+        TagsReply->deleteLater();
+        return TagList;
+    }
+
+    // 读取响应内容
+    QString TagsResponse = TagsReply->readAll();
+    TagsReply->deleteLater();
+
+    // 取出有用的部分
+    QString startMarker = "*#*#*# 标签开始 *#*#*#";
+    QString endMarker = "*#*#*# 标签结束 *#*#*#";
+
+    int startIndex = TagsResponse.indexOf(startMarker);
+    int endIndex = TagsResponse.indexOf(endMarker);
+
+    if (startIndex != -1 && endIndex != -1 && startIndex < endIndex) {
+        startIndex += startMarker.length(); // 移动到开始标记之后的位置
+        TagsResponse = TagsResponse.mid(startIndex, endIndex - startIndex);
+    } else {
+        qDebug() << "Tag未找到标记或标记顺序不正确";
+        return TagList;
+    }
+
+    QStringList rawTags = TagsResponse.split("*#*#");
+    static QRegularExpression regExp("\\s+");
+    for (QString tag : rawTags)
+    {
+        tag=tag.remove('\n').trimmed().replace(regExp," ");
+        if(tag!="")
+        {
+            TagList.append(tag);  // 修剪标签并添加到 TagList 中
+        }
+    }
+
+    return TagList;
+}
+
+
+
+void MainWindow2::display_tags(QStringList &TagList)
+{
+    ui->scrollArea_tags->setWidgetResizable(true);
+
+    //创建内部widget和布局
+    QWidget *scrollWidget = new QWidget;
+    QVBoxLayout * layout = new QVBoxLayout(scrollWidget);
+
+    if(TagList.empty())
+    {
+        QTextBrowser *textEdit = new QTextBrowser();
+        textEdit->setStyleSheet(qTextStyle);
+        textEdit->setHtml("<h1>网络链接故障</h1>");
+        textEdit->setOpenExternalLinks(true);
+        // 不要滚动条
+        textEdit->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        textEdit->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+        textEdit->setReadOnly(true); //只读
+        //添加占位label
+        layout->addWidget(textEdit);
+        layout->addWidget(new QLabel(""));
+
+        // 自适应高度
+        textEdit->document()->adjustSize();
+        textEdit->setFixedHeight(100);
+    }
+
+    for ( const QString &tag : TagList)
+    {
+        QPushButton *button = new QPushButton(tag,this);
+        layout->addWidget(button);
+        connect(button,&QPushButton::clicked,[this,tag](){get_Docu_of_tag(tag);});
+    }
+
+
+    scrollWidget->setLayout(layout);
+    ui->scrollArea_tags->setWidget(scrollWidget);
+    //滚动到最底部
+    QScrollBar *vScrollBar = ui->scrollArea_tags->verticalScrollBar();
+    vScrollBar->setStyleSheet(qScrollBarStyle);
+}
+
+void MainWindow2::on_pushButton_clicked()
+{
+    QStringList Tag = this->getTags();
+    this->display_tags(Tag);
+}
+
+void MainWindow2::get_Docu_of_tag(QString tag)
+{
+    qWarning()<< tag;
+}
+
+void display_Docu_of_tag()
+{
+
+}
