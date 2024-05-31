@@ -391,9 +391,9 @@ QComboBox:focus {
    <widget class="QPushButton" name="pushButton_Document_manage_page">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>110</y>
-      <width>101</width>
+      <x>0</x>
+      <y>130</y>
+      <width>130</width>
       <height>51</height>
      </rect>
     </property>
@@ -433,9 +433,9 @@ QPushButton:pressed {
    <widget class="QPushButton" name="pushButton_AI__chat_page">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>170</y>
-      <width>101</width>
+      <x>0</x>
+      <y>190</y>
+      <width>130</width>
       <height>51</height>
      </rect>
     </property>
@@ -472,9 +472,9 @@ QPushButton:pressed {
    <widget class="QPushButton" name="pushButton_Document_query_page">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>290</y>
-      <width>101</width>
+      <x>0</x>
+      <y>310</y>
+      <width>130</width>
       <height>51</height>
      </rect>
     </property>
@@ -511,9 +511,9 @@ QPushButton:pressed {
    <widget class="QPushButton" name="pushButton_translate_page">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>230</y>
-      <width>101</width>
+      <x>0</x>
+      <y>250</y>
+      <width>130</width>
       <height>51</height>
      </rect>
     </property>
@@ -550,9 +550,9 @@ QPushButton:pressed {
    <widget class="QPushButton" name="pushButton_task">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>350</y>
-      <width>101</width>
+      <x>0</x>
+      <y>370</y>
+      <width>130</width>
       <height>51</height>
      </rect>
     </property>
@@ -589,9 +589,9 @@ QPushButton:pressed {
    <widget class="QPushButton" name="pushButton_Mine_page">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>410</y>
-      <width>101</width>
+      <x>0</x>
+      <y>430</y>
+      <width>130</width>
       <height>51</height>
      </rect>
     </property>
@@ -629,9 +629,9 @@ QPushButton:pressed {
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>0</y>
-      <width>54</width>
-      <height>54</height>
+      <y>-10</y>
+      <width>61</width>
+      <height>61</height>
      </rect>
     </property>
     <property name="pixmap">
@@ -712,9 +712,9 @@ QPushButton:pressed {
    <widget class="QPushButton" name="pushButton_pure">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>470</y>
-      <width>101</width>
+      <x>0</x>
+      <y>490</y>
+      <width>130</width>
       <height>51</height>
      </rect>
     </property>
@@ -751,9 +751,9 @@ QPushButton:pressed {
    <widget class="QPushButton" name="pushButton_selected">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>530</y>
-      <width>101</width>
+      <x>0</x>
+      <y>550</y>
+      <width>130</width>
       <height>51</height>
      </rect>
     </property>
@@ -806,6 +806,61 @@ QPushButton:pressed {
      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
     </property>
    </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>-10</x>
+      <y>60</y>
+      <width>141</width>
+      <height>591</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:rgb(198, 125, 255)</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_name_3">
+    <property name="geometry">
+     <rect>
+      <x>530</x>
+      <y>30</y>
+      <width>91</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>学术助手</string>
+    </property>
+    <property name="textFormat">
+     <enum>Qt::PlainText</enum>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <zorder>stackedWidget</zorder>
+   <zorder>label</zorder>
+   <zorder>pushButton_Document_manage_page</zorder>
+   <zorder>pushButton_AI__chat_page</zorder>
+   <zorder>pushButton_Document_query_page</zorder>
+   <zorder>pushButton_translate_page</zorder>
+   <zorder>pushButton_task</zorder>
+   <zorder>pushButton_Mine_page</zorder>
+   <zorder>label_3</zorder>
+   <zorder>pushButton_minimize</zorder>
+   <zorder>pushButton_close</zorder>
+   <zorder>pushButton_pure</zorder>
+   <zorder>pushButton_selected</zorder>
+   <zorder>label_name</zorder>
+   <zorder>label_name_3</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
