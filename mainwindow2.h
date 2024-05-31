@@ -47,6 +47,12 @@ private slots:
 
     void on_stackedWidget_currentChanged();
 
+    void on_pushButton_translate_page_clicked();
+
+    void on_textEdit_translate_textChanged();
+
+    void on_pushButton_translate_clicked();
+
 protected:
     void mousePressEvent(QMouseEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;

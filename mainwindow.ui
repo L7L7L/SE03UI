@@ -102,6 +102,11 @@ QPushButton:hover {
 QPushButton:pressed {
     background-color: rgb(128, 45, 207); /* 设置按下时的背景颜色 */
 }
+
+QPushButton:disabled {
+    background-color: rgb(200, 200, 200); /* 设置禁用时的背景颜色 */
+    color: rgb(150, 150, 150); /* 设置禁用时的文字颜色 */
+}
 </string>
       </property>
       <property name="text">

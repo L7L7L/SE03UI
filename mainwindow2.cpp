@@ -345,6 +345,11 @@ MainWindow2::MainWindow2(QWidget *parent)
     //设置按钮的样式（读取哪个是选中滚动）
     this->on_stackedWidget_currentChanged();
 
+    // 给语言选择框添加选项
+    ui->comboBox_language->addItem("简体中文");
+    ui->comboBox_language->addItem("繁体中文");
+    ui->comboBox_language->addItem("英语");
+    ui->comboBox_language->setCurrentIndex(0);
 }
 
 MainWindow2::~MainWindow2()
@@ -429,7 +434,6 @@ void MainWindow2::displaySearchResult(const QVector<Paper>& papers)
 
         // 自适应高度
         textEdit->document()->adjustSize();
-        auto h = textEdit->document()->size().height();
         textEdit->setFixedHeight(480);
     }
 
@@ -715,7 +719,7 @@ void MainWindow2::on_stackedWidget_currentChanged()
     ui->pushButton_Document_query_page->setStyleSheet(pureStyle);
     ui->pushButton_Mine_page->setStyleSheet(pureStyle);
     ui->pushButton_task->setStyleSheet(pureStyle);
-    ui->pushButton_translate->setStyleSheet(pureStyle);
+    ui->pushButton_translate_page->setStyleSheet(pureStyle);
 
     if(ui->stackedWidget->currentWidget() == ui->page_0_AI_chat)
     {
@@ -740,5 +744,46 @@ void MainWindow2::on_stackedWidget_currentChanged()
 
 
     //To be added
+}
+
+
+void MainWindow2::on_pushButton_translate_page_clicked()
+{
+    ui->stackedWidget->setCurrentWidget(ui->page_4_translate);
+}
+
+
+void MainWindow2::on_textEdit_translate_textChanged()
+{
+    if(ui->textEdit->toPlainText()!=""&& !isSendingMessage)
+    {
+        ui->pushButton_translate->setEnabled(true);
+    }
+    else
+    {
+        ui->pushButton_translate->setEnabled(false);
+    }
+}
+
+
+void MainWindow2::on_pushButton_translate_clicked()
+{
+    if(ui->pushButton_translate->isEnabled() == false)
+    {
+        return;
+    }
+    if(isSendingMessage == true)
+    {
+        QMessageBox::warning(nullptr, "无法使用", "AI正在思考");
+        return;
+    }
+    auto textToTranslate = ui->textEdit_translate->toPlainText();
+    auto originalAiText = ui->textEdit_question->toPlainText();
+
+
+
+
+    ui->textEdit_question->setText(originalAiText);
+
 }
 

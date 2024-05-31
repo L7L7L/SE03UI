@@ -21,7 +21,7 @@
     <property name="geometry">
      <rect>
       <x>130</x>
-      <y>70</y>
+      <y>60</y>
       <width>901</width>
       <height>1031</height>
      </rect>
@@ -30,7 +30,7 @@
      <string notr="true">background-color:#FAFAFA</string>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="page_0_AI_chat">
      <widget class="QScrollArea" name="scrollArea_history">
@@ -124,6 +124,11 @@ QPushButton:hover {
 
 QPushButton:pressed {
     background-color: rgb(128, 45, 207); /* 设置按下时的背景颜色 */
+}
+
+QPushButton:disabled {
+    background-color: rgb(200, 200, 200); /* 设置禁用时的背景颜色 */
+    color: rgb(150, 150, 150); /* 设置禁用时的文字颜色 */
 }
 </string>
       </property>
@@ -262,6 +267,109 @@ li.checked::marker { content: &quot;\2612&quot;; }
       </property>
      </widget>
     </widget>
+    <widget class="QWidget" name="page_4_translate">
+     <widget class="QPushButton" name="pushButton_translate">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>760</x>
+        <y>500</y>
+        <width>81</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+    background-color: rgb(168, 85, 247); /* 设置默认背景颜色 */
+    color: white; /* 设置文字颜色 */
+    border: none; /* 去除边框 */
+    padding: 8px 16px; /* 设置内边距 */
+    border-radius: 4px; /* 设置圆角 */
+    font-size: 14px; /* 设置字体大小 */
+}
+
+QPushButton:hover {
+    background-color: rgb(148, 65, 227); /* 设置鼠标悬停时的背景颜色 */
+}
+
+QPushButton:pressed {
+    background-color: rgb(128, 45, 207); /* 设置按下时的背景颜色 */
+}
+
+QPushButton:disabled {
+    background-color: rgb(200, 200, 200); /* 设置禁用时的背景颜色 */
+    color: rgb(150, 150, 150); /* 设置禁用时的文字颜色 */
+}
+</string>
+      </property>
+      <property name="text">
+       <string>AI翻译</string>
+      </property>
+     </widget>
+     <widget class="QTextEdit" name="textEdit_translate">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>30</y>
+        <width>821</width>
+        <height>451</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QTextEdit {
+    background-color: rgb(255, 255, 255); /* 设置背景颜色 */
+    color: black; /* 设置文本颜色 */
+    border: 1px solid rgb(168, 85, 247); /* 设置边框颜色 */
+    padding: 4px 8px; /* 设置内边距 */
+    border-radius: 4px; /* 设置圆角 */
+}
+
+QTextEdit:focus {
+    border: 1px solid rgb(68, 5, 127); /* 设置聚焦时的边框颜色 */
+}
+</string>
+      </property>
+      <property name="placeholderText">
+       <string>输入要翻译的内容</string>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="comboBox_language">
+      <property name="geometry">
+       <rect>
+        <x>620</x>
+        <y>500</y>
+        <width>131</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QComboBox {
+    background-color: rgb(255, 255, 255); /* 设置背景颜色 */
+    color: black; /* 设置文本颜色 */
+    border: 1px solid rgb(168, 85, 247); /* 设置边框颜色 */
+    padding: 4px 8px; /* 设置内边距 */
+    border-radius: 4px; /* 设置圆角 */
+}
+
+QComboBox:focus {
+    border: 1px solid rgb(68, 5, 127); /* 设置聚焦时的边框颜色 */
+}
+
+</string>
+      </property>
+      <property name="currentText">
+       <string/>
+      </property>
+      <property name="currentIndex">
+       <number>-1</number>
+      </property>
+      <property name="placeholderText">
+       <string/>
+      </property>
+     </widget>
+    </widget>
    </widget>
    <widget class="QPushButton" name="pushButton_Document_manage_page">
     <property name="geometry">
@@ -383,7 +491,7 @@ QPushButton:pressed {
      <string>搜索</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_translate">
+   <widget class="QPushButton" name="pushButton_translate_page">
     <property name="geometry">
      <rect>
       <x>10</x>
