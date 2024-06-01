@@ -189,6 +189,9 @@ MainWindow2::MainWindow2(QWidget *parent)
 
     ui->comboBox_language->setCurrentIndex(0);
     ui->pushButton_tags->setEnabled(0);
+
+    //限制页数输入
+    ui->lineEdit_display_page->setValidator(new QIntValidator(0, 0, ui->lineEdit_display_page));
 }
 
 MainWindow2::~MainWindow2()
@@ -272,6 +275,9 @@ void MainWindow2::on_pushButton_search_clicked()
                                     QString::number(ui->comboBox_sorttype->currentIndex()),
                                     QString::number(ui->comboBox_sortorder->currentIndex()));
     this->Page_searchResult_n=std::ceil(Paper_searchResult.size()/5.0);
+    //限制页数输入
+    ui->lineEdit_display_page->setValidator(new QIntValidator(0, this->Page_searchResult_n, ui->lineEdit_display_page));
+
     this->display_serchResult_n=1;
     displaySearchResult(Paper_searchResult.mid(0,5));
     this->ui->label_of_searchpaper_num->setText("/"+(QString::number(this->Page_searchResult_n)));
@@ -626,8 +632,18 @@ void MainWindow2::displayHistory()
 
     for(int i=0 ; i<history.size() ; i++)
     {
+        QLabel* labelTalker = new QLabel(i%2==0 ? "用户" : "AI");
+        QFont font;
+        font.setFamily("微软雅黑");  // 设置字体族
+        font.setPointSize(20);    // 设置字体大小
+        font.setBold(true);       // 设置粗体
+        labelTalker->setFont(font);
+        if(i%2==0)
+        {
+            labelTalker->setAlignment(Qt::AlignRight);
+        }
+        layout->addWidget(labelTalker);
 
-        layout->addWidget(new QLabel(i%2==0 ? "用户：" : "AI："));
         QTextEdit *textEdit = new QTextEdit();
         // 设置风格
         textEdit->setStyleSheet(qTextStyle);
@@ -636,20 +652,39 @@ void MainWindow2::displayHistory()
         {
             lastAiTextEdit = textEdit;
         }
-        textEdit->setPlainText(history[i]);
+        history[i].replace("\n", "<br>");
+        textEdit->setHtml(history[i]);
         // 不要滚动条
         textEdit->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         textEdit->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
         textEdit->setReadOnly(true); //只读
+
+
+
+
+        if(i%2==0)
+        {
+            // 创建一个水平布局用于放置 textEdit
+            QHBoxLayout *hLayout = new QHBoxLayout();
+            hLayout->addSpacerItem(new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Minimum));
+            hLayout->addWidget(textEdit);
+            // 将水平布局添加到主垂直布局中
+            layout->addLayout(hLayout);
+        }
+        else
+        {
+            layout->addWidget(textEdit);
+        }
         //添加占位label
-        layout->addWidget(textEdit);
         layout->addWidget(new QLabel(""));
 
         // 自适应高度
         textEdit->document()->adjustSize();
         auto h = textEdit->document()->size().height();
-        textEdit->setFixedHeight((h + 10 > 40 ? h + 10 : 40));
+        // auto w = textEdit->document()->size().width();
+        textEdit->setFixedHeight(h+10);
+        textEdit->setFixedWidth(600);
     }
     scrollWidget->setLayout(layout);
     ui->scrollArea_history->setWidget(scrollWidget);
@@ -1099,12 +1134,27 @@ QStringList MainWindow2::getTags()
 //渲染收藏夹
 void MainWindow2::display_tags(QStringList &TagList)
 {
-    ui->scrollArea_tags->setWidgetResizable(true);
 
+
+    ui->listWidget_tag->clear();
+    ui->listWidget_tag->addItems(TagList);
+    if(!TagList.empty())
+    {
+        ui->listWidget_tag->setCurrentRow(0);
+    }
+
+    //QScrollBar *scrollBar = new QScrollBar(Qt::Vertical, this);
+    //scrollBar->setStyleSheet(qScrollBarStyle);
+
+
+    //->listWidget_tag->addScrollBarWidget(scrollBar, Qt::AlignRight);
     //创建内部widget和布局
     QWidget *scrollWidget = new QWidget;
     QVBoxLayout * layout = new QVBoxLayout(scrollWidget);
-
+    for (auto it: TagList)
+    {
+        qWarning()<<it;
+    }
     if(TagList.empty())
     {
         QTextBrowser *textEdit = new QTextBrowser();
@@ -1125,27 +1175,7 @@ void MainWindow2::display_tags(QStringList &TagList)
         textEdit->setFixedHeight(100);
     }
 
-    for ( const QString &tag : TagList)
-    {
-        QPushButton *button = new QPushButton(tag,this);
-        layout->addWidget(button);
-        connect(button,&QPushButton::clicked,[this,tag](){get_Docu_of_tag(tag);});
-        //添加占位label
-        layout->addWidget(new QLabel(""));
-
-        button->setStyleSheet(qbuttonStyle);
-        // 自适应高度
-        button->setFixedHeight(50);
-        // textEdit->document()->adjustSize();
-        // textEdit->setFixedHeight(480);
-    }
-
-
     scrollWidget->setLayout(layout);
-    ui->scrollArea_tags->setWidget(scrollWidget);
-    //滚动到最底部
-    QScrollBar *vScrollBar = ui->scrollArea_tags->verticalScrollBar();
-    vScrollBar->setStyleSheet(qScrollBarStyle);
 }
 
 void MainWindow2::on_pushButton_tags_clicked()
@@ -1313,7 +1343,7 @@ void MainWindow2::display_Docu_of_tag(QVector<Paper> &papers)
         // 设置风格
         textEdit->setStyleSheet(qTextStyle);
 
-        textEdit->setHtml("<h1>没有搜索到相关结果</h1>");
+        textEdit->setHtml("<h1>没有文献可以展示</h1><h3>该收藏夹没有文献，或者您还未选中任何收藏夹。</h3><h3>您可以在搜索页面查找并收藏文献！</h3>");
         textEdit->setOpenExternalLinks(true);
         // 不要滚动条
         textEdit->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -1359,7 +1389,7 @@ void MainWindow2::display_Docu_of_tag(QVector<Paper> &papers)
 
         QHBoxLayout *layoutH = new QHBoxLayout;
 
-        //收藏按钮
+        //取消收藏按钮
         QPushButton *buttonStar = new QPushButton("取消收藏");
         buttonStar->setStyleSheet(ui->pushButton_search->styleSheet());
         auto paperUrl = papers[i].paperUrl;
@@ -1367,7 +1397,14 @@ void MainWindow2::display_Docu_of_tag(QVector<Paper> &papers)
             {
             disstarPaper(paperUrl, buttonStar);
             on_pushButton_tags_clicked();
+
+            // auto Tags = getTags();
+            // if(Tags.contains(this->now_tag) == false)
+            // {
+            //     this->now_tag = "default";
+            // }
             this->get_Docu_of_tag(this->now_tag);
+
             });
 
         //下载按钮
@@ -1479,10 +1516,35 @@ void MainWindow2::on_lineEdit_returnPressed()
 }
 
 
+void MainWindow2::on_listWidget_tag_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous)
+{
+    if(!current)
+    {
+        get_Docu_of_tag("");
+        //ui->listWidget_tag->setCurrentRow(0);
+        return;
+    }
+    get_Docu_of_tag(current->text());
+}
+
+void MainWindow2::on_pushButton_tagsFliter_clicked()
+{
+    QString keyword = ui->lineEdit_tagKeyword->text();
+    auto originalTags = getTags();
+    QStringList Tags;
+    for(auto it: originalTags)
+    {
+        if(it.contains(keyword))
+        {
+            Tags.push_back(it);
+        }
+    }
+    display_tags(Tags);
+}
 
 
-
-
-
-
+void MainWindow2::on_lineEdit_tagKeyword_returnPressed()
+{
+    on_pushButton_tagsFliter_clicked();
+}
 

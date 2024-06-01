@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QComboBox>
+#include <QListWidgetItem>
 #include <QPushButton>
 
 namespace Ui {
@@ -64,6 +65,12 @@ private slots:
     void on_pushButton_last_pgae_clicked();
     void on_pushButton_next_pgae_clicked();
     void on_lineEdit_display_page_returnPressed();
+
+    void on_listWidget_tag_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
+
+    void on_pushButton_tagsFliter_clicked();
+
+    void on_lineEdit_tagKeyword_returnPressed();
 
 protected:
     void mousePressEvent(QMouseEvent *event) override;

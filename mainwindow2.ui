@@ -30,7 +30,7 @@
      <string notr="true">background-color:#FAFAFA</string>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="page_0_AI_chat">
      <widget class="QScrollArea" name="scrollArea_history">
@@ -138,29 +138,6 @@ QPushButton:disabled {
      </widget>
     </widget>
     <widget class="QWidget" name="page_1_Docu_mange">
-     <widget class="QScrollArea" name="scrollArea_tags">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>40</y>
-        <width>200</width>
-        <height>501</height>
-       </rect>
-      </property>
-      <property name="widgetResizable">
-       <bool>true</bool>
-      </property>
-      <widget class="QWidget" name="scrollAreaWidgetContents_3">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>0</y>
-         <width>198</width>
-         <height>499</height>
-        </rect>
-       </property>
-      </widget>
-     </widget>
      <widget class="QScrollArea" name="scrollArea_docu_of_tag">
       <property name="geometry">
        <rect>
@@ -184,7 +161,73 @@ QPushButton:disabled {
        </property>
       </widget>
      </widget>
-     <widget class="QPushButton" name="pushButton_tags">
+     <widget class="QListWidget" name="listWidget_tag">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>40</y>
+        <width>201</width>
+        <height>421</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QListWidget {
+    background-color: rgb(255, 255, 255); /* 设置背景颜色 */
+    color: black; /* 设置文本颜色 */
+    border: 1px solid rgb(168, 85, 247); /* 设置边框颜色 */
+    padding: 4px; /* 设置内边距 */
+    border-radius: 4px; /* 设置圆角 */
+}
+
+QListWidget::item {
+    background-color: transparent; /* 默认情况下的项目背景颜色 */
+    padding: 8px; /* 项目内边距 */
+    border: none; /* 无边框 */
+}
+
+QListWidget::item:selected {
+    background-color: rgb(168, 85, 247); /* 选中项目的背景颜色 */
+    color: white; /* 选中项目的文本颜色 */
+}
+
+QListWidget::item:hover {
+    background-color: rgb(200, 150, 247); /* 鼠标悬停时的背景颜色 */
+    color: black; /* 鼠标悬停时的文本颜色 */
+}
+
+QScrollArea {
+    background-color: rgb(255, 255, 255); /* 设置背景颜色 */
+    border: 1px solid rgb(168, 85, 247); /* 设置边框颜色 */
+    border-radius: 4px; /* 设置圆角 */
+}
+
+QScrollBar:vertical {
+    border: none;
+    background-color: rgb(240, 240, 240); /* 滚动条背景颜色 */
+    width: 12px; /* 滚动条宽度 */
+    margin: 2px 0 2px 0; /* 滚动条与内容间的间距 */
+    border-radius: 4px; /* 滚动条圆角 */
+}
+
+QScrollBar::handle:vertical {
+    background-color: rgb(168, 85, 247); /* 滚动条滑块颜色 */
+    min-height: 20px; /* 滑块最小高度 */
+    border-radius: 4px; /* 滑块圆角 */
+}
+
+QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
+    border: none;
+    background: none;
+}
+
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+    background: none;
+}
+
+</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_starTags">
       <property name="geometry">
        <rect>
         <x>20</x>
@@ -194,19 +237,144 @@ QPushButton:disabled {
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">QPushButton {
-    background-color: rgb(0, 85, 255); /* 设置默认背景颜色 */
-    color: white; /* 设置文字颜色 */
+       <string notr="true">
+background-color:rgb(198, 125, 255);
+color: white; /* 设置文字颜色 */
     border: none; /* 去除边框 */
-    font-size: 18px; /* 设置字体大小 */
-}
+    padding: 8px 16px; /* 设置内边距 */
 
-</string>
+    font-size: 14px; /* 设置字体大小 */</string>
       </property>
       <property name="text">
        <string>收藏夹</string>
       </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
      </widget>
+     <widget class="QLineEdit" name="lineEdit_tagKeyword">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>470</y>
+        <width>121</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QLineEdit {
+    background-color: rgb(255, 255, 255); /* 设置背景颜色 */
+    color: black; /* 设置文本颜色 */
+    border: 1px solid rgb(168, 85, 247); /* 设置边框颜色 */
+    padding: 4px 8px; /* 设置内边距 */
+    border-radius: 4px; /* 设置圆角 */
+}
+
+QLineEdit:focus {
+    border: 1px solid rgb(68, 5, 147); /* 设置聚焦时的边框颜色 */
+}
+</string>
+      </property>
+      <property name="text">
+       <string>de</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_tags">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>510</y>
+        <width>191</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+    background-color: rgb(168, 85, 247); /* 设置默认背景颜色 */
+    color: white; /* 设置文字颜色 */
+    border: none; /* 去除边框 */
+    padding: 8px 16px; /* 设置内边距 */
+    border-radius: 4px; /* 设置圆角 */
+    font-size: 14px; /* 设置字体大小 */
+}
+
+QPushButton:hover {
+    background-color: rgb(148, 65, 227); /* 设置鼠标悬停时的背景颜色 */
+}
+
+QPushButton:pressed {
+    background-color: rgb(128, 45, 207); /* 设置按下时的背景颜色 */
+}
+</string>
+      </property>
+      <property name="text">
+       <string>清除筛选</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_staContent">
+      <property name="geometry">
+       <rect>
+        <x>220</x>
+        <y>10</y>
+        <width>621</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">
+background-color:rgb(118, 25, 205);
+color: white; /* 设置文字颜色 */
+    border: none; /* 去除边框 */
+    padding: 8px 16px; /* 设置内边距 */
+
+    font-size: 14px; /* 设置字体大小 */</string>
+      </property>
+      <property name="text">
+       <string>内容</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_tagsFliter">
+      <property name="geometry">
+       <rect>
+        <x>140</x>
+        <y>470</y>
+        <width>71</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+    background-color: rgb(168, 85, 247); /* 设置默认背景颜色 */
+    color: white; /* 设置文字颜色 */
+    border: none; /* 去除边框 */
+    padding: 8px 16px; /* 设置内边距 */
+    border-radius: 4px; /* 设置圆角 */
+    font-size: 14px; /* 设置字体大小 */
+}
+
+QPushButton:hover {
+    background-color: rgb(148, 65, 227); /* 设置鼠标悬停时的背景颜色 */
+}
+
+QPushButton:pressed {
+    background-color: rgb(128, 45, 207); /* 设置按下时的背景颜色 */
+}
+</string>
+      </property>
+      <property name="text">
+       <string>筛选</string>
+      </property>
+     </widget>
+     <zorder>label_starTags</zorder>
+     <zorder>scrollArea_docu_of_tag</zorder>
+     <zorder>listWidget_tag</zorder>
+     <zorder>lineEdit_tagKeyword</zorder>
+     <zorder>pushButton_tags</zorder>
+     <zorder>label_staContent</zorder>
+     <zorder>pushButton_tagsFliter</zorder>
     </widget>
     <widget class="QWidget" name="page_2_Docu_query">
      <widget class="QPushButton" name="pushButton_search">
