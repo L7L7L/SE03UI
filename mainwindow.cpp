@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "mainwindow2.h"
+#include "url.h"
 #include <QCoreApplication>
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
@@ -139,7 +140,7 @@ void MainWindow::on_pushButton_clicked()
         return;
     QString tmpEmail = ui->lineEdit->text();
     QString password = ui->lineEdit_2->text();
-    const QString loginURL = "http://62.234.28.172:5656/system/login/";
+    const QString loginURL = UrlofLogin;
 
     if(tmpEmail.isEmpty())
     {
@@ -337,7 +338,7 @@ void MainWindow::on_pushButton_3_clicked()
     ui->pushButton_3->setStyleSheet("background-color : rgb(90, 90, 90);\ncolor : gray;\n\n");
     ui->pushButton_3->setText("注册中...");
 
-    const QString logonURL = "http://62.234.28.172:5656/system/logon/";
+    const QString logonURL = UrlofLogon;
     int status = logon(logonURL, tmpEmail, password);
     if(status == -1)
     {

@@ -78,6 +78,7 @@ private:
     QStringList getAiHistory();
     void question_to_AI(QString question);
     QStringList getTags();
+    QString now_tag;
     void display_tags(QStringList &TagList);
     void get_Docu_of_tag(QString tag);
     void display_Docu_of_tag(QVector<Paper> &papers);
@@ -240,7 +241,7 @@ private:
     QVector<Paper> Paper_searchResult;//论文查询结果
     int Page_searchResult_n = 0;
     int display_serchResult_n = 0;
-
+    void disstarPaper(QString paperUrl, QPushButton* button);
 };
 
 struct Paper

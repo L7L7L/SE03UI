@@ -170,8 +170,12 @@ public:
         pushButton_tags = new QPushButton(page_1_Docu_mange);
         pushButton_tags->setObjectName("pushButton_tags");
         pushButton_tags->setGeometry(QRect(20, 10, 201, 31));
-        pushButton_tags->setStyleSheet(QString::fromUtf8("font-size: 16px;   \n"
-"\n"
+        pushButton_tags->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+"    background-color: rgb(0, 85, 255); /* \350\256\276\347\275\256\351\273\230\350\256\244\350\203\214\346\231\257\351\242\234\350\211\262 */\n"
+"    color: white; /* \350\256\276\347\275\256\346\226\207\345\255\227\351\242\234\350\211\262 */\n"
+"    border: none; /* \345\216\273\351\231\244\350\276\271\346\241\206 */\n"
+"    font-size: 18px; /* \350\256\276\347\275\256\345\255\227\344\275\223\345\244\247\345\260\217 */\n"
+"}\n"
 "\n"
 ""));
         stackedWidget->addWidget(page_1_Docu_mange);
@@ -684,7 +688,7 @@ public:
 
         retranslateUi(MainWindow2);
 
-        stackedWidget->setCurrentIndex(2);
+        stackedWidget->setCurrentIndex(1);
         comboBox_field->setCurrentIndex(-1);
         comboBox_sorttype->setCurrentIndex(-1);
         comboBox_sortorder->setCurrentIndex(-1);

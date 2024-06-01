@@ -1,5 +1,6 @@
 #include "mainwindow2.h"
 #include "ui_mainwindow2.h"
+#include "url.h"
 #include <QCoreApplication>
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
@@ -187,8 +188,7 @@ MainWindow2::MainWindow2(QWidget *parent)
     ui->comboBox_language->addItem("越南语");   // Vietnamese
 
     ui->comboBox_language->setCurrentIndex(0);
-
-    ui->lineEdit_display_page->setAlignment(Qt::AlignLeft);
+    ui->pushButton_tags->setEnabled(0);
 }
 
 MainWindow2::~MainWindow2()
@@ -245,6 +245,7 @@ void MainWindow2::on_pushButton_AI__chat_page_clicked()
 void MainWindow2::on_pushButton_Document_manage_page_clicked()
 {
     ui->stackedWidget->setCurrentIndex(1);
+    on_pushButton_tags_clicked();
 }
 
 void MainWindow2::on_pushButton_Document_query_page_clicked()
@@ -453,7 +454,7 @@ void MainWindow2::mouseReleaseEvent(QMouseEvent *event) {
 QStringList MainWindow2::getAiHistory()
 {
     QStringList strList;
-    QString mainUrl = "http://62.234.28.172:5656/system/main/";
+    QString mainUrl = UrlofMain;
     QNetworkRequest request((QUrl(mainUrl)));
 
     // 发送GET请求
@@ -547,7 +548,7 @@ QStringList MainWindow2::getAiHistory()
 void MainWindow2::question_to_AI(QString question)
 {
     // QStringList strList;
-    QString mainUrl = "http://62.234.28.172:5656/system/main/";
+    QString mainUrl = UrlofMain;
     QNetworkRequest request((QUrl(mainUrl)));
 
     // 发送GET请求
@@ -664,7 +665,7 @@ void MainWindow2::displayHistory()
 QVector<Paper> MainWindow2::paperSearch(const QString &keyword, const QString &field, const QString &sortType, const QString &sortOrder)
 {
     QVector<Paper> papers;
-    QString searchUrl = "http://62.234.28.172:5656/system/paper_query/";
+    QString searchUrl = UrlofQuery;
     QNetworkRequest request((QUrl(searchUrl)));
 
     // 发送GET请求
@@ -807,7 +808,7 @@ void MainWindow2::starPaper(QString paperUrl, QComboBox* tagBox, QPushButton* bu
     QString originalText = button->text();
     button->setText("收藏中");
     button->setEnabled(0);
-    QString searchUrl = "http://62.234.28.172:5656/system/paper_query/";
+    QString searchUrl = UrlofQuery;
     QNetworkRequest request((QUrl(searchUrl)));
 
     // 发送GET请求
@@ -880,6 +881,8 @@ void MainWindow2::starPaper(QString paperUrl, QComboBox* tagBox, QPushButton* bu
         button->setText(originalText);
         button->setEnabled(1);
     });
+    //刷新收藏夹
+    on_pushButton_tags_clicked();
 }
 
 //渲染搜索结果
@@ -999,7 +1002,7 @@ void MainWindow2::displaySearchResult(const QVector<Paper>& papers)
 QStringList MainWindow2::getTags()
 {
     QStringList TagList;
-    QString mainUrl = "http://62.234.28.172:5656/system/star_query/";
+    QString mainUrl = UrlofStar;
     QNetworkRequest request((QUrl(mainUrl)));
 
     // 发送GET请求
@@ -1157,7 +1160,7 @@ void MainWindow2::on_pushButton_tags_clicked()
 void MainWindow2::get_Docu_of_tag(QString tag)
 {
     QVector<Paper> papers;
-    QString searchUrl = "http://62.234.28.172:5656/system/star_query/";
+    QString searchUrl = UrlofStar;
     QNetworkRequest request((QUrl(searchUrl)));
 
     // 发送GET请求
@@ -1287,6 +1290,7 @@ void MainWindow2::get_Docu_of_tag(QString tag)
         papers.append(newPaper);
 
     }
+    this->now_tag=tag;
     display_Docu_of_tag(papers);
     return;
 }
@@ -1325,6 +1329,8 @@ void MainWindow2::display_Docu_of_tag(QVector<Paper> &papers)
         textEdit->setFixedHeight(480);
     }
 
+    QStringList Tags = getTags();
+
     // 添加到布局中
     for(int i=0 ; i<papers.size() ; i++)
     {
@@ -1342,14 +1348,50 @@ void MainWindow2::display_Docu_of_tag(QVector<Paper> &papers)
         textEdit->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
         textEdit->setReadOnly(true); //只读
-        //添加占位label
+        //添加到布局中
         layout->addWidget(textEdit);
-        layout->addWidget(new QLabel(""));
+
 
         // 自适应高度
         textEdit->document()->adjustSize();
         auto h = textEdit->document()->size().height();
-        textEdit->setFixedHeight((h + 10 > 40 ? h + 10 : 40));
+        textEdit->setFixedHeight(h);
+
+        QHBoxLayout *layoutH = new QHBoxLayout;
+
+        //收藏按钮
+        QPushButton *buttonStar = new QPushButton("取消收藏");
+        buttonStar->setStyleSheet(ui->pushButton_search->styleSheet());
+        auto paperUrl = papers[i].paperUrl;
+        connect(buttonStar, &QPushButton::clicked, [this, paperUrl, buttonStar]()
+            {
+            disstarPaper(paperUrl, buttonStar);
+            on_pushButton_tags_clicked();
+            this->get_Docu_of_tag(this->now_tag);
+            });
+
+        //下载按钮
+        QPushButton *buttonPdf = new QPushButton("下载pdf");
+        buttonPdf->setStyleSheet(ui->pushButton_search->styleSheet());
+        auto pdfUrl = papers[i].pdfUrl;
+        connect(buttonPdf, &QPushButton::clicked, [pdfUrl]() { QDesktopServices::openUrl(pdfUrl); });
+
+        //原文链接按钮
+        QPushButton *buttonLink = new QPushButton("打开原文链接");
+        buttonLink->setStyleSheet(ui->pushButton_search->styleSheet());
+        connect(buttonLink, &QPushButton::clicked, [ paperUrl]() { QDesktopServices::openUrl(paperUrl); });
+
+        //添加空间到布局中
+        layout->addLayout(layoutH);
+
+
+        layoutH->addWidget(buttonStar);
+        layoutH->addWidget(new QLabel(" "));
+        layoutH->addWidget(buttonPdf);
+        layoutH->addWidget(buttonLink);
+        //添加占位label
+        layout->addWidget(new QLabel("\n\n"));
+
     }
     scrollWidget->setLayout(layout);
     ui->scrollArea_docu_of_tag->setWidget(scrollWidget);
@@ -1357,6 +1399,78 @@ void MainWindow2::display_Docu_of_tag(QVector<Paper> &papers)
     QScrollBar *vScrollBar = ui->scrollArea_docu_of_tag->verticalScrollBar();
     // vScrollBar->setValue(vScrollBar->maximum());
     vScrollBar->setStyleSheet(qScrollBarStyle);
+}
+
+void MainWindow2::disstarPaper(QString paperUrl, QPushButton* button)
+{
+    QString originalText = button->text();
+    button->setText("取消收藏中");
+    button->setEnabled(0);
+    QString searchUrl = UrlofStar;
+    QNetworkRequest request((QUrl(searchUrl)));
+
+    // 发送GET请求
+    QNetworkReply *reply = manager.get(request);
+
+    // 等待请求完成
+    QEventLoop loop;
+    QObject::connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+    loop.exec();
+
+    // 检查请求状态
+    if (reply->error() != QNetworkReply::NoError) {
+        qWarning() << "Error:" << reply->errorString();
+        reply->deleteLater();
+        button->setText(originalText);
+        button->setEnabled(0);
+        return;
+
+    }
+
+    // 读取响应内容
+    QString response = reply->readAll();
+    reply->deleteLater();
+
+    QString pattern = "<input\\s+type=\"hidden\"\\s+name=\"csrfmiddlewaretoken\"\\s+value=\"([^\"]*)\">";
+    static QRegularExpression regex(pattern);
+
+    // 匹配csrfToken
+    QRegularExpressionMatch match = regex.match(response);
+    QString csrfToken;
+    if (match.hasMatch()) {
+        csrfToken = match.captured();
+        // std::cout<<csrfToken.toStdString()<<"\n";
+        csrfToken = csrfToken.right(66);
+        csrfToken = csrfToken.left(64);
+        // std::cout<<csrfToken.toStdString()<<"\n";
+    } else {
+        button->setText(originalText);
+        button->setEnabled(1);
+        return;
+    }
+
+    QNetworkRequest aiQuestionRequest((QUrl(searchUrl)));
+    aiQuestionRequest.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+    aiQuestionRequest.setRawHeader("Referer", searchUrl.toUtf8());
+
+    QUrlQuery params;
+    params.addQueryItem("entry_id", paperUrl);
+    params.addQueryItem("cancel_button", "cancel_collect");
+    params.addQueryItem("csrfmiddlewaretoken", csrfToken);
+    QNetworkReply *starQuestionReply = manager.post(aiQuestionRequest, params.query(QUrl::FullyEncoded).toUtf8());
+
+    QEventLoop loop2;
+    QObject::connect(starQuestionReply, &QNetworkReply::finished, &loop2, &QEventLoop::quit);
+    loop2.exec();
+
+    // 检查请求状态
+    if (starQuestionReply->error() != QNetworkReply::NoError) {
+        qWarning() << "Error:" << starQuestionReply->errorString();
+        starQuestionReply->deleteLater();
+        button->setText(originalText);
+        button->setEnabled(1);
+        return;
+    }
 }
 
 void MainWindow2::on_lineEdit_returnPressed()
