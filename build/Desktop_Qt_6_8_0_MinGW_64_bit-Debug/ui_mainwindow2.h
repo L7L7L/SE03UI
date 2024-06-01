@@ -53,6 +53,10 @@ public:
     QComboBox *comboBox_sorttype;
     QComboBox *comboBox_sortorder;
     QLabel *label_sortorder;
+    QPushButton *pushButton_last_pgae;
+    QPushButton *pushButton_next_pgae;
+    QLabel *label_of_searchpaper_num;
+    QLineEdit *lineEdit_display_page;
     QWidget *page_3_mine;
     QLabel *label_name_2;
     QLabel *label_profile;
@@ -212,11 +216,11 @@ public:
 ""));
         scrollArea_search = new QScrollArea(page_2_Docu_query);
         scrollArea_search->setObjectName("scrollArea_search");
-        scrollArea_search->setGeometry(QRect(20, 50, 821, 491));
+        scrollArea_search->setGeometry(QRect(20, 50, 821, 471));
         scrollArea_search->setWidgetResizable(true);
         scrollAreaWidgetContents_2 = new QWidget();
         scrollAreaWidgetContents_2->setObjectName("scrollAreaWidgetContents_2");
-        scrollAreaWidgetContents_2->setGeometry(QRect(0, 0, 819, 489));
+        scrollAreaWidgetContents_2->setGeometry(QRect(0, 0, 819, 469));
         scrollArea_search->setWidget(scrollAreaWidgetContents_2);
         comboBox_field = new QComboBox(page_2_Docu_query);
         comboBox_field->setObjectName("comboBox_field");
@@ -289,6 +293,51 @@ public:
         label_sortorder->setCursor(QCursor(Qt::PointingHandCursor));
         label_sortorder->setTextFormat(Qt::PlainText);
         label_sortorder->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
+        pushButton_last_pgae = new QPushButton(page_2_Docu_query);
+        pushButton_last_pgae->setObjectName("pushButton_last_pgae");
+        pushButton_last_pgae->setGeometry(QRect(670, 530, 40, 20));
+        pushButton_last_pgae->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+"    background-color: rgb(168, 85, 247); /* \350\256\276\347\275\256\351\273\230\350\256\244\350\203\214\346\231\257\351\242\234\350\211\262 */\n"
+"    color: white; /* \350\256\276\347\275\256\346\226\207\345\255\227\351\242\234\350\211\262 */\n"
+"    border: none; /* \345\216\273\351\231\244\350\276\271\346\241\206 */\n"
+"    border-radius: 4px; /* \350\256\276\347\275\256\345\234\206\350\247\222 */\n"
+"    font-size: 10px; /* \350\256\276\347\275\256\345\255\227\344\275\223\345\244\247\345\260\217 */\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"    background-color: rgb(148, 65, 227); /* \350\256\276\347\275\256\351\274\240\346\240\207\346\202\254\345\201\234\346\227\266\347\232\204\350\203\214\346\231\257\351\242\234\350\211\262 */\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: rgb(128, 45, 207); /* \350\256\276\347\275\256\346\214\211\344\270\213\346\227\266\347\232\204\350\203\214\346\231\257\351\242\234\350\211\262 */\n"
+"}\n"
+""));
+        pushButton_next_pgae = new QPushButton(page_2_Docu_query);
+        pushButton_next_pgae->setObjectName("pushButton_next_pgae");
+        pushButton_next_pgae->setGeometry(QRect(800, 530, 40, 20));
+        pushButton_next_pgae->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+"    background-color: rgb(168, 85, 247); /* \350\256\276\347\275\256\351\273\230\350\256\244\350\203\214\346\231\257\351\242\234\350\211\262 */\n"
+"    color: white; /* \350\256\276\347\275\256\346\226\207\345\255\227\351\242\234\350\211\262 */\n"
+"    border: none; /* \345\216\273\351\231\244\350\276\271\346\241\206 */\n"
+"    border-radius: 4px; /* \350\256\276\347\275\256\345\234\206\350\247\222 */\n"
+"    font-size: 10px; /* \350\256\276\347\275\256\345\255\227\344\275\223\345\244\247\345\260\217 */\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"    background-color: rgb(148, 65, 227); /* \350\256\276\347\275\256\351\274\240\346\240\207\346\202\254\345\201\234\346\227\266\347\232\204\350\203\214\346\231\257\351\242\234\350\211\262 */\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: rgb(128, 45, 207); /* \350\256\276\347\275\256\346\214\211\344\270\213\346\227\266\347\232\204\350\203\214\346\231\257\351\242\234\350\211\262 */\n"
+"}\n"
+""));
+        label_of_searchpaper_num = new QLabel(page_2_Docu_query);
+        label_of_searchpaper_num->setObjectName("label_of_searchpaper_num");
+        label_of_searchpaper_num->setGeometry(QRect(760, 530, 40, 20));
+        lineEdit_display_page = new QLineEdit(page_2_Docu_query);
+        lineEdit_display_page->setObjectName("lineEdit_display_page");
+        lineEdit_display_page->setGeometry(QRect(720, 530, 31, 20));
+        lineEdit_display_page->setStyleSheet(QString::fromUtf8("border: 1px solid rgb(168, 85, 247);"));
         stackedWidget->addWidget(page_2_Docu_query);
         label_sortorder->raise();
         pushButton_search->raise();
@@ -299,6 +348,10 @@ public:
         comboBox_sorttype->raise();
         comboBox_sortorder->raise();
         comboBox_field->raise();
+        pushButton_last_pgae->raise();
+        pushButton_next_pgae->raise();
+        label_of_searchpaper_num->raise();
+        lineEdit_display_page->raise();
         page_3_mine = new QWidget();
         page_3_mine->setObjectName("page_3_mine");
         label_name_2 = new QLabel(page_3_mine);
@@ -631,7 +684,7 @@ public:
 
         retranslateUi(MainWindow2);
 
-        stackedWidget->setCurrentIndex(1);
+        stackedWidget->setCurrentIndex(2);
         comboBox_field->setCurrentIndex(-1);
         comboBox_sorttype->setCurrentIndex(-1);
         comboBox_sortorder->setCurrentIndex(-1);
@@ -649,7 +702,7 @@ public:
         pushButton_question->setText(QCoreApplication::translate("MainWindow2", "\345\217\221\351\200\201", nullptr));
         pushButton_tags->setText(QCoreApplication::translate("MainWindow2", "\346\224\266\350\227\217\345\244\271", nullptr));
         pushButton_search->setText(QCoreApplication::translate("MainWindow2", "\346\220\234\347\264\242", nullptr));
-        lineEdit->setText(QCoreApplication::translate("MainWindow2", "fuck", nullptr));
+        lineEdit->setText(QCoreApplication::translate("MainWindow2", "DQN", nullptr));
         comboBox_field->setCurrentText(QString());
         comboBox_field->setPlaceholderText(QString());
         label_field->setText(QCoreApplication::translate("MainWindow2", "\351\242\206\345\237\237\357\274\232", nullptr));
@@ -659,6 +712,10 @@ public:
         comboBox_sortorder->setCurrentText(QString());
         comboBox_sortorder->setPlaceholderText(QString());
         label_sortorder->setText(QCoreApplication::translate("MainWindow2", "\346\216\222\345\272\217\346\226\271\345\274\217\357\274\232", nullptr));
+        pushButton_last_pgae->setText(QCoreApplication::translate("MainWindow2", "\344\270\212\344\270\200\351\241\265", nullptr));
+        pushButton_next_pgae->setText(QCoreApplication::translate("MainWindow2", "\344\270\213\344\270\200\351\241\265", nullptr));
+        label_of_searchpaper_num->setText(QCoreApplication::translate("MainWindow2", "/ 0 ", nullptr));
+        lineEdit_display_page->setText(QCoreApplication::translate("MainWindow2", "0", nullptr));
         label_name_2->setText(QCoreApplication::translate("MainWindow2", "name", nullptr));
         label_profile->setText(QCoreApplication::translate("MainWindow2", "\346\210\221\347\232\204\344\277\241\346\201\257\357\274\232", nullptr));
         pushButton_translate->setText(QCoreApplication::translate("MainWindow2", "AI\347\277\273\350\257\221", nullptr));

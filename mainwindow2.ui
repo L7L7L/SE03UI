@@ -30,7 +30,7 @@
      <string notr="true">background-color:#FAFAFA</string>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="page_0_AI_chat">
      <widget class="QScrollArea" name="scrollArea_history">
@@ -264,7 +264,7 @@ QLineEdit:focus {
 </string>
       </property>
       <property name="text">
-       <string>fuck</string>
+       <string>DQN</string>
       </property>
      </widget>
      <widget class="QScrollArea" name="scrollArea_search">
@@ -273,7 +273,7 @@ QLineEdit:focus {
         <x>20</x>
         <y>50</y>
         <width>821</width>
-        <height>491</height>
+        <height>471</height>
        </rect>
       </property>
       <property name="widgetResizable">
@@ -285,7 +285,7 @@ QLineEdit:focus {
          <x>0</x>
          <y>0</y>
          <width>819</width>
-         <height>489</height>
+         <height>469</height>
         </rect>
        </property>
       </widget>
@@ -473,6 +473,97 @@ QComboBox:focus {
        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
       </property>
      </widget>
+     <widget class="QPushButton" name="pushButton_last_pgae">
+      <property name="geometry">
+       <rect>
+        <x>670</x>
+        <y>530</y>
+        <width>40</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+    background-color: rgb(168, 85, 247); /* 设置默认背景颜色 */
+    color: white; /* 设置文字颜色 */
+    border: none; /* 去除边框 */
+    border-radius: 4px; /* 设置圆角 */
+    font-size: 10px; /* 设置字体大小 */
+}
+
+QPushButton:hover {
+    background-color: rgb(148, 65, 227); /* 设置鼠标悬停时的背景颜色 */
+}
+
+QPushButton:pressed {
+    background-color: rgb(128, 45, 207); /* 设置按下时的背景颜色 */
+}
+</string>
+      </property>
+      <property name="text">
+       <string>上一页</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_next_pgae">
+      <property name="geometry">
+       <rect>
+        <x>800</x>
+        <y>530</y>
+        <width>40</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+    background-color: rgb(168, 85, 247); /* 设置默认背景颜色 */
+    color: white; /* 设置文字颜色 */
+    border: none; /* 去除边框 */
+    border-radius: 4px; /* 设置圆角 */
+    font-size: 10px; /* 设置字体大小 */
+}
+
+QPushButton:hover {
+    background-color: rgb(148, 65, 227); /* 设置鼠标悬停时的背景颜色 */
+}
+
+QPushButton:pressed {
+    background-color: rgb(128, 45, 207); /* 设置按下时的背景颜色 */
+}
+</string>
+      </property>
+      <property name="text">
+       <string>下一页</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_of_searchpaper_num">
+      <property name="geometry">
+       <rect>
+        <x>760</x>
+        <y>530</y>
+        <width>40</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>/ 0 </string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_display_page">
+      <property name="geometry">
+       <rect>
+        <x>720</x>
+        <y>530</y>
+        <width>31</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border: 1px solid rgb(168, 85, 247);</string>
+      </property>
+      <property name="text">
+       <string>0</string>
+      </property>
+     </widget>
      <zorder>label_sortorder</zorder>
      <zorder>pushButton_search</zorder>
      <zorder>lineEdit</zorder>
@@ -482,6 +573,10 @@ QComboBox:focus {
      <zorder>comboBox_sorttype</zorder>
      <zorder>comboBox_sortorder</zorder>
      <zorder>comboBox_field</zorder>
+     <zorder>pushButton_last_pgae</zorder>
+     <zorder>pushButton_next_pgae</zorder>
+     <zorder>label_of_searchpaper_num</zorder>
+     <zorder>lineEdit_display_page</zorder>
     </widget>
     <widget class="QWidget" name="page_3_mine">
      <widget class="QLabel" name="label_name_2">
