@@ -55,7 +55,7 @@ private slots:
 
     void on_pushButton_translate_clicked();
 
-    void on_pushButton_clicked();
+    void on_pushButton_tags_clicked();
 
     void starPaper(QString paperUrl, QComboBox* tagBox, QPushButton* button);
 
@@ -77,6 +77,9 @@ private:
     void display_tags(QStringList &TagList);
     void get_Docu_of_tag(QString tag);
     void display_Docu_of_tag(QVector<Paper> &papers);
+    QVector<Paper> paperSearch(const QString &keyword, const QString &field,
+                               const QString &sortType, const QString &sortOrder);
+
 };
 
 
