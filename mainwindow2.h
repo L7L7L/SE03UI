@@ -42,6 +42,8 @@ private slots:
 
     void on_pushButton_Mine_page_clicked();
 
+    void on_pushButton_Daily_push_page_clicked();
+
     void on_pushButton_search_clicked();
 
     void on_pushButton_minimize_clicked();
@@ -71,6 +73,8 @@ private slots:
     void on_pushButton_tagsFliter_clicked();
 
     void on_lineEdit_tagKeyword_returnPressed();
+
+    void on_pushButton_add_interested_clicked();
 
 protected:
     void mousePressEvent(QMouseEvent *event) override;
@@ -249,6 +253,7 @@ private:
     int Page_searchResult_n = 0;
     int display_serchResult_n = 0;
     void disstarPaper(QString paperUrl, QPushButton* button);
+    QStringList get_interested_fields();
 };
 
 struct Paper

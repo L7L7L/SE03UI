@@ -151,6 +151,7 @@ MainWindow2::MainWindow2(QWidget *parent)
         "高能物理-晶格", "高能物理-现象学", "高能物理实验", "高能物理理论"
     };
     ui->comboBox_field->addItems(subjects);
+    ui->comboBox_field_interested->addItems(subjects);
 
     //初始化排序方式的列表框
     ui->comboBox_sorttype->addItem("按相关性");
@@ -192,6 +193,7 @@ MainWindow2::MainWindow2(QWidget *parent)
 
     //限制页数输入
     ui->lineEdit_display_page->setValidator(new QIntValidator(0, 0, ui->lineEdit_display_page));
+
 }
 
 MainWindow2::~MainWindow2()
@@ -259,6 +261,16 @@ void MainWindow2::on_pushButton_Document_query_page_clicked()
 void MainWindow2::on_pushButton_Mine_page_clicked()
 {
     ui->stackedWidget->setCurrentIndex(3);
+}
+
+void MainWindow2::on_pushButton_translate_page_clicked()
+{
+    ui->stackedWidget->setCurrentWidget(ui->page_4_translate);
+}
+
+void MainWindow2::on_pushButton_Daily_push_page_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(5);
 }
 
 //文献搜索按钮
@@ -344,7 +356,7 @@ void MainWindow2::on_stackedWidget_currentChanged()
     ui->pushButton_Document_manage_page->setStyleSheet(pureStyle);
     ui->pushButton_Document_query_page->setStyleSheet(pureStyle);
     ui->pushButton_Mine_page->setStyleSheet(pureStyle);
-    ui->pushButton_task->setStyleSheet(pureStyle);
+    ui->pushButton_Daily_push_page->setStyleSheet(pureStyle);
     ui->pushButton_translate_page->setStyleSheet(pureStyle);
 
     if(ui->stackedWidget->currentWidget() == ui->page_0_AI_chat)
@@ -367,15 +379,20 @@ void MainWindow2::on_stackedWidget_currentChanged()
         ui->pushButton_Mine_page->setStyleSheet(selectedStyle);
     }
 
+    if(ui->stackedWidget->currentWidget() == ui->page_4_translate)
+    {
+        ui->pushButton_translate_page->setStyleSheet(selectedStyle);
+    }
 
+    if(ui->stackedWidget->currentWidget() == ui->page_5_Daliy_push)
+    {
+        ui->pushButton_Daily_push_page->setStyleSheet(selectedStyle);
+    }
 
     //To be added
 }
 
-void MainWindow2::on_pushButton_translate_page_clicked()
-{
-    ui->stackedWidget->setCurrentWidget(ui->page_4_translate);
-}
+
 
 void MainWindow2::on_textEdit_translate_textChanged()
 {
@@ -453,7 +470,10 @@ void MainWindow2::mouseReleaseEvent(QMouseEvent *event) {
     }
 }
 
-
+void MainWindow2::on_lineEdit_returnPressed()
+{
+    on_pushButton_search_clicked();
+}
 
 
 //获取ai对话历史
@@ -1134,8 +1154,6 @@ QStringList MainWindow2::getTags()
 //渲染收藏夹
 void MainWindow2::display_tags(QStringList &TagList)
 {
-
-
     ui->listWidget_tag->clear();
     ui->listWidget_tag->addItems(TagList);
     if(!TagList.empty())
@@ -1510,10 +1528,7 @@ void MainWindow2::disstarPaper(QString paperUrl, QPushButton* button)
     }
 }
 
-void MainWindow2::on_lineEdit_returnPressed()
-{
-    on_pushButton_search_clicked();
-}
+
 
 
 void MainWindow2::on_listWidget_tag_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous)
@@ -1546,5 +1561,127 @@ void MainWindow2::on_pushButton_tagsFliter_clicked()
 void MainWindow2::on_lineEdit_tagKeyword_returnPressed()
 {
     on_pushButton_tagsFliter_clicked();
+}
+
+
+QStringList MainWindow2::get_interested_fields()
+{
+    QStringList fields;
+    QString searchUrl = UrlofPush;
+    QNetworkRequest request((QUrl(searchUrl)));
+
+    // 发送GET请求
+    QNetworkReply *reply = manager.get(request);
+
+    // 等待请求完成
+    QEventLoop loop;
+    QObject::connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+    loop.exec();
+
+    // 检查请求状态
+    if (reply->error() != QNetworkReply::NoError) {
+        qWarning() << "Error:" << reply->errorString();
+        reply->deleteLater();
+        return fields;
+    }
+
+    // 读取响应内容
+    QString response = reply->readAll();
+    reply->deleteLater();
+
+    QString pattern = "<input\\s+type=\"hidden\"\\s+name=\"csrfmiddlewaretoken\"\\s+value=\"([^\"]*)\">";
+    static QRegularExpression regex(pattern);
+
+    // 匹配csrfToken
+    QRegularExpressionMatch match = regex.match(response);
+    QString csrfToken;
+    if (match.hasMatch()) {
+        csrfToken = match.captured();
+        // std::cout<<csrfToken.toStdString()<<"\n";
+        csrfToken = csrfToken.right(66);
+        csrfToken = csrfToken.left(64);
+        // std::cout<<csrfToken.toStdString()<<"\n";
+    } else {
+        return fields;
+    }
+
+    QNetworkRequest fieldsRequest((QUrl(searchUrl)));
+    fieldsRequest.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+    fieldsRequest.setRawHeader("Referer", searchUrl.toUtf8());
+
+    QUrlQuery params;
+    params.addQueryItem("csrfmiddlewaretoken", csrfToken);
+    QNetworkReply *fieldsReply = manager.post(fieldsRequest, params.query(QUrl::FullyEncoded).toUtf8());
+
+
+
+    QEventLoop loop2;
+    QObject::connect(fieldsReply,&QNetworkReply::finished,&loop2,&QEventLoop::quit);
+    loop2.exec();
+
+    // 检查请求状态
+    if (fieldsReply->error() != QNetworkReply::NoError) {
+        qWarning() << "Error:" << fieldsReply->errorString();
+        fieldsReply->deleteLater();
+        return fields;
+    }
+
+    // 读取响应内容
+    QString html = fieldsReply->readAll();
+    fieldsReply->deleteLater();
+
+    // 取出有用的部分
+    QString start_marker = "***";
+    QString end_marker = "###";
+    int startIndex = html.indexOf(start_marker);
+    int endIndex = html.indexOf(end_marker);
+
+    if(startIndex != -1 && endIndex != -1 && startIndex < endIndex)
+    {
+        startIndex +=start_marker.size();
+        if(html=="未设置兴趣领域")
+            return fields;
+    }
+    else
+    {
+        qWarning()<<"网页链接失败";
+    }
+
+    html=html.mid(startIndex,endIndex-startIndex);
+    html=html.remove("\n");
+    html = html.remove(" ");
+
+    start_marker="%%%";
+    end_marker = "$$$";
+    int startpos = 0;
+
+    // 定义正则表达式来匹配由 %%% 和 $$$ 包围的内容
+    QRegularExpression re("%%%([^$]+)\\$\\$\\$");
+    QRegularExpressionMatchIterator i = re.globalMatch(html);
+
+    // 提取并输出匹配的内容
+    while (i.hasNext()) {
+        QRegularExpressionMatch match = i.next();
+        QString field = match.captured(1);  // captured(1) 获取第一个捕获组的内容
+        fields.append(field);
+    }
+
+    return fields;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+void MainWindow2::on_pushButton_add_interested_clicked()
+{
+    this->get_interested_fields();
 }
 
