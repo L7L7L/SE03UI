@@ -995,7 +995,7 @@ public:
 
         retranslateUi(MainWindow2);
 
-        stackedWidget->setCurrentIndex(2);
+        stackedWidget->setCurrentIndex(5);
         comboBox_field->setCurrentIndex(-1);
         comboBox_sorttype->setCurrentIndex(-1);
         comboBox_sortorder->setCurrentIndex(-1);

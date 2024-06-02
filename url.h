@@ -8,8 +8,4 @@
 #define UrlofStar "http://62.234.28.172:5656/system/star_query/"
 #define UrlofPush "http://62.234.28.172:5656/system/paper_push"
 
-
-
-
-
 #endif // URL_H

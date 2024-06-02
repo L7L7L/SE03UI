@@ -1979,10 +1979,22 @@ QVector<Paper> MainWindow2::paperPush()
             );
         pdfUrl = pdfUrl.remove('\n').trimmed().replace(regExp, " ");
 
-        // 新建 Paper 并将之加入返回的向量
-        Paper newPaper(title, author, publicTime, abstractText, paperUrl, pdfUrl);
-        papers.append(newPaper);
-
+        int start = project.indexOf("#*#*#*已收藏标签开始#*#*#*");
+        int end = project.indexOf("#*#*#*已收藏标签结束#*#*#*");
+        if(start!=-1 && end!=-1 && start < end)
+        {
+            QString startag = project.mid(start+19,end-19-start);
+            startag = startag.remove('\n').trimmed().replace(regExp, " ");
+            // 新建 Paper 并将之加入返回的向量
+            Paper newPaper(title, author, publicTime, abstractText, paperUrl, pdfUrl,startag);
+            papers.append(newPaper);
+        }
+        else
+        {
+            // 新建 Paper 并将之加入返回的向量
+            Paper newPaper(title, author, publicTime, abstractText, paperUrl, pdfUrl);
+            papers.append(newPaper);
+        }
     }
 
     return papers;
@@ -2006,7 +2018,7 @@ void MainWindow2::display_push(QVector<Paper>&papers)
         // 设置风格
         textEdit->setStyleSheet(qTextStyle);
 
-        textEdit->setHtml("<h1>请刷新推送</h1>");
+        textEdit->setHtml("<h1>没有搜索到相关结果</h1>");
         textEdit->setOpenExternalLinks(true);
         // 不要滚动条
         textEdit->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -2051,17 +2063,32 @@ void MainWindow2::display_push(QVector<Paper>&papers)
         textEdit->setFixedHeight(h);
 
         QHBoxLayout *layoutH = new QHBoxLayout;
-
-        //标签选择框
-        layoutH->addWidget(new QLabel(" 选择 / 输入一个标签："));
-        QComboBox *tagCombo = new QComboBox();
-
-
-        //收藏按钮
-        QPushButton *buttonStar = new QPushButton("收藏此文章");
-        buttonStar->setStyleSheet(ui->pushButton_search->styleSheet());
         auto paperUrl = papers[i].paperUrl;
-        connect(buttonStar, &QPushButton::clicked, [this, paperUrl, tagCombo, buttonStar]() { starPaper(paperUrl,tagCombo, buttonStar); });
+
+        if(papers[i].is_star)
+        {
+            QLabel *tag_label = new QLabel("已收藏到："+papers[i].starTag);
+            tag_label->setStyleSheet("background-color: rgb(168, 85, 247);color: white;  border: none; padding: 8px 16px;  border-radius: 4px;font-size: 14px;" );
+            layoutH->addWidget(tag_label);
+        }
+        else
+        {
+            //标签选择框
+            layoutH->addWidget(new QLabel(" 选择 / 输入一个标签："));
+            QComboBox *tagCombo = new QComboBox();
+
+
+            //收藏按钮
+            QPushButton *buttonStar = new QPushButton("收藏此文章");
+            buttonStar->setStyleSheet(ui->pushButton_search->styleSheet());
+            connect(buttonStar, &QPushButton::clicked, [this, paperUrl, tagCombo, buttonStar]() { starPaper(paperUrl,tagCombo, buttonStar); });
+
+            tagCombo->setEditable(true);
+            tagCombo->setStyleSheet(ui->comboBox_field->styleSheet());
+            tagCombo->addItems(Tags);
+            layoutH->addWidget(tagCombo);
+            layoutH->addWidget(buttonStar);
+        }
 
         //下载按钮
         QPushButton *buttonPdf = new QPushButton("下载pdf");
@@ -2079,11 +2106,7 @@ void MainWindow2::display_push(QVector<Paper>&papers)
 
 
 
-        tagCombo->setEditable(true);
-        tagCombo->setStyleSheet(ui->comboBox_field->styleSheet());
-        tagCombo->addItems(Tags);
-        layoutH->addWidget(tagCombo);
-        layoutH->addWidget(buttonStar);
+
         layoutH->addWidget(new QLabel(" "));
         layoutH->addWidget(buttonPdf);
         layoutH->addWidget(buttonLink);
@@ -2102,5 +2125,6 @@ void MainWindow2::display_push(QVector<Paper>&papers)
 void MainWindow2::on_pushButton_refresh_push_clicked()
 {
     QVector<Paper> papers = this->paperPush();
+    this->display_push(papers);
 }
 
