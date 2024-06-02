@@ -76,6 +76,10 @@ private slots:
 
     void on_pushButton_add_interested_clicked();
 
+    void on_pushButton_delete_interested_clicked();
+
+    void on_pushButton_refresh_push_clicked();
+
 protected:
     void mousePressEvent(QMouseEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
@@ -254,6 +258,10 @@ private:
     int display_serchResult_n = 0;
     void disstarPaper(QString paperUrl, QPushButton* button);
     QStringList get_interested_fields();
+    void displayfields(QStringList &fields);
+    void fresh_fields();
+    QVector<Paper> paperPush();
+    void display_push(QVector<Paper>&papers);
 };
 
 struct Paper
@@ -264,8 +272,16 @@ struct Paper
     QString abstract;
     QString paperUrl;
     QString pdfUrl;
+    bool is_star;
+    QString starTag;
     Paper(QString title, QString author, QString publicTime, QString abstract, QString paperUrl, QString pdfUrl)
-        : title(title), author(author), publicTime(publicTime), abstract(abstract), paperUrl(paperUrl), pdfUrl(pdfUrl) {}
+        : title(title), author(author), publicTime(publicTime), abstract(abstract),
+        paperUrl(paperUrl), pdfUrl(pdfUrl),is_star(0) {}
+
+    Paper(QString title, QString author, QString publicTime, QString abstract,
+          QString paperUrl, QString pdfUrl , QString starTag)
+        : title(title), author(author), publicTime(publicTime), abstract(abstract),
+        paperUrl(paperUrl), pdfUrl(pdfUrl),is_star(1),starTag(starTag) {}
 
     QString str() const
     {

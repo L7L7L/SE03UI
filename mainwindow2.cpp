@@ -271,6 +271,7 @@ void MainWindow2::on_pushButton_translate_page_clicked()
 void MainWindow2::on_pushButton_Daily_push_page_clicked()
 {
     ui->stackedWidget->setCurrentIndex(5);
+    this->fresh_fields();
 }
 
 //文献搜索按钮
@@ -848,10 +849,22 @@ QVector<Paper> MainWindow2::paperSearch(const QString &keyword, const QString &f
             );
         pdfUrl = pdfUrl.remove('\n').trimmed().replace(regExp, " ");
 
-        // 新建 Paper 并将之加入返回的向量
-        Paper newPaper(title, author, publicTime, abstractText, paperUrl, pdfUrl);
-        papers.append(newPaper);
-
+        int start = project.indexOf("#*#*#*已收藏标签开始#*#*#*");
+        int end = project.indexOf("#*#*#*已收藏标签结束#*#*#*");
+        if(start!=-1 && end!=-1 && start < end)
+        {
+            QString startag = project.mid(start+19,end-19-start);
+            startag = startag.remove('\n').trimmed().replace(regExp, " ");
+            // 新建 Paper 并将之加入返回的向量
+            Paper newPaper(title, author, publicTime, abstractText, paperUrl, pdfUrl,startag);
+            papers.append(newPaper);
+        }
+        else
+        {
+            // 新建 Paper 并将之加入返回的向量
+            Paper newPaper(title, author, publicTime, abstractText, paperUrl, pdfUrl);
+            papers.append(newPaper);
+        }
     }
 
     return papers;
@@ -1004,17 +1017,32 @@ void MainWindow2::displaySearchResult(const QVector<Paper>& papers)
         textEdit->setFixedHeight(h);
 
         QHBoxLayout *layoutH = new QHBoxLayout;
-
-        //标签选择框
-        layoutH->addWidget(new QLabel(" 选择 / 输入一个标签："));
-        QComboBox *tagCombo = new QComboBox();
-
-
-        //收藏按钮
-        QPushButton *buttonStar = new QPushButton("收藏此文章");
-        buttonStar->setStyleSheet(ui->pushButton_search->styleSheet());
         auto paperUrl = papers[i].paperUrl;
-        connect(buttonStar, &QPushButton::clicked, [this, paperUrl, tagCombo, buttonStar]() { starPaper(paperUrl,tagCombo, buttonStar); });
+
+        if(papers[i].is_star)
+        {
+            QLabel *tag_label = new QLabel("已收藏到："+papers[i].starTag);
+            tag_label->setStyleSheet("background-color: rgb(168, 85, 247);color: white;  border: none; padding: 8px 16px;  border-radius: 4px;font-size: 14px;" );
+            layoutH->addWidget(tag_label);
+        }
+        else
+        {
+            //标签选择框
+            layoutH->addWidget(new QLabel(" 选择 / 输入一个标签："));
+            QComboBox *tagCombo = new QComboBox();
+
+
+            //收藏按钮
+            QPushButton *buttonStar = new QPushButton("收藏此文章");
+            buttonStar->setStyleSheet(ui->pushButton_search->styleSheet());
+            connect(buttonStar, &QPushButton::clicked, [this, paperUrl, tagCombo, buttonStar]() { starPaper(paperUrl,tagCombo, buttonStar); });
+
+            tagCombo->setEditable(true);
+            tagCombo->setStyleSheet(ui->comboBox_field->styleSheet());
+            tagCombo->addItems(Tags);
+            layoutH->addWidget(tagCombo);
+            layoutH->addWidget(buttonStar);
+        }
 
         //下载按钮
         QPushButton *buttonPdf = new QPushButton("下载pdf");
@@ -1032,11 +1060,7 @@ void MainWindow2::displaySearchResult(const QVector<Paper>& papers)
 
 
 
-        tagCombo->setEditable(true);
-        tagCombo->setStyleSheet(ui->comboBox_field->styleSheet());
-        tagCombo->addItems(Tags);
-        layoutH->addWidget(tagCombo);
-        layoutH->addWidget(buttonStar);
+
         layoutH->addWidget(new QLabel(" "));
         layoutH->addWidget(buttonPdf);
         layoutH->addWidget(buttonLink);
@@ -1529,8 +1553,6 @@ void MainWindow2::disstarPaper(QString paperUrl, QPushButton* button)
 }
 
 
-
-
 void MainWindow2::on_listWidget_tag_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous)
 {
     if(!current)
@@ -1563,7 +1585,7 @@ void MainWindow2::on_lineEdit_tagKeyword_returnPressed()
     on_pushButton_tagsFliter_clicked();
 }
 
-
+//获取当前感兴趣
 QStringList MainWindow2::get_interested_fields()
 {
     QStringList fields;
@@ -1651,10 +1673,6 @@ QStringList MainWindow2::get_interested_fields()
     html=html.remove("\n");
     html = html.remove(" ");
 
-    start_marker="%%%";
-    end_marker = "$$$";
-    int startpos = 0;
-
     // 定义正则表达式来匹配由 %%% 和 $$$ 包围的内容
     QRegularExpression re("%%%([^$]+)\\$\\$\\$");
     QRegularExpressionMatchIterator i = re.globalMatch(html);
@@ -1669,19 +1687,420 @@ QStringList MainWindow2::get_interested_fields()
     return fields;
 }
 
+void MainWindow2::displayfields(QStringList &fields)
+{
+    ui->listWidget_interested->clear();
+
+    if(fields.empty())
+    {
+        ui->listWidget_interested->addItem("请添加感兴趣的领域");
+    }
+    else
+    {
+        QStringList translatedFields;
+        for(const QString &field : fields)
+        {
+            translatedFields.append(mapField.key(field));
+        }
+
+        ui->listWidget_interested->addItems(translatedFields);
+        ui->listWidget_interested->setCurrentRow(0);
+    }
+}
 
 
 
-
-
-
-
-
-
-
+void MainWindow2::fresh_fields()
+{
+    QStringList fields=this->get_interested_fields();
+    // QStringList fields;
+    this->displayfields(fields);
+}
 
 void MainWindow2::on_pushButton_add_interested_clicked()
 {
-    this->get_interested_fields();
+    QString searchUrl = UrlofPush;
+    QNetworkRequest request((QUrl(searchUrl)));
+
+    // 发送GET请求
+    QNetworkReply *reply = manager.get(request);
+
+    // 等待请求完成
+    QEventLoop loop;
+    QObject::connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+    loop.exec();
+
+    // 检查请求状态
+    if (reply->error() != QNetworkReply::NoError) {
+        qWarning() << "Error:" << reply->errorString();
+        reply->deleteLater();
+        return;
+    }
+
+    // 读取响应内容
+    QString response = reply->readAll();
+    reply->deleteLater();
+
+    QString pattern = "<input\\s+type=\"hidden\"\\s+name=\"csrfmiddlewaretoken\"\\s+value=\"([^\"]*)\">";
+    static QRegularExpression regex(pattern);
+
+    // 匹配csrfToken
+    QRegularExpressionMatch match = regex.match(response);
+    QString csrfToken;
+    if (match.hasMatch()) {
+        csrfToken = match.captured();
+        // std::cout<<csrfToken.toStdString()<<"\n";
+        csrfToken = csrfToken.right(66);
+        csrfToken = csrfToken.left(64);
+        // std::cout<<csrfToken.toStdString()<<"\n";
+    } else {
+        return;
+    }
+
+    QNetworkRequest Request((QUrl(searchUrl)));
+    Request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+    Request.setRawHeader("Referer", searchUrl.toUtf8());
+
+    QString field = ui->comboBox_field_interested->currentText();
+    field = mapField[field];
+    QUrlQuery params;
+    params.addQueryItem("csrfmiddlewaretoken", csrfToken);
+    params.addQueryItem("field_input", field);
+    params.addQueryItem("add_field_button", "add_field");
+    QNetworkReply *Reply = manager.post(Request, params.query(QUrl::FullyEncoded).toUtf8());
+
+
+
+    QEventLoop loop2;
+    QObject::connect(Reply,&QNetworkReply::finished,&loop2,&QEventLoop::quit);
+    loop2.exec();
+
+    // 检查请求状态
+    if (Reply->error() != QNetworkReply::NoError) {
+        qWarning() << "Error:" << Reply->errorString();
+        Reply->deleteLater();
+        return;
+    }
+
+    this->fresh_fields();
+}
+
+
+
+void MainWindow2::on_pushButton_delete_interested_clicked()
+{
+    QString searchUrl = UrlofPush;
+    QNetworkRequest request((QUrl(searchUrl)));
+
+    // 发送GET请求
+    QNetworkReply *reply = manager.get(request);
+
+    // 等待请求完成
+    QEventLoop loop;
+    QObject::connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+    loop.exec();
+
+    // 检查请求状态
+    if (reply->error() != QNetworkReply::NoError) {
+        qWarning() << "Error:" << reply->errorString();
+        reply->deleteLater();
+        return;
+    }
+
+    // 读取响应内容
+    QString response = reply->readAll();
+    reply->deleteLater();
+
+    QString pattern = "<input\\s+type=\"hidden\"\\s+name=\"csrfmiddlewaretoken\"\\s+value=\"([^\"]*)\">";
+    static QRegularExpression regex(pattern);
+
+    // 匹配csrfToken
+    QRegularExpressionMatch match = regex.match(response);
+    QString csrfToken;
+    if (match.hasMatch()) {
+        csrfToken = match.captured();
+        // std::cout<<csrfToken.toStdString()<<"\n";
+        csrfToken = csrfToken.right(66);
+        csrfToken = csrfToken.left(64);
+        // std::cout<<csrfToken.toStdString()<<"\n";
+    } else {
+        return;
+    }
+
+    QNetworkRequest Request((QUrl(searchUrl)));
+    Request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+    Request.setRawHeader("Referer", searchUrl.toUtf8());
+
+    QString field = ui->listWidget_interested->currentItem()->text();
+    field = mapField.value(field);
+    QUrlQuery params;
+    params.addQueryItem("csrfmiddlewaretoken", csrfToken);
+    params.addQueryItem("field_to_delete", field);
+    params.addQueryItem("delete_field_button", "delete_field");
+    QNetworkReply *Reply = manager.post(Request, params.query(QUrl::FullyEncoded).toUtf8());
+
+
+
+    QEventLoop loop2;
+    QObject::connect(Reply,&QNetworkReply::finished,&loop2,&QEventLoop::quit);
+    loop2.exec();
+
+    // 检查请求状态
+    if (Reply->error() != QNetworkReply::NoError) {
+        qWarning() << "Error:" << Reply->errorString();
+        Reply->deleteLater();
+        return;
+    }
+
+    this->fresh_fields();
+}
+
+QVector<Paper> MainWindow2::paperPush()
+{
+    QVector<Paper> papers;
+    QString searchUrl = UrlofPush;
+    QNetworkRequest request((QUrl(searchUrl)));
+
+    // 发送GET请求
+    QNetworkReply *reply = manager.get(request);
+
+    // 等待请求完成
+    QEventLoop loop;
+    QObject::connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+    loop.exec();
+
+    // 检查请求状态
+    if (reply->error() != QNetworkReply::NoError) {
+        qWarning() << "Error:" << reply->errorString();
+        reply->deleteLater();
+        return papers;
+    }
+
+    // 读取响应内容
+    QString response = reply->readAll();
+    reply->deleteLater();
+
+    QString pattern = "<input\\s+type=\"hidden\"\\s+name=\"csrfmiddlewaretoken\"\\s+value=\"([^\"]*)\">";
+    static QRegularExpression regex(pattern);
+
+    // 匹配csrfToken
+    QRegularExpressionMatch match = regex.match(response);
+    QString csrfToken;
+    if (match.hasMatch()) {
+        csrfToken = match.captured();
+        csrfToken = csrfToken.right(66);
+        csrfToken = csrfToken.left(64);
+    } else {
+        return papers;
+    }
+
+    QNetworkRequest Request((QUrl(searchUrl)));
+    Request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+    Request.setRawHeader("Referer", searchUrl.toUtf8());
+
+    QUrlQuery params;
+    params.addQueryItem("push_paper_button", "push_paper");
+    params.addQueryItem("csrfmiddlewaretoken", csrfToken);
+
+    QNetworkReply *Reply = manager.post(Request, params.query(QUrl::FullyEncoded).toUtf8());
+
+
+
+    QEventLoop loop2;
+    QObject::connect(Reply,&QNetworkReply::finished,&loop2,&QEventLoop::quit);
+    loop2.exec();
+
+    // 检查请求状态
+    if (Reply->error() != QNetworkReply::NoError) {
+        qWarning() << "Error:" << Reply->errorString();
+        Reply->deleteLater();
+        return papers;
+    }
+
+    // 读取响应内容
+    QString html = Reply->readAll();
+    Reply->deleteLater();
+
+    // 取出有用的部分
+    QString start_marker = "#*#*#*论文项目开始#*#*#*";
+    QString end_marker = "#*#*#*论文项目结束#*#*#*";
+    int start_pos = 0;
+
+    while ((start_pos = html.indexOf(start_marker, start_pos)) != -1) {
+        int end_pos = html.indexOf(end_marker, start_pos);
+        if (end_pos == -1) break;
+
+        // 匹配多个空格
+        static QRegularExpression regExp("\\s+");
+
+        QString project = html.mid(start_pos, end_pos - start_pos);
+        start_pos = end_pos + end_marker.length();
+        // 读取标题并整理格式
+        QString title = project.mid(
+            project.indexOf("#*#*#*标题开始#*#*#*") + 16,
+            project.indexOf("#*#*#*标题结束#*#*#*") - project.indexOf("#*#*#*标题开始#*#*#*") - 16
+            );
+        title = title.remove('\n').trimmed().replace(regExp, " ");
+
+
+        // 读取作者并整理格式
+        QString author = project.mid(
+            project.indexOf("#*#*#*作者开始#*#*#*") + 16,
+            project.indexOf("#*#*#*作者结束#*#*#*") - project.indexOf("#*#*#*作者开始#*#*#*") - 16
+            );
+        author = author.remove('\n').trimmed().replace(regExp, " ");
+
+        // 读取发布时间并整理格式
+        QString publicTime = project.mid(
+            project.indexOf("#*#*#*时间开始#*#*#*") + 16,
+            project.indexOf("#*#*#*时间结束#*#*#*") - project.indexOf("#*#*#*时间开始#*#*#*") - 16
+            );
+        publicTime = publicTime.remove('\n').trimmed().replace(regExp, " ");
+
+        // 读取摘要并整理格式
+        QString abstractText = project.mid(
+            project.indexOf("#*#*#*摘要开始#*#*#*") + 16,
+            project.indexOf("#*#*#*摘要结束#*#*#*") - project.indexOf("#*#*#*摘要开始#*#*#*") - 16
+            );
+        abstractText = abstractText.remove('\n').trimmed().replace(regExp, " ");
+
+
+        // 读取paperUrl并整理格式
+        QString paperUrl = project.mid(
+            project.indexOf("#*#*#*论文地址开始#*#*#*") + 18,
+            project.indexOf("#*#*#*论文地址结束#*#*#*") - project.indexOf("#*#*#*论文地址开始#*#*#*") - 18
+            );
+        paperUrl = paperUrl.remove('\n').trimmed().replace(regExp, " ");
+
+        // 读取pdfUrl并整理格式
+        QString pdfUrl = project.mid(
+            project.indexOf("#*#*#*pdf地址开始#*#*#*") + 19,
+            project.indexOf("#*#*#*pdf地址结束#*#*#*") - project.indexOf("#*#*#*pdf地址开始#*#*#*") - 19
+            );
+        pdfUrl = pdfUrl.remove('\n').trimmed().replace(regExp, " ");
+
+        // 新建 Paper 并将之加入返回的向量
+        Paper newPaper(title, author, publicTime, abstractText, paperUrl, pdfUrl);
+        papers.append(newPaper);
+
+    }
+
+    return papers;
+}
+
+void MainWindow2::display_push(QVector<Paper>&papers)
+{
+    ui->scrollArea_docu_of_push->setWidgetResizable(true);
+
+    // 创建内部widget和布局
+    QWidget *scrollWidget = new QWidget;
+    QVBoxLayout *layout = new QVBoxLayout(scrollWidget);
+
+
+    //没搜到
+    if(papers.empty())
+    {
+        // layout->addWidget(new QLabel(i%2==0 ? "用户：" : "AI："));
+        QTextBrowser *textEdit = new QTextBrowser();
+        // QTextBrowser *textBrowser = new QTextBrowser;
+        // 设置风格
+        textEdit->setStyleSheet(qTextStyle);
+
+        textEdit->setHtml("<h1>请刷新推送</h1>");
+        textEdit->setOpenExternalLinks(true);
+        // 不要滚动条
+        textEdit->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        textEdit->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+        textEdit->setReadOnly(true); //只读
+        //添加占位label
+        layout->addWidget(textEdit);
+        layout->addWidget(new QLabel(""));
+
+        // 自适应高度
+        textEdit->document()->adjustSize();
+        textEdit->setFixedHeight(480);
+    }
+
+    QStringList Tags = getTags();
+
+    // 添加到布局中
+    for(int i=0 ; i<papers.size() ; i++)
+    {
+
+        // layout->addWidget(new QLabel(i%2==0 ? "用户：" : "AI："));
+        QTextBrowser *textEdit = new QTextBrowser();
+        // QTextBrowser *textBrowser = new QTextBrowser;
+        // 设置风格
+        textEdit->setStyleSheet(qTextStyle);
+
+        textEdit->setHtml(papers[i].toHtml());
+        textEdit->setOpenExternalLinks(true);
+        // 不要滚动条
+        textEdit->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        textEdit->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+        textEdit->setReadOnly(true); //只读
+        //添加到布局中
+        layout->addWidget(textEdit);
+
+
+        // 自适应高度
+        textEdit->document()->adjustSize();
+        auto h = textEdit->document()->size().height();
+        textEdit->setFixedHeight(h);
+
+        QHBoxLayout *layoutH = new QHBoxLayout;
+
+        //标签选择框
+        layoutH->addWidget(new QLabel(" 选择 / 输入一个标签："));
+        QComboBox *tagCombo = new QComboBox();
+
+
+        //收藏按钮
+        QPushButton *buttonStar = new QPushButton("收藏此文章");
+        buttonStar->setStyleSheet(ui->pushButton_search->styleSheet());
+        auto paperUrl = papers[i].paperUrl;
+        connect(buttonStar, &QPushButton::clicked, [this, paperUrl, tagCombo, buttonStar]() { starPaper(paperUrl,tagCombo, buttonStar); });
+
+        //下载按钮
+        QPushButton *buttonPdf = new QPushButton("下载pdf");
+        buttonPdf->setStyleSheet(ui->pushButton_search->styleSheet());
+        auto pdfUrl = papers[i].pdfUrl;
+        connect(buttonPdf, &QPushButton::clicked, [pdfUrl]() { QDesktopServices::openUrl(pdfUrl); });
+
+        //原文链接按钮
+        QPushButton *buttonLink = new QPushButton("打开原文链接");
+        buttonLink->setStyleSheet(ui->pushButton_search->styleSheet());
+        connect(buttonLink, &QPushButton::clicked, [ paperUrl]() { QDesktopServices::openUrl(paperUrl); });
+
+        //添加空间到布局中
+        layout->addLayout(layoutH);
+
+
+
+        tagCombo->setEditable(true);
+        tagCombo->setStyleSheet(ui->comboBox_field->styleSheet());
+        tagCombo->addItems(Tags);
+        layoutH->addWidget(tagCombo);
+        layoutH->addWidget(buttonStar);
+        layoutH->addWidget(new QLabel(" "));
+        layoutH->addWidget(buttonPdf);
+        layoutH->addWidget(buttonLink);
+        //添加占位label
+        layout->addWidget(new QLabel("\n\n"));
+
+    }
+    scrollWidget->setLayout(layout);
+    ui->scrollArea_docu_of_push->setWidget(scrollWidget);
+    //滚动到最底部
+    QScrollBar *vScrollBar = ui->scrollArea_docu_of_push->verticalScrollBar();
+    // vScrollBar->setValue(vScrollBar->maximum());
+    vScrollBar->setStyleSheet(qScrollBarStyle);
+}
+
+void MainWindow2::on_pushButton_refresh_push_clicked()
+{
+    QVector<Paper> papers = this->paperPush();
 }
 
