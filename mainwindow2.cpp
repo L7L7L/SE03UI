@@ -237,6 +237,10 @@ void MainWindow2::on_pushButton_Document_manage_page_clicked()
 {
     ui->stackedWidget->setCurrentIndex(1);
     on_pushButton_tags_clicked();
+    if(this->now_tag_row == 0)
+        this->get_Docu_of_tag("default");
+    else
+        ui->listWidget_tag->setCurrentRow(this->now_tag_row);
 }
 
 void MainWindow2::on_pushButton_Document_query_page_clicked()
@@ -258,6 +262,7 @@ void MainWindow2::on_pushButton_Daily_push_page_clicked()
 {
     ui->stackedWidget->setCurrentIndex(5);
     this->fresh_fields();
+    ui->listWidget_interested->setCurrentRow(this->now_field);
 }
 
 //文献搜索按钮
@@ -1146,6 +1151,8 @@ QStringList MainWindow2::getTags()
         TagsResponse = TagsResponse.mid(startIndex, endIndex - startIndex);
     } else {
         qDebug() << "Tag未找到标记或标记顺序不正确";
+
+        this->num_tag = ui->listWidget_tag->currentRow();
         return TagList;
     }
 
@@ -1160,6 +1167,12 @@ QStringList MainWindow2::getTags()
         }
     }
 
+    if(TagList.size()<this->num_tag)
+    {
+        this->now_tag_row = 0;
+        ui->listWidget_tag->setCurrentRow(this->now_tag_row);
+    }
+    this->num_tag = TagList.size();
     return TagList;
 }
 //渲染收藏夹
@@ -1210,10 +1223,9 @@ void MainWindow2::display_tags(QStringList &TagList)
 
 void MainWindow2::on_pushButton_tags_clicked()
 {
-    ui->pushButton_tags->setEnabled(0);
     QStringList Tag = this->getTags();
     this->display_tags(Tag);
-    ui->pushButton_tags->setEnabled(1);
+    ui->listWidget_tag->setCurrentRow(this->now_tag_row);
 }
 
 //获取收藏夹所含论文
@@ -1427,12 +1439,6 @@ void MainWindow2::display_Docu_of_tag(QVector<Paper> &papers)
             {
             disstarPaper(paperUrl, buttonStar);
             on_pushButton_tags_clicked();
-
-            // auto Tags = getTags();
-            // if(Tags.contains(this->now_tag) == false)
-            // {
-            //     this->now_tag = "default";
-            // }
             this->get_Docu_of_tag(this->now_tag);
 
             });
@@ -1541,16 +1547,18 @@ void MainWindow2::disstarPaper(QString paperUrl, QPushButton* button)
 }
 
 
-void MainWindow2::on_listWidget_tag_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous)
+void MainWindow2::on_listWidget_tag_itemClicked(QListWidgetItem *item)
 {
-    if(!current)
+    this->now_tag_row = ui->listWidget_tag->currentRow();
+    if(!item)
     {
         get_Docu_of_tag("");
         //ui->listWidget_tag->setCurrentRow(0);
         return;
     }
-    get_Docu_of_tag(current->text());
+    get_Docu_of_tag(item->text());
 }
+
 
 void MainWindow2::on_pushButton_tagsFliter_clicked()
 {
@@ -1672,6 +1680,7 @@ QStringList MainWindow2::get_interested_fields()
         fields.append(field);
     }
 
+    this->num_field = fields.size();
     return fields;
 }
 
@@ -1771,6 +1780,8 @@ void MainWindow2::on_pushButton_add_interested_clicked()
     }
 
     this->fresh_fields();
+    this->now_field = this->num_field - 1;
+    ui->listWidget_interested->setCurrentRow(this->now_field);
 }
 
 
@@ -1840,7 +1851,14 @@ void MainWindow2::on_pushButton_delete_interested_clicked()
         return;
     }
 
+    this->now_field = 0;
     this->fresh_fields();
+    ui->listWidget_interested->setCurrentRow(this->now_field);
+}
+
+void MainWindow2::on_listWidget_interested_itemClicked(QListWidgetItem *item)
+{
+    this->now_field = ui->listWidget_interested->currentRow();
 }
 
 QVector<Paper> MainWindow2::paperPush()
@@ -2115,4 +2133,8 @@ void MainWindow2::on_pushButton_refresh_push_clicked()
     QVector<Paper> papers = this->paperPush();
     this->display_push(papers);
 }
+
+
+
+
 

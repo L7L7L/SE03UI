@@ -68,8 +68,6 @@ private slots:
     void on_pushButton_next_pgae_clicked();
     void on_lineEdit_display_page_returnPressed();
 
-    void on_listWidget_tag_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
-
     void on_pushButton_tagsFliter_clicked();
 
     void on_lineEdit_tagKeyword_returnPressed();
@@ -80,6 +78,10 @@ private slots:
 
     void on_pushButton_refresh_push_clicked();
 
+
+    void on_listWidget_interested_itemClicked(QListWidgetItem *item);
+
+    void on_listWidget_tag_itemClicked(QListWidgetItem *item);
 
 protected:
     void mousePressEvent(QMouseEvent *event) override;
@@ -263,6 +265,10 @@ private:
     void fresh_fields();
     QVector<Paper> paperPush();
     void display_push(QVector<Paper>&papers);
+    int now_field = 0;
+    int num_field = 0;
+    int now_tag_row = 0;
+    int num_tag = 0;
 };
 
 struct Paper
