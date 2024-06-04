@@ -15,9 +15,24 @@
 #include <QHttpMultiPart>
 #include <QNetworkCookieJar>
 #include <QTextDocument>
+#include <QSettings>
+#include <QFile>
+
 
 QString email;
 QNetworkAccessManager manager;
+
+// 字符串加解密函数
+QString encrypt(const QString &input) {
+    QString key = "wangjincheng";
+    QString output = input;
+    int keyLength = key.length();
+    for (int i = 0; i < input.length(); ++i) {
+        output[i] = char(input[i].unicode() ^ key[i % keyLength].unicode());
+    }
+    return output;
+}
+
 
 // 以下代码确保窗口可拖动
 void MainWindow::mousePressEvent(QMouseEvent *event) {
@@ -127,6 +142,26 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     this->setFixedSize(370, 485);
     this->setWindowFlags(Qt::FramelessWindowHint);
+
+    // 读取记住的密码
+    QString appDir = QCoreApplication::applicationDirPath();
+    QString iniFilePath = appDir + "/SAconfig.ini";
+
+    // 创建QSettings对象，指定ini文件路径
+    QSettings settings(iniFilePath, QSettings::IniFormat);
+
+    // 读取ini文件中的值，如果文件不存在，则返回默认值
+    QString email = settings.value("Login/email", "").toString();
+    QString password = settings.value("Login/password", "").toString();
+    password = encrypt(password);
+    QString remember = settings.value("Login/remember", "").toString();
+
+    if(remember == "true"){
+        ui->lineEdit->setText(email);
+        ui->lineEdit_2->setText(password);
+        ui->checkBox->setChecked(1);
+    }
+
 }
 
 MainWindow::~MainWindow()
@@ -160,6 +195,28 @@ void MainWindow::on_pushButton_clicked()
     if(loginStatus == 1)
     {
         MainWindow2 *m = new MainWindow2;
+
+        // 获取应用程序目录
+        QString appDir = QCoreApplication::applicationDirPath();
+        QString iniFilePath = appDir + "/SAconfig.ini";
+
+        // 创建QSettings对象，指定ini文件路径
+        QSettings settings(iniFilePath, QSettings::IniFormat);
+
+
+        if(ui->checkBox->isChecked())// 记住密码
+        {
+            // 写入值到ini文件，如果文件不存在，则会创建该文件
+            settings.setValue("Login/email", tmpEmail);
+            settings.setValue("Login/password", encrypt(password));
+            settings.setValue("Login/remember", "true");
+        }
+        else
+        {
+            settings.setValue("Login/remember", "false");
+        }
+
+        settings.sync();
         this->close();
         m->show();
     }

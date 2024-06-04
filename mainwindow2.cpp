@@ -28,6 +28,7 @@ extern QNetworkAccessManager manager;
 extern QString email;
 QTimer dotTimerAI; //用来显示省略号的Timer
 QTimer dotTimerSearch; //用来显示省略号的Timer
+QTimer dotTimerPush; //用来显示省略号的Timer
 QTextEdit *lastAiTextEdit; //指向AI对话框的最后一个文本框
 
 QString qTextStyle = "QTextEdit {"
@@ -93,11 +94,13 @@ MainWindow2::MainWindow2(QWidget *parent)
     this->setWindowFlags(Qt::FramelessWindowHint);
     // 隐藏刷新按钮
     ui->pushButton_refreshAiHistory->setVisible(false);
-    ui->stackedWidget->setCurrentIndex(0);
+    ui->stackedWidget->setCurrentWidget(ui->page_1_Docu_mange);
+    on_pushButton_Document_manage_page_clicked();
 
     //设置Timer
     QObject::connect(&dotTimerAI, &QTimer::timeout, this, &MainWindow2::showDotAI);
     QObject::connect(&dotTimerSearch, &QTimer::timeout, this, &MainWindow2::showDotSearch);
+    QObject::connect(&dotTimerPush, &QTimer::timeout, this, &MainWindow2::showDotPush);
     //设置按钮的样式（读取哪个是选中滚动）
     this->on_stackedWidget_currentChanged();
 
@@ -237,10 +240,8 @@ void MainWindow2::on_pushButton_Document_manage_page_clicked()
 {
     ui->stackedWidget->setCurrentIndex(1);
     on_pushButton_tags_clicked();
-    if(this->now_tag_row == 0)
-        this->get_Docu_of_tag("default");
-    else
-        ui->listWidget_tag->setCurrentRow(this->now_tag_row);
+    this->get_Docu_of_tag(now_tag);
+
 }
 
 void MainWindow2::on_pushButton_Document_query_page_clicked()
@@ -437,6 +438,15 @@ void MainWindow2::showDotSearch()
         ui->pushButton_search->setText("");
     }
     ui->pushButton_search->setText(ui->pushButton_search->text()+".");
+}
+
+void MainWindow2::showDotPush()
+{
+    if(ui->pushButton_refresh_push->text() == "......")
+    {
+        ui->pushButton_refresh_push->setText("");
+    }
+    ui->pushButton_refresh_push->setText(ui->pushButton_refresh_push->text()+".");
 }
 
 // 以下代码确保窗口可拖动
@@ -1177,8 +1187,7 @@ void MainWindow2::display_tags(QStringList &TagList)
     ui->listWidget_tag->addItems(TagList);
     if(!TagList.empty())
     {
-
-        ui->listWidget_tag->setCurrentRow(0);
+        ui->listWidget_tag->setCurrentRow(now_tag_row);
     }
 
     //QScrollBar *scrollBar = new QScrollBar(Qt::Vertical, this);
@@ -1226,6 +1235,7 @@ void MainWindow2::on_pushButton_tags_clicked()
 //获取收藏夹所含论文
 void MainWindow2::get_Docu_of_tag(QString tag)
 {
+    ui->listWidget_tag->setEnabled(0);
     QVector<Paper> papers;
     QString searchUrl = UrlofStar;
     QNetworkRequest request((QUrl(searchUrl)));
@@ -1361,12 +1371,20 @@ void MainWindow2::get_Docu_of_tag(QString tag)
     if (papers.size() == 0)
     {
         this->now_tag_row = 0;
-        get_Docu_of_tag("default");
+        if(tag != "default")
+        {
+            get_Docu_of_tag("default");
+        }
+        else
+        {
+            display_Docu_of_tag(papers);
+        }
     }
     else
     {
-            display_Docu_of_tag(papers);
+        display_Docu_of_tag(papers);
     }
+    ui->listWidget_tag->setEnabled(1);
     return;
 }
 //渲染收藏夹所含论文
@@ -1705,9 +1723,10 @@ void MainWindow2::displayfields(QStringList &fields)
 
         ui->listWidget_interested->addItems(translatedFields);
         ui->listWidget_interested->setCurrentRow(0);
+
+
     }
 }
-
 
 
 void MainWindow2::fresh_fields()
@@ -1791,6 +1810,10 @@ void MainWindow2::on_pushButton_add_interested_clicked()
 
 void MainWindow2::on_pushButton_delete_interested_clicked()
 {
+    if(ui->listWidget_interested->currentItem()->text() == "请添加感兴趣的领域")
+    {
+        return;
+    }
     QString searchUrl = UrlofPush;
     QNetworkRequest request((QUrl(searchUrl)));
 
@@ -1861,6 +1884,7 @@ void MainWindow2::on_pushButton_delete_interested_clicked()
 
 void MainWindow2::on_listWidget_interested_itemClicked(QListWidgetItem *item)
 {
+    item->setText(item->text());//无用语句，避免警告
     this->now_field = ui->listWidget_interested->currentRow();
 }
 
@@ -2134,11 +2158,14 @@ void MainWindow2::display_push(QVector<Paper>&papers)
 
 void MainWindow2::on_pushButton_refresh_push_clicked()
 {
+    auto original = ui->pushButton_refresh_push->text();
+    ui->pushButton_refresh_push->setText(".");
+    ui->pushButton_refresh_push->setEnabled(0);
+    dotTimerPush.start(400);
     QVector<Paper> papers = this->paperPush();
     this->display_push(papers);
+    dotTimerPush.stop();
+    ui->pushButton_refresh_push->setEnabled(1);
+    ui->pushButton_refresh_push->setText(original);
 }
-
-
-
-
 

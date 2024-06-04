@@ -34,6 +34,9 @@ private slots:
 
     void showDotSearch();
 
+    void showDotPush();
+
+
     void on_pushButton_AI__chat_page_clicked();
 
     void on_pushButton_Document_manage_page_clicked();
@@ -78,10 +81,10 @@ private slots:
 
     void on_pushButton_refresh_push_clicked();
 
-
     void on_listWidget_interested_itemClicked(QListWidgetItem *item);
 
     void on_listWidget_tag_itemClicked(QListWidgetItem *item);
+
 
 protected:
     void mousePressEvent(QMouseEvent *event) override;

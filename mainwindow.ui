@@ -43,7 +43,7 @@
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>60</y>
+      <y>50</y>
       <width>370</width>
       <height>455</height>
      </rect>
@@ -87,7 +87,7 @@
       </property>
       <property name="styleSheet">
        <string notr="true">QPushButton {
-    background-color: rgb(168, 85, 247); /* 设置默认背景颜色 */
+    background-color: rgb(70, 130, 180); /* 设置默认背景颜色 */
     color: white; /* 设置文字颜色 */
     border: none; /* 去除边框 */
     padding: 8px 16px; /* 设置内边距 */
@@ -96,12 +96,14 @@
 }
 
 QPushButton:hover {
-    background-color: rgb(148, 65, 227); /* 设置鼠标悬停时的背景颜色 */
+    background-color: rgb(24, 72, 112); /* 设置鼠标悬停时的背景颜色 */
 }
 
 QPushButton:pressed {
-    background-color: rgb(128, 45, 207); /* 设置按下时的背景颜色 */
+    background-color: rgb(21, 64, 99); /* 设置按下时的背景颜色 */
 }
+
+
 
 QPushButton:disabled {
     background-color: rgb(200, 200, 200); /* 设置禁用时的背景颜色 */
@@ -126,18 +128,18 @@ QPushButton:disabled {
        <string notr="true">QLineEdit {
     background-color: rgb(255, 255, 255); /* 设置背景颜色 */
     color: black; /* 设置文本颜色 */
-    border: 1px solid rgb(168, 85, 247); /* 设置边框颜色 */
+    border: 1px solid rgb(70, 130, 180); /* 设置边框颜色 */
     padding: 4px 8px; /* 设置内边距 */
     border-radius: 4px; /* 设置圆角 */
 }
 
 QLineEdit:focus {
-    border: 1px solid rgb(68, 5, 147); /* 设置聚焦时的边框颜色 */
+    border: 1px solid rgb(30, 90, 140); /* 设置聚焦时的边框颜色 */
 }
 </string>
       </property>
       <property name="text">
-       <string>password</string>
+       <string/>
       </property>
       <property name="echoMode">
        <enum>QLineEdit::Password</enum>
@@ -156,7 +158,7 @@ QLineEdit:focus {
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true"/>
+       <string notr="true">color : rgb(21, 64, 99)</string>
       </property>
       <property name="text">
        <string>记住密码</string>
@@ -173,25 +175,6 @@ QLineEdit:focus {
       </property>
       <property name="text">
        <string>邮箱</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_3">
-      <property name="geometry">
-       <rect>
-        <x>150</x>
-        <y>-10</y>
-        <width>80</width>
-        <height>80</height>
-       </rect>
-      </property>
-      <property name="pixmap">
-       <pixmap resource="image.qrc">:/new/prefix1/image/logo.png</pixmap>
-      </property>
-      <property name="scaledContents">
-       <bool>true</bool>
-      </property>
-      <property name="wordWrap">
-       <bool>false</bool>
       </property>
      </widget>
      <widget class="QLineEdit" name="lineEdit">
@@ -213,18 +196,18 @@ QLineEdit:focus {
        <string notr="true">QLineEdit {
     background-color: rgb(255, 255, 255); /* 设置背景颜色 */
     color: black; /* 设置文本颜色 */
-    border: 1px solid rgb(168, 85, 247); /* 设置边框颜色 */
+    border: 1px solid rgb(70, 130, 180); /* 设置边框颜色 */
     padding: 4px 8px; /* 设置内边距 */
     border-radius: 4px; /* 设置圆角 */
 }
 
 QLineEdit:focus {
-    border: 1px solid rgb(68, 5, 147); /* 设置聚焦时的边框颜色 */
+    border: 1px solid rgb(30, 90, 140); /* 设置聚焦时的边框颜色 */
 }
 </string>
       </property>
       <property name="text">
-       <string>123@qq.com</string>
+       <string/>
       </property>
       <property name="placeholderText">
        <string>请输入邮箱</string>
@@ -244,10 +227,34 @@ QLineEdit:focus {
       </property>
       <property name="styleSheet">
        <string notr="true">border : none;
-color : rgb(68, 5, 147)</string>
+color : rgb(21, 64, 99)</string>
       </property>
       <property name="text">
        <string>还没有账户？注册</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_name_3">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>60</y>
+        <width>371</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>登录学术助手</string>
+      </property>
+      <property name="textFormat">
+       <enum>Qt::PlainText</enum>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
       </property>
      </widget>
     </widget>
@@ -256,7 +263,7 @@ color : rgb(68, 5, 147)</string>
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>0</y>
+        <y>-20</y>
         <width>370</width>
         <height>455</height>
        </rect>
@@ -300,7 +307,7 @@ color : rgb(68, 5, 147)</string>
         </property>
         <property name="styleSheet">
          <string notr="true">QPushButton {
-    background-color: rgb(168, 85, 247); /* 设置默认背景颜色 */
+    background-color: rgb(70, 130, 180); /* 设置默认背景颜色 */
     color: white; /* 设置文字颜色 */
     border: none; /* 去除边框 */
     padding: 8px 16px; /* 设置内边距 */
@@ -309,11 +316,18 @@ color : rgb(68, 5, 147)</string>
 }
 
 QPushButton:hover {
-    background-color: rgb(148, 65, 227); /* 设置鼠标悬停时的背景颜色 */
+    background-color: rgb(24, 72, 112); /* 设置鼠标悬停时的背景颜色 */
 }
 
 QPushButton:pressed {
-    background-color: rgb(128, 45, 207); /* 设置按下时的背景颜色 */
+    background-color: rgb(21, 64, 99); /* 设置按下时的背景颜色 */
+}
+
+
+
+QPushButton:disabled {
+    background-color: rgb(200, 200, 200); /* 设置禁用时的背景颜色 */
+    color: rgb(150, 150, 150); /* 设置禁用时的文字颜色 */
 }
 </string>
         </property>
@@ -334,13 +348,13 @@ QPushButton:pressed {
          <string notr="true">QLineEdit {
     background-color: rgb(255, 255, 255); /* 设置背景颜色 */
     color: black; /* 设置文本颜色 */
-    border: 1px solid rgb(168, 85, 247); /* 设置边框颜色 */
+    border: 1px solid rgb(70, 130, 180); /* 设置边框颜色 */
     padding: 4px 8px; /* 设置内边距 */
     border-radius: 4px; /* 设置圆角 */
 }
 
 QLineEdit:focus {
-    border: 1px solid rgb(68, 5, 147); /* 设置聚焦时的边框颜色 */
+    border: 1px solid rgb(30, 90, 140); /* 设置聚焦时的边框颜色 */
 }
 </string>
         </property>
@@ -364,7 +378,7 @@ QLineEdit:focus {
          </rect>
         </property>
         <property name="styleSheet">
-         <string notr="true">color : rgb(68, 5, 147)</string>
+         <string notr="true">color : rgb(21, 64, 99)</string>
         </property>
         <property name="text">
          <string>接受用户协议</string>
@@ -402,13 +416,13 @@ QLineEdit:focus {
          <string notr="true">QLineEdit {
     background-color: rgb(255, 255, 255); /* 设置背景颜色 */
     color: black; /* 设置文本颜色 */
-    border: 1px solid rgb(168, 85, 247); /* 设置边框颜色 */
+    border: 1px solid rgb(70, 130, 180); /* 设置边框颜色 */
     padding: 4px 8px; /* 设置内边距 */
     border-radius: 4px; /* 设置圆角 */
 }
 
 QLineEdit:focus {
-    border: 1px solid rgb(68, 5, 147); /* 设置聚焦时的边框颜色 */
+    border: 1px solid rgb(30, 90, 140); /* 设置聚焦时的边框颜色 */
 }
 </string>
         </property>
@@ -433,7 +447,7 @@ QLineEdit:focus {
         </property>
         <property name="styleSheet">
          <string notr="true">border : none;
-color : rgb(68, 5, 147)</string>
+color : rgb(21, 64, 99)</string>
         </property>
         <property name="text">
          <string>已有账户？登录！</string>
@@ -452,13 +466,13 @@ color : rgb(68, 5, 147)</string>
          <string notr="true">QLineEdit {
     background-color: rgb(255, 255, 255); /* 设置背景颜色 */
     color: black; /* 设置文本颜色 */
-    border: 1px solid rgb(168, 85, 247); /* 设置边框颜色 */
+    border: 1px solid rgb(70, 130, 180); /* 设置边框颜色 */
     padding: 4px 8px; /* 设置内边距 */
     border-radius: 4px; /* 设置圆角 */
 }
 
 QLineEdit:focus {
-    border: 1px solid rgb(68, 5, 147); /* 设置聚焦时的边框颜色 */
+    border: 1px solid rgb(30, 90, 140); /* 设置聚焦时的边框颜色 */
 }
 </string>
         </property>
@@ -485,23 +499,28 @@ QLineEdit:focus {
          <string>确认密码</string>
         </property>
        </widget>
-       <widget class="QLabel" name="label_6">
+       <widget class="QLabel" name="label_name_4">
         <property name="geometry">
          <rect>
-          <x>150</x>
-          <y>-10</y>
-          <width>80</width>
-          <height>80</height>
+          <x>0</x>
+          <y>50</y>
+          <width>371</width>
+          <height>21</height>
          </rect>
         </property>
-        <property name="pixmap">
-         <pixmap resource="image.qrc">:/new/prefix1/image/logo.png</pixmap>
+        <property name="font">
+         <font>
+          <pointsize>14</pointsize>
+         </font>
         </property>
-        <property name="scaledContents">
-         <bool>true</bool>
+        <property name="text">
+         <string>注册学术助手</string>
         </property>
-        <property name="wordWrap">
-         <bool>false</bool>
+        <property name="textFormat">
+         <enum>Qt::PlainText</enum>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
         </property>
        </widget>
       </widget>
@@ -526,18 +545,18 @@ QLineEdit:focus {
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
-    background-color: rgb(168, 85, 247); /* 设置默认背景颜色 */
+    background-color: rgb(70, 130, 180); /* 设置默认背景颜色 */
     color: white; /* 设置文字颜色 */
     border: none; /* 去除边框 */
 
 }
 
 QPushButton:hover {
-    background-color: rgb(148, 65, 227); /* 设置鼠标悬停时的背景颜色 */
+    background-color: rgb(30, 90, 140); /* 设置鼠标悬停时的背景颜色 */
 }
 
 QPushButton:pressed {
-    background-color: rgb(128, 45, 207); /* 设置按下时的背景颜色 */
+    background-color: rgb(24, 72, 112); /* 设置按下时的背景颜色 */
 }
 </string>
     </property>
@@ -572,6 +591,25 @@ QPushButton:pressed {
     </property>
     <property name="text">
      <string>X</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>61</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="pixmap">
+     <pixmap resource="image.qrc">:/new/prefix1/image/logo.png</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+    <property name="wordWrap">
+     <bool>false</bool>
     </property>
    </widget>
   </widget>
