@@ -30,7 +30,7 @@
      <string notr="true">background-color:#FAFAFA</string>
     </property>
     <property name="currentIndex">
-     <number>5</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="page_0_AI_chat">
      <widget class="QScrollArea" name="scrollArea_history">
@@ -82,13 +82,13 @@
        <string notr="true">QTextEdit {
     background-color: rgb(255, 255, 255); /* 设置背景颜色 */
     color: black; /* 设置文本颜色 */
-    border: 1px solid rgb(168, 85, 247); /* 设置边框颜色 */
+    border: 1px solid rgb(70, 130, 180); /* 设置边框颜色 */
     padding: 4px 8px; /* 设置内边距 */
     border-radius: 4px; /* 设置圆角 */
 }
 
 QTextEdit:focus {
-    border: 1px solid rgb(68, 5, 127); /* 设置聚焦时的边框颜色 */
+    border: 1px solid rgb(30, 90, 140); /* 设置聚焦时的边框颜色 */
 }
 </string>
       </property>
@@ -110,7 +110,7 @@ QTextEdit:focus {
       </property>
       <property name="styleSheet">
        <string notr="true">QPushButton {
-    background-color: rgb(168, 85, 247); /* 设置默认背景颜色 */
+    background-color: rgb(70, 130, 180); /* 设置默认背景颜色 */
     color: white; /* 设置文字颜色 */
     border: none; /* 去除边框 */
     padding: 8px 16px; /* 设置内边距 */
@@ -119,12 +119,13 @@ QTextEdit:focus {
 }
 
 QPushButton:hover {
-    background-color: rgb(148, 65, 227); /* 设置鼠标悬停时的背景颜色 */
+    background-color: rgb(30, 90, 140); /* 设置鼠标悬停时的背景颜色 */
 }
 
 QPushButton:pressed {
-    background-color: rgb(128, 45, 207); /* 设置按下时的背景颜色 */
+    background-color: rgb(24, 72, 112); /* 设置按下时的背景颜色 */
 }
+
 
 QPushButton:disabled {
     background-color: rgb(200, 200, 200); /* 设置禁用时的背景颜色 */
@@ -174,7 +175,7 @@ QPushButton:disabled {
        <string notr="true">QListWidget {
     background-color: rgb(255, 255, 255); /* 设置背景颜色 */
     color: black; /* 设置文本颜色 */
-    border: 1px solid rgb(168, 85, 247); /* 设置边框颜色 */
+    border: 1px solid rgb(70, 130, 180); /* 设置边框颜色 */
     padding: 4px; /* 设置内边距 */
     border-radius: 4px; /* 设置圆角 */
 }
@@ -186,12 +187,12 @@ QListWidget::item {
 }
 
 QListWidget::item:selected {
-    background-color: rgb(168, 85, 247); /* 选中项目的背景颜色 */
+    background-color: rgb(30, 90, 140); /* 选中项目的背景颜色 */
     color: white; /* 选中项目的文本颜色 */
 }
 
 QListWidget::item:hover {
-    background-color: rgb(200, 150, 247); /* 鼠标悬停时的背景颜色 */
+    background-color: rgb(30, 90, 140); /* 鼠标悬停时的背景颜色 */
     color: black; /* 鼠标悬停时的文本颜色 */
 }
 
@@ -210,7 +211,7 @@ QScrollBar:vertical {
 }
 
 QScrollBar::handle:vertical {
-    background-color: rgb(168, 85, 247); /* 滚动条滑块颜色 */
+    background-color: rgb(30, 90, 140); /* 滚动条滑块颜色 */
     min-height: 20px; /* 滑块最小高度 */
     border-radius: 4px; /* 滑块圆角 */
 }
@@ -238,7 +239,7 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
       </property>
       <property name="styleSheet">
        <string notr="true">
-background-color:rgb(198, 125, 255);
+background-color:rgb(70, 130, 180);
 color: white; /* 设置文字颜色 */
     border: none; /* 去除边框 */
     padding: 8px 16px; /* 设置内边距 */
@@ -265,13 +266,13 @@ color: white; /* 设置文字颜色 */
        <string notr="true">QLineEdit {
     background-color: rgb(255, 255, 255); /* 设置背景颜色 */
     color: black; /* 设置文本颜色 */
-    border: 1px solid rgb(168, 85, 247); /* 设置边框颜色 */
+    border: 1px solid rgb(70, 130, 180); /* 设置边框颜色 */
     padding: 4px 8px; /* 设置内边距 */
     border-radius: 4px; /* 设置圆角 */
 }
 
 QLineEdit:focus {
-    border: 1px solid rgb(68, 5, 147); /* 设置聚焦时的边框颜色 */
+    border: 1px solid rgb(30, 90, 140); /* 设置聚焦时的边框颜色 */
 }
 </string>
       </property>
@@ -290,7 +291,7 @@ QLineEdit:focus {
       </property>
       <property name="styleSheet">
        <string notr="true">QPushButton {
-    background-color: rgb(168, 85, 247); /* 设置默认背景颜色 */
+    background-color: rgb(70, 130, 180); /* 设置默认背景颜色 */
     color: white; /* 设置文字颜色 */
     border: none; /* 去除边框 */
     padding: 8px 16px; /* 设置内边距 */
@@ -299,11 +300,11 @@ QLineEdit:focus {
 }
 
 QPushButton:hover {
-    background-color: rgb(148, 65, 227); /* 设置鼠标悬停时的背景颜色 */
+    background-color: rgb(60, 120, 170); /* 设置鼠标悬停时的背景颜色 */
 }
 
 QPushButton:pressed {
-    background-color: rgb(128, 45, 207); /* 设置按下时的背景颜色 */
+    background-color: rgb(50, 110, 160); /* 设置按下时的背景颜色 */
 }
 </string>
       </property>
@@ -322,7 +323,7 @@ QPushButton:pressed {
       </property>
       <property name="styleSheet">
        <string notr="true">
-background-color:rgb(118, 25, 205);
+background-color:rgb(30, 90, 140);
 color: white; /* 设置文字颜色 */
     border: none; /* 去除边框 */
     padding: 8px 16px; /* 设置内边距 */
@@ -347,7 +348,7 @@ color: white; /* 设置文字颜色 */
       </property>
       <property name="styleSheet">
        <string notr="true">QPushButton {
-    background-color: rgb(168, 85, 247); /* 设置默认背景颜色 */
+    background-color: rgb(70, 130, 180); /* 设置默认背景颜色 */
     color: white; /* 设置文字颜色 */
     border: none; /* 去除边框 */
     padding: 8px 16px; /* 设置内边距 */
@@ -356,11 +357,11 @@ color: white; /* 设置文字颜色 */
 }
 
 QPushButton:hover {
-    background-color: rgb(148, 65, 227); /* 设置鼠标悬停时的背景颜色 */
+    background-color: rgb(60, 120, 170); /* 设置鼠标悬停时的背景颜色 */
 }
 
 QPushButton:pressed {
-    background-color: rgb(128, 45, 207); /* 设置按下时的背景颜色 */
+    background-color: rgb(50, 110, 160); /* 设置按下时的背景颜色 */
 }
 </string>
       </property>
@@ -391,7 +392,7 @@ QPushButton:pressed {
       </property>
       <property name="styleSheet">
        <string notr="true">QPushButton {
-    background-color: rgb(168, 85, 247); /* 设置默认背景颜色 */
+    background-color: rgb(70, 130, 180); /* 设置默认背景颜色 */
     color: white; /* 设置文字颜色 */
     border: none; /* 去除边框 */
     padding: 8px 16px; /* 设置内边距 */
@@ -400,11 +401,11 @@ QPushButton:pressed {
 }
 
 QPushButton:hover {
-    background-color: rgb(148, 65, 227); /* 设置鼠标悬停时的背景颜色 */
+    background-color: rgb(30, 90, 140); /* 设置鼠标悬停时的背景颜色 */
 }
 
 QPushButton:pressed {
-    background-color: rgb(128, 45, 207); /* 设置按下时的背景颜色 */
+    background-color: rgb(24, 72, 112); /* 设置按下时的背景颜色 */
 }
 </string>
       </property>
@@ -425,13 +426,13 @@ QPushButton:pressed {
        <string notr="true">QLineEdit {
     background-color: rgb(255, 255, 255); /* 设置背景颜色 */
     color: black; /* 设置文本颜色 */
-    border: 1px solid rgb(168, 85, 247); /* 设置边框颜色 */
+    border: 1px solid rgb(70, 130, 180); /* 设置边框颜色 */
     padding: 4px 8px; /* 设置内边距 */
     border-radius: 4px; /* 设置圆角 */
 }
 
 QLineEdit:focus {
-    border: 1px solid rgb(68, 5, 147); /* 设置聚焦时的边框颜色 */
+    border: 1px solid rgb(30, 90, 140); /* 设置聚焦时的边框颜色 */
 }
 </string>
       </property>
@@ -475,7 +476,7 @@ QLineEdit:focus {
        <string notr="true">QComboBox {
     background-color: rgb(255, 255, 255); /* 设置背景颜色 */
     color: black; /* 设置文本颜色 */
-    border: 1px solid rgb(168, 85, 247); /* 设置边框颜色 */
+    border: 1px solid rgb(70, 130, 180); /* 设置边框颜色 */
     padding: 4px 8px; /* 设置内边距 */
     border-radius: 4px; /* 设置圆角 */
 }
@@ -563,7 +564,7 @@ QComboBox:focus {
        <string notr="true">QComboBox {
     background-color: rgb(255, 255, 255); /* 设置背景颜色 */
     color: black; /* 设置文本颜色 */
-    border: 1px solid rgb(168, 85, 247); /* 设置边框颜色 */
+    border: 1px solid rgb(70, 130, 180); /* 设置边框颜色 */
     padding: 4px 8px; /* 设置内边距 */
     border-radius: 4px; /* 设置圆角 */
 }
@@ -597,7 +598,7 @@ QComboBox:focus {
        <string notr="true">QComboBox {
     background-color: rgb(255, 255, 255); /* 设置背景颜色 */
     color: black; /* 设置文本颜色 */
-    border: 1px solid rgb(168, 85, 247); /* 设置边框颜色 */
+    border: 1px solid rgb(70, 130, 180); /* 设置边框颜色 */
     padding: 4px 8px; /* 设置内边距 */
     border-radius: 4px; /* 设置圆角 */
 }
@@ -656,7 +657,7 @@ QComboBox:focus {
       </property>
       <property name="styleSheet">
        <string notr="true">QPushButton {
-    background-color: rgb(168, 85, 247); /* 设置默认背景颜色 */
+    background-color: rgb(70, 130, 180); /* 设置默认背景颜色 */
     color: white; /* 设置文字颜色 */
     border: none; /* 去除边框 */
     border-radius: 4px; /* 设置圆角 */
@@ -664,11 +665,11 @@ QComboBox:focus {
 }
 
 QPushButton:hover {
-    background-color: rgb(148, 65, 227); /* 设置鼠标悬停时的背景颜色 */
+    background-color: rgb(30, 90, 140); /* 设置鼠标悬停时的背景颜色 */
 }
 
 QPushButton:pressed {
-    background-color: rgb(128, 45, 207); /* 设置按下时的背景颜色 */
+    background-color: rgb(24, 72, 112); /* 设置按下时的背景颜色 */
 }
 </string>
       </property>
@@ -687,7 +688,7 @@ QPushButton:pressed {
       </property>
       <property name="styleSheet">
        <string notr="true">QPushButton {
-    background-color: rgb(168, 85, 247); /* 设置默认背景颜色 */
+    background-color: rgb(70, 130, 180); /* 设置默认背景颜色 */
     color: white; /* 设置文字颜色 */
     border: none; /* 去除边框 */
     border-radius: 4px; /* 设置圆角 */
@@ -695,11 +696,11 @@ QPushButton:pressed {
 }
 
 QPushButton:hover {
-    background-color: rgb(148, 65, 227); /* 设置鼠标悬停时的背景颜色 */
+    background-color: rgb(30, 90, 140); /* 设置鼠标悬停时的背景颜色 */
 }
 
 QPushButton:pressed {
-    background-color: rgb(128, 45, 207); /* 设置按下时的背景颜色 */
+    background-color: rgb(24, 72, 112); /* 设置按下时的背景颜色 */
 }
 </string>
       </property>
@@ -730,7 +731,17 @@ QPushButton:pressed {
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">border: 1px solid rgb(168, 85, 247);</string>
+       <string notr="true">QLineEdit {
+    background-color: rgb(255, 255, 255); /* 设置背景颜色 */
+    color: black; /* 设置文本颜色 */
+    border: 1px solid rgb(70, 130, 180); /* 设置边框颜色 */
+    border-radius: 4px; /* 设置圆角 */
+}
+
+QLineEdit:focus {
+    border: 1px solid rgb(30, 90, 140); /* 设置聚焦时的边框颜色 */
+}
+</string>
       </property>
       <property name="text">
        <string>0</string>
@@ -805,7 +816,7 @@ QPushButton:pressed {
       </property>
       <property name="styleSheet">
        <string notr="true">QPushButton {
-    background-color: rgb(168, 85, 247); /* 设置默认背景颜色 */
+    background-color: rgb(70, 130, 180); /* 设置默认背景颜色 */
     color: white; /* 设置文字颜色 */
     border: none; /* 去除边框 */
     padding: 8px 16px; /* 设置内边距 */
@@ -814,12 +825,13 @@ QPushButton:pressed {
 }
 
 QPushButton:hover {
-    background-color: rgb(148, 65, 227); /* 设置鼠标悬停时的背景颜色 */
+    background-color: rgb(30, 90, 140); /* 设置鼠标悬停时的背景颜色 */
 }
 
 QPushButton:pressed {
-    background-color: rgb(128, 45, 207); /* 设置按下时的背景颜色 */
+    background-color: rgb(24, 72, 112); /* 设置按下时的背景颜色 */
 }
+
 
 QPushButton:disabled {
     background-color: rgb(200, 200, 200); /* 设置禁用时的背景颜色 */
@@ -844,13 +856,13 @@ QPushButton:disabled {
        <string notr="true">QTextEdit {
     background-color: rgb(255, 255, 255); /* 设置背景颜色 */
     color: black; /* 设置文本颜色 */
-    border: 1px solid rgb(168, 85, 247); /* 设置边框颜色 */
+    border: 1px solid rgb(70, 130, 180); /* 设置边框颜色 */
     padding: 4px 8px; /* 设置内边距 */
     border-radius: 4px; /* 设置圆角 */
 }
 
 QTextEdit:focus {
-    border: 1px solid rgb(68, 5, 127); /* 设置聚焦时的边框颜色 */
+    border: 1px solid rgb(30, 90, 140); /* 设置聚焦时的边框颜色 */
 }
 </string>
       </property>
@@ -871,7 +883,7 @@ QTextEdit:focus {
        <string notr="true">QComboBox {
     background-color: rgb(255, 255, 255); /* 设置背景颜色 */
     color: black; /* 设置文本颜色 */
-    border: 1px solid rgb(168, 85, 247); /* 设置边框颜色 */
+    border: 1px solid rgb(70, 130, 180); /* 设置边框颜色 */
     padding: 4px 8px; /* 设置内边距 */
     border-radius: 4px; /* 设置圆角 */
 }
@@ -928,7 +940,7 @@ QComboBox:focus {
       </property>
       <property name="styleSheet">
        <string notr="true">
-background-color:rgb(118, 25, 205);
+background-color:rgb(30, 90, 140);
 color: white; /* 设置文字颜色 */
     border: none; /* 去除边框 */
     padding: 8px 16px; /* 设置内边距 */
@@ -936,7 +948,7 @@ color: white; /* 设置文字颜色 */
     font-size: 14px; /* 设置字体大小 */</string>
       </property>
       <property name="text">
-       <string>今日推送</string>
+       <string>推荐文献</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -953,7 +965,7 @@ color: white; /* 设置文字颜色 */
       </property>
       <property name="styleSheet">
        <string notr="true">
-background-color:rgb(198, 125, 255);
+background-color:rgb(70, 130, 180);
 color: white; /* 设置文字颜色 */
     border: none; /* 去除边框 */
     padding: 8px 16px; /* 设置内边距 */
@@ -980,7 +992,7 @@ color: white; /* 设置文字颜色 */
        <string notr="true">QListWidget {
     background-color: rgb(255, 255, 255); /* 设置背景颜色 */
     color: black; /* 设置文本颜色 */
-    border: 1px solid rgb(168, 85, 247); /* 设置边框颜色 */
+    border: 1px solid rgb(70, 130, 180); /* 设置边框颜色 */
     padding: 4px; /* 设置内边距 */
     border-radius: 4px; /* 设置圆角 */
 }
@@ -992,12 +1004,12 @@ QListWidget::item {
 }
 
 QListWidget::item:selected {
-    background-color: rgb(168, 85, 247); /* 选中项目的背景颜色 */
+    background-color: rgb(30, 90, 140); /* 选中项目的背景颜色 */
     color: white; /* 选中项目的文本颜色 */
 }
 
 QListWidget::item:hover {
-    background-color: rgb(200, 150, 247); /* 鼠标悬停时的背景颜色 */
+    background-color: rgb(30, 90, 140); /* 鼠标悬停时的背景颜色 */
     color: black; /* 鼠标悬停时的文本颜色 */
 }
 
@@ -1016,7 +1028,7 @@ QScrollBar:vertical {
 }
 
 QScrollBar::handle:vertical {
-    background-color: rgb(168, 85, 247); /* 滚动条滑块颜色 */
+    background-color: rgb(30, 90, 140); /* 滚动条滑块颜色 */
     min-height: 20px; /* 滑块最小高度 */
     border-radius: 4px; /* 滑块圆角 */
 }
@@ -1037,8 +1049,8 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>390</y>
-        <width>201</width>
+        <y>440</y>
+        <width>121</width>
         <height>31</height>
        </rect>
       </property>
@@ -1046,7 +1058,7 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
        <string notr="true">QComboBox {
     background-color: rgb(255, 255, 255); /* 设置背景颜色 */
     color: black; /* 设置文本颜色 */
-    border: 1px solid rgb(168, 85, 247); /* 设置边框颜色 */
+    border: 1px solid rgb(70, 130, 180); /* 设置边框颜色 */
     padding: 4px 8px; /* 设置内边距 */
     border-radius: 4px; /* 设置圆角 */
 }
@@ -1070,7 +1082,7 @@ QComboBox:focus {
      <widget class="QPushButton" name="pushButton_add_interested">
       <property name="geometry">
        <rect>
-        <x>130</x>
+        <x>150</x>
         <y>440</y>
         <width>61</width>
         <height>31</height>
@@ -1081,7 +1093,7 @@ QComboBox:focus {
       </property>
       <property name="styleSheet">
        <string notr="true">QPushButton {
-    background-color: rgb(168, 85, 247); /* 设置默认背景颜色 */
+    background-color: rgb(70, 130, 180); /* 设置默认背景颜色 */
     color: white; /* 设置文字颜色 */
     border: none; /* 去除边框 */
     padding: 8px 16px; /* 设置内边距 */
@@ -1090,11 +1102,11 @@ QComboBox:focus {
 }
 
 QPushButton:hover {
-    background-color: rgb(148, 65, 227); /* 设置鼠标悬停时的背景颜色 */
+    background-color: rgb(60, 120, 170); /* 设置鼠标悬停时的背景颜色 */
 }
 
 QPushButton:pressed {
-    background-color: rgb(128, 45, 207); /* 设置按下时的背景颜色 */
+    background-color: rgb(50, 110, 160); /* 设置按下时的背景颜色 */
 }
 </string>
       </property>
@@ -1105,9 +1117,9 @@ QPushButton:pressed {
      <widget class="QPushButton" name="pushButton_delete_interested">
       <property name="geometry">
        <rect>
-        <x>40</x>
-        <y>440</y>
-        <width>61</width>
+        <x>20</x>
+        <y>390</y>
+        <width>191</width>
         <height>31</height>
        </rect>
       </property>
@@ -1116,12 +1128,20 @@ QPushButton:pressed {
       </property>
       <property name="styleSheet">
        <string notr="true">QPushButton {
-    background-color: rgb(255, 24, 39); /* 设置默认背景颜色 */
+    background-color: rgb(70, 130, 180); /* 设置默认背景颜色 */
     color: white; /* 设置文字颜色 */
     border: none; /* 去除边框 */
     padding: 8px 16px; /* 设置内边距 */
     border-radius: 4px; /* 设置圆角 */
     font-size: 14px; /* 设置字体大小 */
+}
+
+QPushButton:hover {
+    background-color: rgb(60, 120, 170); /* 设置鼠标悬停时的背景颜色 */
+}
+
+QPushButton:pressed {
+    background-color: rgb(50, 110, 160); /* 设置按下时的背景颜色 */
 }
 </string>
       </property>
@@ -1132,9 +1152,9 @@ QPushButton:pressed {
      <widget class="QPushButton" name="pushButton_refresh_push">
       <property name="geometry">
        <rect>
-        <x>60</x>
+        <x>20</x>
         <y>490</y>
-        <width>111</width>
+        <width>191</width>
         <height>31</height>
        </rect>
       </property>
@@ -1143,7 +1163,7 @@ QPushButton:pressed {
       </property>
       <property name="styleSheet">
        <string notr="true">QPushButton {
-    background-color: rgb(168, 85, 247); /* 设置默认背景颜色 */
+    background-color: rgb(70, 130, 180); /* 设置默认背景颜色 */
     color: white; /* 设置文字颜色 */
     border: none; /* 去除边框 */
     padding: 8px 16px; /* 设置内边距 */
@@ -1152,16 +1172,16 @@ QPushButton:pressed {
 }
 
 QPushButton:hover {
-    background-color: rgb(148, 65, 227); /* 设置鼠标悬停时的背景颜色 */
+    background-color: rgb(60, 120, 170); /* 设置鼠标悬停时的背景颜色 */
 }
 
 QPushButton:pressed {
-    background-color: rgb(128, 45, 207); /* 设置按下时的背景颜色 */
+    background-color: rgb(50, 110, 160); /* 设置按下时的背景颜色 */
 }
 </string>
       </property>
       <property name="text">
-       <string>刷新推送</string>
+       <string>换一批</string>
       </property>
      </widget>
     </widget>
@@ -1188,7 +1208,7 @@ QPushButton:pressed {
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
-    background-color: rgb(198, 125, 255); /* 设置默认背景颜色 */
+    background-color: rgb(70, 130, 180); /* 设置默认背景颜色 */
     color: white; /* 设置文字颜色 */
     border: none; /* 去除边框 */
     padding: 8px 16px; /* 设置内边距 */
@@ -1196,11 +1216,11 @@ QPushButton:pressed {
 }
 
 QPushButton:hover {
-    background-color: rgb(148, 65, 227); /* 设置鼠标悬停时的背景颜色 */
+    background-color: rgb(40, 100, 150); 
 }
 
 QPushButton:pressed {
-    background-color: rgb(128, 45, 207); /* 设置按下时的背景颜色 */
+    background-color: rgb(20, 80, 120); 
 }
 </string>
     </property>
@@ -1209,84 +1229,6 @@ QPushButton:pressed {
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_AI__chat_page">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>190</y>
-      <width>130</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>-1</pointsize>
-     </font>
-    </property>
-    <property name="cursor">
-     <cursorShape>PointingHandCursor</cursorShape>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">QPushButton {
-    background-color: rgb(198, 125, 255); /* 设置默认背景颜色 */
-    color: white; /* 设置文字颜色 */
-    border: none; /* 去除边框 */
-    padding: 8px 16px; /* 设置内边距 */
-    font-size: 14px; /* 设置字体大小 */
-}
-
-QPushButton:hover {
-    background-color: rgb(148, 65, 227); 
-}
-
-QPushButton:pressed {
-    background-color: rgb(128, 45, 207); 
-}
-</string>
-    </property>
-    <property name="text">
-     <string>AI问答</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_Document_query_page">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>310</y>
-      <width>130</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>-1</pointsize>
-     </font>
-    </property>
-    <property name="cursor">
-     <cursorShape>PointingHandCursor</cursorShape>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">QPushButton {
-    background-color: rgb(198, 125, 255); /* 设置默认背景颜色 */
-    color: white; /* 设置文字颜色 */
-    border: none; /* 去除边框 */
-    padding: 8px 16px; /* 设置内边距 */
-    font-size: 14px; /* 设置字体大小 */
-}
-
-QPushButton:hover {
-    background-color: rgb(148, 65, 227); 
-}
-
-QPushButton:pressed {
-    background-color: rgb(128, 45, 207); 
-}
-</string>
-    </property>
-    <property name="text">
-     <string>搜索</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_translate_page">
     <property name="geometry">
      <rect>
       <x>0</x>
@@ -1305,7 +1247,7 @@ QPushButton:pressed {
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
-    background-color: rgb(198, 125, 255); /* 设置默认背景颜色 */
+    background-color: rgb(70, 130, 180); /* 设置默认背景颜色 */
     color: white; /* 设置文字颜色 */
     border: none; /* 去除边框 */
     padding: 8px 16px; /* 设置内边距 */
@@ -1313,19 +1255,19 @@ QPushButton:pressed {
 }
 
 QPushButton:hover {
-    background-color: rgb(148, 65, 227); 
+    background-color: rgb(40, 100, 150); 
 }
 
 QPushButton:pressed {
-    background-color: rgb(128, 45, 207); 
+    background-color: rgb(20, 80, 120); 
 }
 </string>
     </property>
     <property name="text">
-     <string>翻译</string>
+     <string>AI问答</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_Daily_push_page">
+   <widget class="QPushButton" name="pushButton_Document_query_page">
     <property name="geometry">
      <rect>
       <x>0</x>
@@ -1344,7 +1286,7 @@ QPushButton:pressed {
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
-    background-color: rgb(198, 125, 255); /* 设置默认背景颜色 */
+    background-color: rgb(70, 130, 180); /* 设置默认背景颜色 */
     color: white; /* 设置文字颜色 */
     border: none; /* 去除边框 */
     padding: 8px 16px; /* 设置内边距 */
@@ -1352,16 +1294,55 @@ QPushButton:pressed {
 }
 
 QPushButton:hover {
-    background-color: rgb(148, 65, 227); 
+    background-color: rgb(40, 100, 150); 
 }
 
 QPushButton:pressed {
-    background-color: rgb(128, 45, 207); 
+    background-color: rgb(20, 80, 120); 
 }
 </string>
     </property>
     <property name="text">
-     <string>每日推送</string>
+     <string>搜索</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_translate_page">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>310</y>
+      <width>130</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>-1</pointsize>
+     </font>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+    background-color: rgb(70, 130, 180); /* 设置默认背景颜色 */
+    color: white; /* 设置文字颜色 */
+    border: none; /* 去除边框 */
+    padding: 8px 16px; /* 设置内边距 */
+    font-size: 14px; /* 设置字体大小 */
+}
+
+QPushButton:hover {
+    background-color: rgb(40, 100, 150); 
+}
+
+QPushButton:pressed {
+    background-color: rgb(20, 80, 120); 
+}
+</string>
+    </property>
+    <property name="text">
+     <string>翻译</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_Mine_page">
@@ -1383,7 +1364,7 @@ QPushButton:pressed {
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
-    background-color: rgb(198, 125, 255); /* 设置默认背景颜色 */
+    background-color: rgb(70, 130, 180); /* 设置默认背景颜色 */
     color: white; /* 设置文字颜色 */
     border: none; /* 去除边框 */
     padding: 8px 16px; /* 设置内边距 */
@@ -1391,11 +1372,11 @@ QPushButton:pressed {
 }
 
 QPushButton:hover {
-    background-color: rgb(148, 65, 227); 
+    background-color: rgb(40, 100, 150); 
 }
 
 QPushButton:pressed {
-    background-color: rgb(128, 45, 207); 
+    background-color: rgb(20, 80, 120); 
 }
 </string>
     </property>
@@ -1421,6 +1402,9 @@ QPushButton:pressed {
     <property name="wordWrap">
      <bool>false</bool>
     </property>
+    <property name="buddy">
+     <cstring>label_3</cstring>
+    </property>
    </widget>
    <widget class="QPushButton" name="pushButton_minimize">
     <property name="geometry">
@@ -1439,18 +1423,18 @@ QPushButton:pressed {
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
-    background-color: rgb(168, 85, 247); /* 设置默认背景颜色 */
+    background-color: rgb(70, 130, 180); /* 设置默认背景颜色 */
     color: white; /* 设置文字颜色 */
     border: none; /* 去除边框 */
 
 }
 
 QPushButton:hover {
-    background-color: rgb(148, 65, 227); /* 设置鼠标悬停时的背景颜色 */
+    background-color: rgb(30, 90, 140); /* 设置鼠标悬停时的背景颜色 */
 }
 
 QPushButton:pressed {
-    background-color: rgb(128, 45, 207); /* 设置按下时的背景颜色 */
+    background-color: rgb(24, 72, 112); /* 设置按下时的背景颜色 */
 }
 </string>
     </property>
@@ -1506,7 +1490,7 @@ QPushButton:pressed {
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
-    background-color: rgb(198, 125, 255); /* 设置默认背景颜色 */
+    background-color: rgb(70, 130, 180); /* 设置默认背景颜色 */
     color: white; /* 设置文字颜色 */
     border: none; /* 去除边框 */
     padding: 8px 16px; /* 设置内边距 */
@@ -1514,11 +1498,11 @@ QPushButton:pressed {
 }
 
 QPushButton:hover {
-    background-color: rgb(148, 65, 227); 
+    background-color: rgb(40, 100, 150); 
 }
 
 QPushButton:pressed {
-    background-color: rgb(128, 45, 207); 
+    background-color: rgb(20, 80, 120); 
 }
 </string>
     </property>
@@ -1545,7 +1529,7 @@ QPushButton:pressed {
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
-    background-color: rgb(118, 25, 205); /* 设置默认背景颜色 */
+    background-color: rgb(30, 90, 140); /* 设置默认背景颜色 */
     color: white; /* 设置文字颜色 */
     border: none; /* 去除边框 */
     padding: 8px 16px; /* 设置内边距 */
@@ -1553,11 +1537,11 @@ QPushButton:pressed {
 }
 
 QPushButton:hover {
-    background-color: rgb(148, 65, 227); 
+    background-color: rgb(20, 60, 130); 
 }
 
 QPushButton:pressed {
-    background-color: rgb(128, 45, 207); 
+    background-color: rgb(10, 80, 120); 
 }
 </string>
     </property>
@@ -1594,7 +1578,7 @@ QPushButton:pressed {
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color:rgb(198, 125, 255)</string>
+     <string notr="true">background-color:rgb(70, 130, 180)</string>
     </property>
     <property name="text">
      <string/>
@@ -1624,13 +1608,51 @@ QPushButton:pressed {
      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
     </property>
    </widget>
+   <widget class="QPushButton" name="pushButton_Daily_push_page">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>190</y>
+      <width>130</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>-1</pointsize>
+     </font>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+    background-color: rgb(70, 130, 180); /* 设置默认背景颜色 */
+    color: white; /* 设置文字颜色 */
+    border: none; /* 去除边框 */
+    padding: 8px 16px; /* 设置内边距 */
+    font-size: 14px; /* 设置字体大小 */
+}
+
+QPushButton:hover {
+    background-color: rgb(40, 100, 150); 
+}
+
+QPushButton:pressed {
+    background-color: rgb(20, 80, 120); 
+}
+</string>
+    </property>
+    <property name="text">
+     <string>文献推荐</string>
+    </property>
+   </widget>
    <zorder>stackedWidget</zorder>
    <zorder>label</zorder>
    <zorder>pushButton_Document_manage_page</zorder>
    <zorder>pushButton_AI__chat_page</zorder>
    <zorder>pushButton_Document_query_page</zorder>
    <zorder>pushButton_translate_page</zorder>
-   <zorder>pushButton_Daily_push_page</zorder>
    <zorder>pushButton_Mine_page</zorder>
    <zorder>label_3</zorder>
    <zorder>pushButton_minimize</zorder>
@@ -1639,6 +1661,7 @@ QPushButton:pressed {
    <zorder>pushButton_selected</zorder>
    <zorder>label_name</zorder>
    <zorder>label_name_3</zorder>
+   <zorder>pushButton_Daily_push_page</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -1652,6 +1675,45 @@ QPushButton:pressed {
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
+ <tabstops>
+  <tabstop>pushButton_Document_manage_page</tabstop>
+  <tabstop>pushButton_Daily_push_page</tabstop>
+  <tabstop>pushButton_AI__chat_page</tabstop>
+  <tabstop>pushButton_translate_page</tabstop>
+  <tabstop>pushButton_Document_query_page</tabstop>
+  <tabstop>pushButton_Mine_page</tabstop>
+  <tabstop>pushButton_pure</tabstop>
+  <tabstop>pushButton_selected</tabstop>
+  <tabstop>listWidget_interested</tabstop>
+  <tabstop>scrollArea_docu_of_push</tabstop>
+  <tabstop>pushButton_delete_interested</tabstop>
+  <tabstop>comboBox_field_interested</tabstop>
+  <tabstop>pushButton_refresh_push</tabstop>
+  <tabstop>pushButton_add_interested</tabstop>
+  <tabstop>comboBox_sortorder</tabstop>
+  <tabstop>pushButton_last_pgae</tabstop>
+  <tabstop>pushButton_next_pgae</tabstop>
+  <tabstop>lineEdit_display_page</tabstop>
+  <tabstop>pushButton_translate</tabstop>
+  <tabstop>textEdit_translate</tabstop>
+  <tabstop>comboBox_language</tabstop>
+  <tabstop>pushButton_search</tabstop>
+  <tabstop>pushButton_tagsFliter</tabstop>
+  <tabstop>scrollArea_search</tabstop>
+  <tabstop>comboBox_sorttype</tabstop>
+  <tabstop>lineEdit</tabstop>
+  <tabstop>comboBox_field</tabstop>
+  <tabstop>scrollArea_history</tabstop>
+  <tabstop>textEdit_question</tabstop>
+  <tabstop>scrollArea_docu_of_tag</tabstop>
+  <tabstop>pushButton_question</tabstop>
+  <tabstop>pushButton_refreshAiHistory</tabstop>
+  <tabstop>listWidget_tag</tabstop>
+  <tabstop>pushButton_minimize</tabstop>
+  <tabstop>pushButton_close</tabstop>
+  <tabstop>lineEdit_tagKeyword</tabstop>
+  <tabstop>pushButton_tags</tabstop>
+ </tabstops>
  <resources>
   <include location="image.qrc"/>
  </resources>

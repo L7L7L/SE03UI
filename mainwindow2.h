@@ -80,6 +80,7 @@ private slots:
 
     void on_pushButton_refresh_push_clicked();
 
+
 protected:
     void mousePressEvent(QMouseEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;

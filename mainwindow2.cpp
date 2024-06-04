@@ -33,13 +33,13 @@ QTextEdit *lastAiTextEdit; //指向AI对话框的最后一个文本框
 QString qTextStyle = "QTextEdit {"
                            "background-color: rgb(255, 255, 255);" /* 设置背景颜色 */
                            "color: black;" /* 设置文本颜色 */
-                           "border: 1px solid rgb(168, 85, 247);" /* 设置边框颜色 */
+                           "border: 1px solid rgb(70, 130, 180);" /* 设置边框颜色 */
                            "padding: 4px 8px;" /* 设置内边距 */
                            "border-radius: 4px;" /* 设置圆角 */
                            "font-size: 14px;" /* 设置字体大小 */
                            "}"
                            "QTextEdit:focus {"
-                           "border: 1px solid rgb(48, 5, 127);" /* 设置聚焦时的边框颜色 */
+                           "border: 1px solid rgb(30, 90, 140);" /* 设置聚焦时的边框颜色 */
                            "}";
 
 
@@ -57,12 +57,12 @@ QString qScrollBarStyle = "/* ScrollBar */"
                               "    margin: 0px 0px 0px 0;"
                               "}"
                               "QScrollBar::handle:horizontal {"
-                              "    background: rgb(168, 85, 247);"
+                              "    background: rgb(30, 90, 140);"
                               "    min-width: 20px;"
                               "    border-radius: 7px;"
                               "}"
                               "QScrollBar::handle:vertical {"
-                              "    background: rgb(168, 85, 247);"
+                              "    background: rgb(30, 90, 140);"
                               "    min-height: 20px;"
                               "    border-radius: 7px;"
                               "}"
@@ -75,20 +75,6 @@ QString qScrollBarStyle = "/* ScrollBar */"
                               "QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {"
                               "    background: none;"
                               "}";
-
-
-QString qbuttonStyle = "QPushButton {"
-                       "   font-size: 15px;"
-                       "   color: black;"
-                       "   border: 2px solid blue;"
-                       "   border-radius: 10px;"
-                       "   background-color: white;"
-                       "}"
-                       "QPushButton:focus {"
-                       "   background-color: blue;"
-                       "   color: white;"
-                       "}";
-
 
 MainWindow2::MainWindow2(QWidget *parent)
     : QMainWindow(parent)
@@ -945,10 +931,10 @@ void MainWindow2::starPaper(QString paperUrl, QComboBox* tagBox, QPushButton* bu
         return;
     }
     button->setText("√ 已收藏");
-    QTimer::singleShot(3000, [button, originalText]() {
-        button->setText(originalText);
-        button->setEnabled(1);
-    });
+    // QTimer::singleShot(3000, [button, originalText]() {
+    //     button->setText(originalText);
+    //     button->setEnabled(1);
+    // });
     //刷新收藏夹
     on_pushButton_tags_clicked();
 }
@@ -1022,7 +1008,8 @@ void MainWindow2::displaySearchResult(const QVector<Paper>& papers)
         if(papers[i].is_star)
         {
             QLabel *tag_label = new QLabel("已收藏到："+papers[i].starTag);
-            tag_label->setStyleSheet("background-color: rgb(168, 85, 247);color: white;  border: none; padding: 8px 16px;  border-radius: 4px;font-size: 14px;" );
+            tag_label->setStyleSheet("background-color: rgb(110, 170, 220);color: white;  border: none; padding: 8px 16px;  border-radius: 0px;font-size: 14px;" );
+            tag_label->setAlignment(Qt::AlignHCenter);
             layoutH->addWidget(tag_label);
         }
         else
@@ -1182,6 +1169,7 @@ void MainWindow2::display_tags(QStringList &TagList)
     ui->listWidget_tag->addItems(TagList);
     if(!TagList.empty())
     {
+
         ui->listWidget_tag->setCurrentRow(0);
     }
 
