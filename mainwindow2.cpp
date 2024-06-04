@@ -1167,11 +1167,6 @@ QStringList MainWindow2::getTags()
         }
     }
 
-    if(TagList.size()<this->num_tag)
-    {
-        this->now_tag_row = 0;
-        ui->listWidget_tag->setCurrentRow(this->now_tag_row);
-    }
     this->num_tag = TagList.size();
     return TagList;
 }
@@ -1363,7 +1358,15 @@ void MainWindow2::get_Docu_of_tag(QString tag)
 
     }
     this->now_tag=tag;
-    display_Docu_of_tag(papers);
+    if (papers.size() == 0)
+    {
+        this->now_tag_row = 0;
+        get_Docu_of_tag("default");
+    }
+    else
+    {
+            display_Docu_of_tag(papers);
+    }
     return;
 }
 //渲染收藏夹所含论文
@@ -2091,6 +2094,7 @@ void MainWindow2::display_push(QVector<Paper>&papers)
 
             tagCombo->setEditable(true);
             tagCombo->setStyleSheet(ui->comboBox_field->styleSheet());
+            tagCombo->setMinimumWidth(100);
             tagCombo->addItems(Tags);
             layoutH->addWidget(tagCombo);
             layoutH->addWidget(buttonStar);
