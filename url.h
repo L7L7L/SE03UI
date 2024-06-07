@@ -7,5 +7,6 @@
 #define UrlofQuery "http://62.234.28.172:5656/system/paper_query/"
 #define UrlofStar "http://62.234.28.172:5656/system/star_query/"
 #define UrlofPush "http://62.234.28.172:5656/system/paper_push"
+#define UrlofForget "http://62.234.28.172:5656/system/recover_password/"
 
 #endif // URL_H

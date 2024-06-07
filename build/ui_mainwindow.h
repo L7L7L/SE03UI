@@ -29,6 +29,12 @@ class Ui_MainWindow
 public:
     QWidget *centralwidget;
     QStackedWidget *stackedWidget;
+    QWidget *page_find;
+    QLabel *label_name_5;
+    QLineEdit *lineEdit_forget;
+    QPushButton *pushButton_find;
+    QLabel *label_6;
+    QPushButton *pushButton_back;
     QWidget *stackedWidgetPage1;
     QLabel *label_2;
     QPushButton *pushButton;
@@ -38,6 +44,7 @@ public:
     QLineEdit *lineEdit;
     QPushButton *pushButton_2;
     QLabel *label_name_3;
+    QPushButton *pushButton_forget;
     QWidget *stackedWidgetPage2;
     QStackedWidget *stackedWidget_2;
     QWidget *stackedWidgetPage1_2;
@@ -82,16 +89,106 @@ public:
         stackedWidget->setEnabled(true);
         stackedWidget->setGeometry(QRect(0, 50, 370, 455));
         stackedWidget->setStyleSheet(QString::fromUtf8("background-color:white"));
+        page_find = new QWidget();
+        page_find->setObjectName("page_find");
+        label_name_5 = new QLabel(page_find);
+        label_name_5->setObjectName("label_name_5");
+        label_name_5->setGeometry(QRect(0, 70, 371, 21));
+        QFont font;
+        font.setPointSize(14);
+        label_name_5->setFont(font);
+        label_name_5->setTextFormat(Qt::PlainText);
+        label_name_5->setAlignment(Qt::AlignCenter);
+        lineEdit_forget = new QLineEdit(page_find);
+        lineEdit_forget->setObjectName("lineEdit_forget");
+        lineEdit_forget->setGeometry(QRect(30, 200, 319, 40));
+        lineEdit_forget->setMinimumSize(QSize(250, 40));
+        lineEdit_forget->setStyleSheet(QString::fromUtf8("QLineEdit {\n"
+"    background-color: rgb(255, 255, 255); /* \350\256\276\347\275\256\350\203\214\346\231\257\351\242\234\350\211\262 */\n"
+"    color: black; /* \350\256\276\347\275\256\346\226\207\346\234\254\351\242\234\350\211\262 */\n"
+"    border: 1px solid rgb(70, 130, 180); /* \350\256\276\347\275\256\350\276\271\346\241\206\351\242\234\350\211\262 */\n"
+"    padding: 4px 8px; /* \350\256\276\347\275\256\345\206\205\350\276\271\350\267\235 */\n"
+"    border-radius: 4px; /* \350\256\276\347\275\256\345\234\206\350\247\222 */\n"
+"}\n"
+"\n"
+"QLineEdit:focus {\n"
+"    border: 1px solid rgb(30, 90, 140); /* \350\256\276\347\275\256\350\201\232\347\204\246\346\227\266\347\232\204\350\276\271\346\241\206\351\242\234\350\211\262 */\n"
+"}\n"
+""));
+        pushButton_find = new QPushButton(page_find);
+        pushButton_find->setObjectName("pushButton_find");
+        pushButton_find->setGeometry(QRect(30, 340, 141, 36));
+        QFont font1;
+        pushButton_find->setFont(font1);
+        pushButton_find->setCursor(QCursor(Qt::PointingHandCursor));
+        pushButton_find->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+"    background-color: rgb(70, 130, 180); /* \350\256\276\347\275\256\351\273\230\350\256\244\350\203\214\346\231\257\351\242\234\350\211\262 */\n"
+"    color: white; /* \350\256\276\347\275\256\346\226\207\345\255\227\351\242\234\350\211\262 */\n"
+"    border: none; /* \345\216\273\351\231\244\350\276\271\346\241\206 */\n"
+"    padding: 8px 16px; /* \350\256\276\347\275\256\345\206\205\350\276\271\350\267\235 */\n"
+"    border-radius: 4px; /* \350\256\276\347\275\256\345\234\206\350\247\222 */\n"
+"    font-size: 14px; /* \350\256\276\347\275\256\345\255\227\344\275\223\345\244\247\345\260\217 */\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"    background-color: rgb(24, 72, 112); /* \350\256\276\347\275\256\351\274\240\346\240\207\346\202\254\345\201\234\346\227\266\347\232\204\350\203\214\346\231\257\351\242\234\350\211\262 */\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: rgb(21, 64, 99); /* \350\256\276\347\275\256\346\214\211\344\270\213\346\227\266\347\232\204\350\203\214\346\231"
+                        "\257\351\242\234\350\211\262 */\n"
+"}\n"
+"\n"
+"\n"
+"\n"
+"QPushButton:disabled {\n"
+"    background-color: rgb(200, 200, 200); /* \350\256\276\347\275\256\347\246\201\347\224\250\346\227\266\347\232\204\350\203\214\346\231\257\351\242\234\350\211\262 */\n"
+"    color: rgb(150, 150, 150); /* \350\256\276\347\275\256\347\246\201\347\224\250\346\227\266\347\232\204\346\226\207\345\255\227\351\242\234\350\211\262 */\n"
+"}\n"
+""));
+        label_6 = new QLabel(page_find);
+        label_6->setObjectName("label_6");
+        label_6->setGeometry(QRect(30, 170, 37, 20));
+        pushButton_back = new QPushButton(page_find);
+        pushButton_back->setObjectName("pushButton_back");
+        pushButton_back->setGeometry(QRect(210, 340, 141, 36));
+        pushButton_back->setFont(font1);
+        pushButton_back->setCursor(QCursor(Qt::PointingHandCursor));
+        pushButton_back->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+"    background-color: rgb(70, 130, 180); /* \350\256\276\347\275\256\351\273\230\350\256\244\350\203\214\346\231\257\351\242\234\350\211\262 */\n"
+"    color: white; /* \350\256\276\347\275\256\346\226\207\345\255\227\351\242\234\350\211\262 */\n"
+"    border: none; /* \345\216\273\351\231\244\350\276\271\346\241\206 */\n"
+"    padding: 8px 16px; /* \350\256\276\347\275\256\345\206\205\350\276\271\350\267\235 */\n"
+"    border-radius: 4px; /* \350\256\276\347\275\256\345\234\206\350\247\222 */\n"
+"    font-size: 14px; /* \350\256\276\347\275\256\345\255\227\344\275\223\345\244\247\345\260\217 */\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"    background-color: rgb(24, 72, 112); /* \350\256\276\347\275\256\351\274\240\346\240\207\346\202\254\345\201\234\346\227\266\347\232\204\350\203\214\346\231\257\351\242\234\350\211\262 */\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: rgb(21, 64, 99); /* \350\256\276\347\275\256\346\214\211\344\270\213\346\227\266\347\232\204\350\203\214\346\231"
+                        "\257\351\242\234\350\211\262 */\n"
+"}\n"
+"\n"
+"\n"
+"\n"
+"QPushButton:disabled {\n"
+"    background-color: rgb(200, 200, 200); /* \350\256\276\347\275\256\347\246\201\347\224\250\346\227\266\347\232\204\350\203\214\346\231\257\351\242\234\350\211\262 */\n"
+"    color: rgb(150, 150, 150); /* \350\256\276\347\275\256\347\246\201\347\224\250\346\227\266\347\232\204\346\226\207\345\255\227\351\242\234\350\211\262 */\n"
+"}\n"
+""));
+        stackedWidget->addWidget(page_find);
         stackedWidgetPage1 = new QWidget();
         stackedWidgetPage1->setObjectName("stackedWidgetPage1");
         label_2 = new QLabel(stackedWidgetPage1);
         label_2->setObjectName("label_2");
-        label_2->setGeometry(QRect(30, 220, 37, 20));
+        label_2->setGeometry(QRect(30, 200, 37, 20));
         pushButton = new QPushButton(stackedWidgetPage1);
         pushButton->setObjectName("pushButton");
         pushButton->setGeometry(QRect(30, 350, 320, 36));
-        QFont font;
-        pushButton->setFont(font);
+        pushButton->setFont(font1);
         pushButton->setCursor(QCursor(Qt::PointingHandCursor));
         pushButton->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "    background-color: rgb(70, 130, 180); /* \350\256\276\347\275\256\351\273\230\350\256\244\350\203\214\346\231\257\351\242\234\350\211\262 */\n"
@@ -120,7 +217,7 @@ public:
 ""));
         lineEdit_2 = new QLineEdit(stackedWidgetPage1);
         lineEdit_2->setObjectName("lineEdit_2");
-        lineEdit_2->setGeometry(QRect(30, 240, 320, 41));
+        lineEdit_2->setGeometry(QRect(30, 220, 320, 41));
         lineEdit_2->setStyleSheet(QString::fromUtf8("QLineEdit {\n"
 "    background-color: rgb(255, 255, 255); /* \350\256\276\347\275\256\350\203\214\346\231\257\351\242\234\350\211\262 */\n"
 "    color: black; /* \350\256\276\347\275\256\346\226\207\346\234\254\351\242\234\350\211\262 */\n"
@@ -166,11 +263,15 @@ public:
         label_name_3 = new QLabel(stackedWidgetPage1);
         label_name_3->setObjectName("label_name_3");
         label_name_3->setGeometry(QRect(0, 60, 371, 21));
-        QFont font1;
-        font1.setPointSize(14);
-        label_name_3->setFont(font1);
+        label_name_3->setFont(font);
         label_name_3->setTextFormat(Qt::PlainText);
         label_name_3->setAlignment(Qt::AlignCenter);
+        pushButton_forget = new QPushButton(stackedWidgetPage1);
+        pushButton_forget->setObjectName("pushButton_forget");
+        pushButton_forget->setGeometry(QRect(290, 270, 61, 20));
+        pushButton_forget->setCursor(QCursor(Qt::PointingHandCursor));
+        pushButton_forget->setStyleSheet(QString::fromUtf8("border : none;\n"
+"color : rgb(21, 64, 99)"));
         stackedWidget->addWidget(stackedWidgetPage1);
         stackedWidgetPage2 = new QWidget();
         stackedWidgetPage2->setObjectName("stackedWidgetPage2");
@@ -186,7 +287,7 @@ public:
         pushButton_3 = new QPushButton(stackedWidgetPage1_2);
         pushButton_3->setObjectName("pushButton_3");
         pushButton_3->setGeometry(QRect(30, 360, 320, 36));
-        pushButton_3->setFont(font);
+        pushButton_3->setFont(font1);
         pushButton_3->setCursor(QCursor(Qt::PointingHandCursor));
         pushButton_3->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "    background-color: rgb(70, 130, 180); /* \350\256\276\347\275\256\351\273\230\350\256\244\350\203\214\346\231\257\351\242\234\350\211\262 */\n"
@@ -280,7 +381,7 @@ public:
         label_name_4 = new QLabel(stackedWidgetPage1_2);
         label_name_4->setObjectName("label_name_4");
         label_name_4->setGeometry(QRect(0, 50, 371, 21));
-        label_name_4->setFont(font1);
+        label_name_4->setFont(font);
         label_name_4->setTextFormat(Qt::PlainText);
         label_name_4->setAlignment(Qt::AlignCenter);
         stackedWidget_2->addWidget(stackedWidgetPage1_2);
@@ -364,6 +465,12 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "\345\255\246\346\234\257\345\260\217\345\212\251\346\211\213-\347\231\273\345\275\225", nullptr));
+        label_name_5->setText(QCoreApplication::translate("MainWindow", "\346\211\276\345\233\236\345\257\206\347\240\201", nullptr));
+        lineEdit_forget->setText(QString());
+        lineEdit_forget->setPlaceholderText(QCoreApplication::translate("MainWindow", "\350\257\267\350\276\223\345\205\245\351\202\256\347\256\261", nullptr));
+        pushButton_find->setText(QCoreApplication::translate("MainWindow", "\346\211\276\345\233\236\345\257\206\347\240\201", nullptr));
+        label_6->setText(QCoreApplication::translate("MainWindow", "\351\202\256\347\256\261", nullptr));
+        pushButton_back->setText(QCoreApplication::translate("MainWindow", "\350\277\224\345\233\236", nullptr));
         label_2->setText(QCoreApplication::translate("MainWindow", "\345\257\206\347\240\201", nullptr));
         pushButton->setText(QCoreApplication::translate("MainWindow", "\347\231\273\345\275\225", nullptr));
         lineEdit_2->setText(QString());
@@ -374,6 +481,7 @@ public:
         lineEdit->setPlaceholderText(QCoreApplication::translate("MainWindow", "\350\257\267\350\276\223\345\205\245\351\202\256\347\256\261", nullptr));
         pushButton_2->setText(QCoreApplication::translate("MainWindow", "\350\277\230\346\262\241\346\234\211\350\264\246\346\210\267\357\274\237\346\263\250\345\206\214", nullptr));
         label_name_3->setText(QCoreApplication::translate("MainWindow", "\347\231\273\345\275\225\345\255\246\346\234\257\345\212\251\346\211\213", nullptr));
+        pushButton_forget->setText(QCoreApplication::translate("MainWindow", "\345\277\230\350\256\260\345\257\206\347\240\201", nullptr));
         label_4->setText(QCoreApplication::translate("MainWindow", "\350\264\246\346\210\267\345\257\206\347\240\201", nullptr));
         pushButton_3->setText(QCoreApplication::translate("MainWindow", "\346\263\250\345\206\214\345\271\266\347\231\273\345\275\225", nullptr));
         lineEdit_rPW->setText(QString());

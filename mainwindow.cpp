@@ -235,13 +235,13 @@ void MainWindow::on_pushButton_clicked()
 
 void MainWindow::on_pushButton_2_clicked()
 {
-    ui->stackedWidget->setCurrentIndex(1);
+    ui->stackedWidget->setCurrentWidget(ui->stackedWidgetPage2);
 }
 
 
 void MainWindow::on_pushButton_4_clicked()
 {
-    ui->stackedWidget->setCurrentIndex(0);
+    ui->stackedWidget->setCurrentWidget(ui->stackedWidgetPage1);
 }
 
 
@@ -445,5 +445,121 @@ void MainWindow::on_pushButton_close_clicked()
 void MainWindow::on_pushButton_minimize_clicked()
 {
     this->showMinimized();
+}
+
+
+void MainWindow::on_pushButton_forget_clicked()
+{
+    ui->stackedWidget->setCurrentWidget(ui->page_find);
+}
+
+
+void MainWindow::on_pushButton_back_clicked()
+{
+    ui->stackedWidget->setCurrentWidget(ui->stackedWidgetPage1);
+}
+
+
+void MainWindow::on_pushButton_find_clicked()
+{
+    ui->pushButton_find->setEnabled(0);
+    auto tmpEmail = ui->lineEdit_forget->text();
+
+    if(tmpEmail.isEmpty())
+    {
+        QMessageBox::warning(nullptr, "找回失败", "请输入邮箱");
+        ui->pushButton_find->setEnabled(1);
+        return;
+    }
+    if(isValidEmail(tmpEmail) == false)
+    {
+        QMessageBox::warning(nullptr, "找回失败", "请输入合法的邮箱");
+        ui->pushButton_find->setEnabled(1);
+        return;
+    }
+
+    QNetworkRequest request((QUrl(UrlofForget)));
+
+    // 发送GET请求
+    QNetworkReply *reply = manager.get(request);
+
+    // 等待请求完成
+    QEventLoop loop;
+    QObject::connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+    loop.exec();
+
+    // 检查请求状态
+    if (reply->error() != QNetworkReply::NoError) {
+        qWarning() << "Error:" << reply->errorString();
+        reply->deleteLater();
+        QMessageBox::warning(nullptr, "找回失败", "网络错误");
+        ui->pushButton_find->setEnabled(1);
+        return;
+    }
+
+    // 读取响应内容
+    QString response = reply->readAll();
+    reply->deleteLater();
+
+    QString pattern = "<input\\s+type=\"hidden\"\\s+name=\"csrfmiddlewaretoken\"\\s+value=\"([^\"]*)\">";
+    static QRegularExpression regex(pattern);
+
+    // 匹配csrfToken
+    QRegularExpressionMatch match = regex.match(response);
+    QString csrfToken;
+    if (match.hasMatch()) {
+        csrfToken = match.captured();
+        // std::cout<<csrfToken.toStdString()<<"\n";
+        csrfToken = csrfToken.right(66);
+        csrfToken = csrfToken.left(64);
+        // std::cout<<csrfToken.toStdString()<<"\n";
+    } else {
+        QMessageBox::warning(nullptr, "找回失败", "网络错误");
+        ui->pushButton_find->setEnabled(1);
+        return;
+    }
+
+    QNetworkRequest loginRequest((QUrl(UrlofForget)));
+    loginRequest.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+    QString UrlForget = UrlofForget;
+    loginRequest.setRawHeader("Referer", UrlForget.toUtf8());
+
+    QUrlQuery params;
+    params.addQueryItem("email", tmpEmail);
+    params.addQueryItem("csrfmiddlewaretoken", csrfToken);
+    // qWarning()<<csrfToken;
+    // qWarning()<<params.toString();
+    QNetworkReply *loginReply = manager.post(loginRequest, params.query(QUrl::FullyEncoded).toUtf8());
+
+    QEventLoop loop2;
+    QObject::connect(loginReply, &QNetworkReply::finished, &loop2, &QEventLoop::quit);
+    loop2.exec();
+
+    // 检查请求状态
+    if (loginReply->error() != QNetworkReply::NoError) {
+        qWarning() << "Error:" << loginReply->errorString();
+        loginReply->deleteLater();
+        QMessageBox::warning(nullptr, "找回失败", "网络错误");
+        ui->pushButton_find->setEnabled(1);
+        return;
+    }
+
+    // 读取响应内容
+    QString loginResponse = loginReply->readAll();
+    loginReply->deleteLater();
+    // qWarning() << loginResponse.toStdString()<<"hhhh";
+    if (loginResponse.contains("密码已发送至您的邮箱。"))
+    {
+        QMessageBox::warning(nullptr, "找回成功", "密码已发送至您的邮箱，请查收");
+        ui->pushButton_find->setEnabled(1);
+        return;
+    }
+    else
+    {
+        QMessageBox::warning(nullptr, "找回失败", "该邮箱未注册");
+        ui->pushButton_find->setEnabled(1);
+        return;
+    }
+    ui->pushButton_find->setEnabled(1);
 }
 

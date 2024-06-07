@@ -44,6 +44,12 @@ private slots:
 
     void on_pushButton_minimize_clicked();
 
+    void on_pushButton_forget_clicked();
+
+    void on_pushButton_back_clicked();
+
+    void on_pushButton_find_clicked();
+
 protected:
     void mousePressEvent(QMouseEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
