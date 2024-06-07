@@ -142,7 +142,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     this->setFixedSize(370, 485);
     this->setWindowFlags(Qt::FramelessWindowHint);
-
+    ui->stackedWidget->setCurrentWidget(ui->stackedWidgetPage1);
     // 读取记住的密码
     QString appDir = QCoreApplication::applicationDirPath();
     QString iniFilePath = appDir + "/SAconfig.ini";
