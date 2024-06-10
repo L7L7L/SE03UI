@@ -178,7 +178,7 @@ MainWindow2::MainWindow2(QWidget *parent)
     ui->comboBox_language->addItem("越南语");   // Vietnamese
 
     ui->comboBox_language->setCurrentIndex(0);
-    ui->pushButton_tags->setEnabled(0);
+    // ui->pushButton_tags->setEnabled(0);
 
     //限制页数输入
     ui->lineEdit_display_page->setValidator(new QIntValidator(0, 0, ui->lineEdit_display_page));

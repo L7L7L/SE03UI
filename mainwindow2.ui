@@ -30,7 +30,7 @@
      <string notr="true">background-color:#FAFAFA</string>
     </property>
     <property name="currentIndex">
-     <number>5</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="page_0_AI_chat">
      <widget class="QScrollArea" name="scrollArea_history">
